@@ -52,6 +52,8 @@ class GithubAuth
     )
     req['Accept-Header'] = 'application/json'
     res = http.request(req)
+    raise "Failed to fetch access token: #{res.body}" unless req.code == 200
+    puts res.body
     JSON.parse(res.body)['access_token']
   end
 
