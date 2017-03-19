@@ -55,12 +55,11 @@ before '/*' do
     ver: VERSION,
     login_link: settings.oauth.login_uri
   }
+  @locals[:user] = cookies[:sixnines] if cookies[:sixnines]
 end
 
 before '/a/*' do
-  redirect to('/') unless cookies[:sixnines]
-  @user = cookies[:sixnines]
-  @locals[:user] = @user
+  redirect to('/') unless @locals[:user]
 end
 
 get '/oauth' do

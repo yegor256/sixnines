@@ -14,6 +14,9 @@
     %p
       - if defined? user
         ='@' + user
+        |
+        %a{:href=>'/a'}
+          account
       - else
         %a{:href=>login_link}
           login
