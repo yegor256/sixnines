@@ -50,9 +50,17 @@ configure do
   )
 end
 
+before '/*' do
+  @locals = {
+    ver: VERSION,
+    login_link: settings.oauth.login_uri
+  }
+end
+
 before '/a/*' do
   redirect to('/') unless cookies[:sixnines]
   @user = cookies[:sixnines]
+  @locals[:user] = @user
 end
 
 get '/oauth' do
@@ -62,10 +70,7 @@ get '/oauth' do
 end
 
 get '/' do
-  haml :index, layout: :layout, locals: {
-    ver: VERSION,
-    login_link: settings.oauth.login_uri
-  }
+  haml :index, layout: :layout, locals: @locals
 end
 
 get '/robots.txt' do
@@ -77,9 +82,7 @@ get '/version' do
 end
 
 get '/a' do
-  haml :account, layout: :layout, locals: {
-    ver: VERSION, user: @user
-  }
+  haml :account, layout: :layout, locals: @locals
 end
 
 get '/css/*.css' do
@@ -90,7 +93,7 @@ end
 
 not_found do
   status 404
-  haml :not_found, layout: :layout, locals: { ver: VERSION }
+  haml :not_found, layout: :layout, locals: @locals
 end
 
 error do
@@ -98,6 +101,6 @@ error do
   haml(
     :error,
     layout: :layout,
-    locals: { ver: VERSION, error: env['sinatra.error'].message }
+    locals: @locals.merge(error: env['sinatra.error'].message)
   )
 end

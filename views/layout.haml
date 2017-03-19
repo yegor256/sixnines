@@ -11,11 +11,10 @@
     %p
       %a{:href => '/'}
         %img.logo{:src => '/images/logo.svg'}
-    - if user
-      %p
-        =user
-    - else
-      %p
+    %p
+      - if defined? user
+        ='@' + user
+      - else
         %a{:href=>login_link}
           login
     =yield
