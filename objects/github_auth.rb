@@ -50,7 +50,7 @@ class GithubAuth
       'client_id' => @id,
       'client_secret' => @secret
     )
-    req['Accept-Header'] = 'application/json'
+    req['Accept'] = 'application/json'
     res = http.request(req)
     raise "Failed to fetch access token: #{res.body}" unless res.code == 200
     puts res.body
