@@ -28,9 +28,11 @@ require 'net/http'
 require 'uri'
 require 'yaml'
 require 'json'
+require 'aws-sdk'
 
 require_relative 'version'
 require_relative 'objects/exec'
+require_relative 'objects/base'
 require_relative 'objects/github_auth'
 
 configure do
@@ -39,6 +41,11 @@ configure do
       'github' => {
         'client_id' => 'nothing',
         'client_secret' => 'nothing'
+      },
+      'dynamodb' => {
+        'region' => 'us-east-1',
+        'key' => 'nothing',
+        'secret' => 'nothing'
       }
     }
   else
@@ -47,6 +54,13 @@ configure do
   set :oauth, GithubAuth.new(
     config['github']['client_id'],
     config['github']['client_secret']
+  )
+  set :base, Base.new(
+    Aws::DynamoDB::Client.new(
+      region: config['dynamodb']['region'],
+      access_key_id: config['dynamodb']['key'],
+      secret_access_key: config['dynamodb']['secret']
+    )
   )
 end
 
@@ -86,7 +100,14 @@ get '/version' do
 end
 
 get '/a' do
-  haml :account, layout: :layout, locals: @locals
+  haml :account, layout: :layout, locals: @locals.merge(
+    endpoints: settings.base.endpoints(@locals[:user]).list
+  )
+end
+
+get '/a/add' do
+  settings.base.endpoints(@locals[:user]).add(params[:endpoint])
+  redirect to('/a')
 end
 
 get '/css/*.css' do

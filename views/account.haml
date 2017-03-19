@@ -1,2 +1,17 @@
-%p
-  Your endpoints are:
+%form{:method=>'post', :action=>'/a/add'}
+  %fieldset
+    %input{:type=>'text', :name=>'endpoint'}
+    %button{:type=>'submit'}>Add
+
+- if endpoints.empty?
+  %p
+    There are no endpoints yet (add the first one above).
+- else
+  %p
+    Your endpoints are:
+  %ul
+    - endpoints.each do |e|
+      %li
+        %code
+          =e.uri
+

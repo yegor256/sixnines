@@ -14,48 +14,19 @@
 #
 # THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFINGEMENT. IN NO EVENT SHALL THE
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 # AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-ENV['RACK_ENV'] = 'test'
-
-require 'test/unit'
-require 'rack/test'
-require_relative '../sixnines'
-
-class AppTest < Test::Unit::TestCase
-  include Rack::Test::Methods
-
-  def app
-    Sinatra::Application
-  end
-
-  def test_renders_version
-    get('/version')
-    assert(last_response.ok?)
-  end
-
-  def test_robots_txt
-    get('/robots.txt')
-    assert(last_response.ok?)
-  end
-
-  def test_it_renders_home_page
-    get('/')
-    assert(last_response.ok?)
-    assert(last_response.body.include?('SixNines'))
-  end
-
-  def test_it_renders_logo
-    get('/images/logo.svg')
-    assert(last_response.ok?)
-  end
-
-  def test_renders_page_not_found
-    get('/the-url-that-is-absent')
-    assert(last_response.status == 404)
+#
+# Single endpoint
+#
+class Endpoint
+  attr_reader :uri
+  def initialize(aws, uri)
+    @aws = aws
+    @uri = uri
   end
 end

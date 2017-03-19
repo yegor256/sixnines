@@ -14,48 +14,42 @@
 #
 # THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFINGEMENT. IN NO EVENT SHALL THE
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 # AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-ENV['RACK_ENV'] = 'test'
+require_relative 'endpoint'
 
-require 'test/unit'
-require 'rack/test'
-require_relative '../sixnines'
-
-class AppTest < Test::Unit::TestCase
-  include Rack::Test::Methods
-
-  def app
-    Sinatra::Application
+#
+# Endpoints of a user
+#
+class Endpoints
+  def initialize(aws, user)
+    @aws = aws
+    @user = user
   end
 
-  def test_renders_version
-    get('/version')
-    assert(last_response.ok?)
+  def add(uri)
+    aws.put_item(
+      item: {
+        'uri' => { s: uri },
+        'user' => { s: @user }
+      },
+      table_name: 'sn_endpoints'
+    )
   end
 
-  def test_robots_txt
-    get('/robots.txt')
-    assert(last_response.ok?)
-  end
-
-  def test_it_renders_home_page
-    get('/')
-    assert(last_response.ok?)
-    assert(last_response.body.include?('SixNines'))
-  end
-
-  def test_it_renders_logo
-    get('/images/logo.svg')
-    assert(last_response.ok?)
-  end
-
-  def test_renders_page_not_found
-    get('/the-url-that-is-absent')
-    assert(last_response.status == 404)
+  def list
+    aws.query(
+      select: 'ALL_ATTRIBUTES',
+      limit: 50,
+      expression_attribute_values: {
+        ':v1' => { s: @user }
+      },
+      key_condition_expression: 'user = :v1',
+      table_name: 'sn_endpoints'
+    )
   end
 end
