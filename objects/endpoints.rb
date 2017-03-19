@@ -37,7 +37,7 @@ class Endpoints
         'uri' => { s: uri },
         'login' => { s: @user }
       },
-      table_name: 'sn_endpoints'
+      table_name: 'sn-endpoints'
     )
   end
 
@@ -49,7 +49,7 @@ class Endpoints
         ':v1' => { s: @user }
       },
       key_condition_expression: 'login = :v1',
-      table_name: 'sn_endpoints'
+      table_name: 'sn-endpoints'
     )
   end
 end
