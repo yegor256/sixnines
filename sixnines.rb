@@ -68,6 +68,11 @@ get '/oauth' do
   redirect to('/')
 end
 
+get '/logout' do
+  cookies[:sixnines] = ''
+  redirect to('/')
+end
+
 get '/' do
   haml :index, layout: :layout, locals: @locals
 end
