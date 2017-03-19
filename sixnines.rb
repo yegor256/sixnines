@@ -42,7 +42,7 @@ configure do
       }
     }
   else
-    YAML.parse(File.join(Dir.cwd, 'config.yml'))
+    YAML.parse(File.join(Dir.pwd, 'config.yml'))
   end
   set :oauth, GithubAuth.new(
     config['github']['client_id'],
