@@ -27,7 +27,7 @@ gem 'coveralls', '0.8.17', require: false
 gem 'haml', '4.0.7'
 gem 'mail', '2.6.4'
 gem 'nokogiri', '1.6.8.1'
-gem 'rack', '~> 1.5'
+gem 'rack-test', '0.6.3'
 gem 'rake', '12.0.0', require: false
 gem 'rubocop', '0.46.0', require: false
 gem 'rubocop-rspec', '1.8.0', require: false

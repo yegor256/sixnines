@@ -21,20 +21,11 @@
 # SOFTWARE.
 
 require 'haml'
-require 'json'
-require 'ostruct'
 require 'sinatra'
 require 'sass'
 
 require_relative 'version'
-require_relative 'objects/config'
-require_relative 'objects/job'
-require_relative 'objects/job_detached'
-require_relative 'objects/job_emailed'
-require_relative 'objects/git_repo'
-require_relative 'objects/github_tickets'
-require_relative 'objects/safe_storage'
-require_relative 'objects/s3'
+require_relative 'objects/exec'
 
 get '/' do
   haml :index, layout: :layout, locals: { ver: VERSION }
@@ -46,61 +37,6 @@ end
 
 get '/version' do
   VERSION
-end
-
-get '/p' do
-  name = params[:name]
-  Nokogiri::XSLT(File.read('assets/xsl/puzzles.xsl')).transform(
-    storage(name).load, ['project', "'#{name}'"]
-  ).to_s
-end
-
-# @todo #41:30min Let's add GZIP compression to this output, since
-#  most XML files are rather big and it would be beneficial to see
-#  them compressed in the browser.
-get '/xml' do
-  content_type 'text/xml'
-  storage(params[:name]).load.to_s
-end
-
-get '/svg' do
-  response.headers['Cache-Control'] = 'no-cache, private'
-  content_type 'image/svg+xml'
-  name = params[:name]
-  Nokogiri::XSLT(File.read('assets/xsl/svg.xsl')).transform(
-    storage(name).load, ['project', "'#{name}'"]
-  ).to_s
-end
-
-post '/hook/github' do
-  request.body.rewind
-  json = JSON.parse(request.body.read)
-  return unless json['ref'] == 'refs/heads/master'
-  name = json['repository']['full_name']
-  cfg = Config.new.yaml
-  unless ENV['RACK_ENV'] == 'test'
-    repo = GitRepo.new(name: name, id_rsa: cfg['id_rsa'])
-    JobDetached.new(
-      repo,
-      JobEmailed.new(
-        name,
-        repo,
-        cfg,
-        Job.new(
-          repo,
-          storage(name),
-          GithubTickets.new(
-            name,
-            cfg['github']['login'],
-            cfg['github']['pwd'],
-            repo
-          )
-        )
-      )
-    ).proceed
-    puts "GitHub hook from #{name}"
-  end
-  "thanks #{name}"
 end
 
 get '/css/*.css' do
@@ -120,24 +56,5 @@ error do
     :error,
     layout: :layout,
     locals: { ver: VERSION, error: env['sinatra.error'].message }
-  )
-end
-
-private
-
-def storage(name)
-  SafeStorage.new(
-    if ENV['RACK_ENV'] == 'test'
-      FakeStorage.new
-    else
-      cfg = Config.new.yaml
-      S3.new(
-        "#{name}.xml",
-        cfg['s3']['bucket'],
-        cfg['s3']['region'],
-        cfg['s3']['key'],
-        cfg['s3']['secret']
-      )
-    end
   )
 end
