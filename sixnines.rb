@@ -105,7 +105,7 @@ get '/a' do
   )
 end
 
-get '/a/add' do
+post '/a/add' do
   settings.base.endpoints(@locals[:user]).add(params[:endpoint])
   redirect to('/a')
 end
