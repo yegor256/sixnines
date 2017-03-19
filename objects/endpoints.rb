@@ -35,8 +35,8 @@ class Endpoints
     @aws.put_item(
       table_name: 'sn-endpoints',
       item: {
-        'uri' => { s: uri },
-        'login' => { s: @user }
+        'login' => @user,
+        'uri' => uri
       }
     )
   end
