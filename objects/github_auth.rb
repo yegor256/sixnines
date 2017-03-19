@@ -52,18 +52,19 @@ class GithubAuth
     )
     req['Accept'] = 'application/json'
     res = http.request(req)
-    raise "Access token error (#{res.code}): #{res.body}" unless res.code == 200
+    raise "Error (#{res.code}): #{res.body}" unless res.code == '200'
     puts res.body
     JSON.parse(res.body)['access_token']
   end
 
   def user_name(token)
-    uri = URI.parse('https://api.github.com/user?access_token=' + token)
+    uri = URI.parse('https://api.github.com/user')
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE
     req = Net::HTTP::Get.new(uri.request_uri)
     req['Accept-Header'] = 'application/json'
+    req['Authorization'] = "token #{token}"
     res = http.request(req)
     JSON.parse(res.body)['login']
   end
