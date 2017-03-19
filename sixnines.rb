@@ -69,7 +69,7 @@ get '/oauth' do
 end
 
 get '/logout' do
-  cookies[:sixnines] = ''
+  cookies.delete(:sixnines)
   redirect to('/')
 end
 
