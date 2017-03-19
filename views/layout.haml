@@ -15,14 +15,11 @@
       - if defined? user
         ='@' + user
         |
-        %a{:href=>'/a'}
-          ='account'
+        %a{:href=>'/a'}>account
         |
-        %a{:href=>'/logout'}
-          ='exit'
+        %a{:href=>'/logout'}>exit
       - else
-        %a{:href=>login_link}
-          login
+        %a{:href=>login_link}>login
     =yield
     %p
       Version
