@@ -40,7 +40,7 @@ class GithubAuth
   end
 
   def access_token(code)
-    uri = URI.parse('https://api.github.com/login/oauth/access_token')
+    uri = URI.parse('https://github.com/login/oauth/access_token')
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE
