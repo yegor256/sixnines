@@ -49,7 +49,7 @@ class GithubAuth
       'client_secret' => @secret
     )
     req['Accept-Header'] = 'application/json'
-    res = http.request(request)
+    res = http.request(req)
     JSON.parse(res.body)['access_token']
   end
 
@@ -58,7 +58,7 @@ class GithubAuth
     http = Net::HTTP.new(uri.host, uri.port)
     req = Net::HTTP::Get.new(uri.request_uri)
     req['Accept-Header'] = 'application/json'
-    res = http.request(request)
+    res = http.request(req)
     JSON.parse(res.body)['login']
   end
 end
