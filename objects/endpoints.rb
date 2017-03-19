@@ -35,7 +35,7 @@ class Endpoints
     @aws.put_item(
       item: {
         'uri' => { s: uri },
-        'user' => { s: @user }
+        'login' => { s: @user }
       },
       table_name: 'sn_endpoints'
     )
@@ -48,7 +48,7 @@ class Endpoints
       expression_attribute_values: {
         ':v1' => { s: @user }
       },
-      key_condition_expression: 'user = :v1',
+      key_condition_expression: 'login = :v1',
       table_name: 'sn_endpoints'
     )
   end
