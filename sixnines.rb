@@ -50,8 +50,18 @@ configure do
   )
 end
 
+before '/a/*' do
+  redirect to('/') unless cookies[:sixnines]
+  @user = cookies[:sixnines]
+end
+
+get '/oauth' do
+  user = settings.oauth.user_name(settings.oauth.access_token(params[:code]))
+  cookies[:sixnines] = user
+  redirect to('/')
+end
+
 get '/' do
-  redirect to('/acc') if cookies[:sixnines]
   haml :index, layout: :layout, locals: {
     ver: VERSION,
     login_link: settings.oauth.login_uri
@@ -66,14 +76,10 @@ get '/version' do
   VERSION
 end
 
-get '/oauth' do
-  settings.oauth.user_name(settings.oauth.access_token(params[:code]))
-  cookies[:sixnines] = 'foobar'
-  redirect to('/')
-end
-
-get '/acc' do
-  redirect to('/') unless cookies[:sixnines]
+get '/a' do
+  haml :account, layout: :layout, locals: {
+    ver: VERSION, user: @user
+  }
 end
 
 get '/css/*.css' do

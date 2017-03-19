@@ -11,6 +11,13 @@
     %p
       %a{:href => '/'}
         %img.logo{:src => '/images/logo.svg'}
+    - if user
+      %p
+        =user
+    - else
+      %p
+        %a{:href=>login_link}
+          login
     =yield
     %p
       Version
