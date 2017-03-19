@@ -16,3 +16,10 @@ Metrics/BlockLength:
   Max: 50
 Style/MultilineMethodCallIndentation:
   Enabled: false
+Style/ElseAlignment:
+  Enabled: false
+Lint/EndAlignment:
+  Enabled: false
+Style/IndentationWidth:
+  Enabled: false
+

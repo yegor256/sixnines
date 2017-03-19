@@ -22,13 +22,40 @@
 
 require 'haml'
 require 'sinatra'
+require 'sinatra/cookies'
 require 'sass'
+require 'net/http'
+require 'uri'
+require 'yaml'
+require 'json'
 
 require_relative 'version'
 require_relative 'objects/exec'
+require_relative 'objects/github_auth'
+
+configure do
+  config = if ENV['RACK_ENV'] == 'test'
+    {
+      'github' => {
+        'client_id' => 'nothing',
+        'client_secret' => 'nothing'
+      }
+    }
+  else
+    YAML.parse(File.join(Dir.cwd, 'config.yml'))
+  end
+  set :oauth, GithubAuth.new(
+    config['github']['client_id'],
+    config['github']['client_secret']
+  )
+end
 
 get '/' do
-  haml :index, layout: :layout, locals: { ver: VERSION }
+  redirect to('/acc') if cookies[:sixnines]
+  haml :index, layout: :layout, locals: {
+    ver: VERSION,
+    login_link: settings.oauth.login_uri
+  }
 end
 
 get '/robots.txt' do
@@ -37,6 +64,16 @@ end
 
 get '/version' do
   VERSION
+end
+
+get '/oauth' do
+  settings.oauth.user_name(settings.oauth.access_token(params[:code]))
+  cookies[:sixnines] = 'foobar'
+  redirect to('/')
+end
+
+get '/acc' do
+  redirect to('/') unless cookies[:sixnines]
 end
 
 get '/css/*.css' do

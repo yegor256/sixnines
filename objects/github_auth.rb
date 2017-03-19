@@ -20,18 +20,45 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-source 'https://rubygems.org'
+require 'net/http'
+require 'uri'
+require 'yaml'
+require 'json'
 
-gem 'aws-sdk', '2.6.35'
-gem 'coveralls', '0.8.17', require: false
-gem 'haml', '4.0.7'
-gem 'mail', '2.6.4'
-gem 'nokogiri', '1.6.8.1'
-gem 'rack-test', '0.6.3'
-gem 'rake', '12.0.0', require: false
-gem 'rubocop', '0.46.0', require: false
-gem 'rubocop-rspec', '1.8.0', require: false
-gem 'sass', '3.4.22'
-gem 'sinatra', '1.4.7'
-gem 'sinatra-contrib'
-gem 'test-unit', '3.0.8', require: false
+#
+# GitHub auth mechanism
+#
+class GithubAuth
+  def initialize(id, secret)
+    @id = id
+    @secret = secret
+  end
+
+  def login_uri
+    'https://github.com/login/oauth/authorize?client_id=' +
+      @id + '&redirect_uri=http://www.sixnines.io/oauth'
+  end
+
+  def access_token(code)
+    uri = URI.parse('https://api.github.com/login/oauth/access_token')
+    http = Net::HTTP.new(uri.host, uri.port)
+    req = Net::HTTP::Post.new(uri.request_uri)
+    req.set_form_data(
+      'code' => code,
+      'client_id' => @id,
+      'client_secret' => @secret
+    )
+    req['Accept-Header'] = 'application/json'
+    res = http.request(request)
+    JSON.parse(res.body)['access_token']
+  end
+
+  def user_name(token)
+    uri = URI.parse('https://api.github.com/user?access_token=' + token)
+    http = Net::HTTP.new(uri.host, uri.port)
+    req = Net::HTTP::Get.new(uri.request_uri)
+    req['Accept-Header'] = 'application/json'
+    res = http.request(request)
+    JSON.parse(res.body)['login']
+  end
+end
