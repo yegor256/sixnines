@@ -33,23 +33,23 @@ class Endpoints
 
   def add(uri)
     @aws.put_item(
+      table_name: 'sn-endpoints',
       item: {
         'uri' => { s: uri },
         'login' => { s: @user }
-      },
-      table_name: 'sn-endpoints'
+      }
     )
   end
 
   def list
     @aws.query(
+      table_name: 'sn-endpoints',
       select: 'ALL_ATTRIBUTES',
       limit: 50,
       expression_attribute_values: {
-        ':v1' => { s: @user }
+        ':v' => @user
       },
-      key_condition_expression: 'login = :v1',
-      table_name: 'sn-endpoints'
+      key_condition_expression: 'login = :v'
     )
   end
 end
