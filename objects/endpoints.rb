@@ -32,7 +32,7 @@ class Endpoints
   end
 
   def add(uri)
-    aws.put_item(
+    @aws.put_item(
       item: {
         'uri' => { s: uri },
         'user' => { s: @user }
@@ -42,7 +42,7 @@ class Endpoints
   end
 
   def list
-    aws.query(
+    @aws.query(
       select: 'ALL_ATTRIBUTES',
       limit: 50,
       expression_attribute_values: {
