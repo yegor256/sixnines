@@ -42,6 +42,8 @@ class GithubAuth
   def access_token(code)
     uri = URI.parse('https://api.github.com/login/oauth/access_token')
     http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
+    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
     req = Net::HTTP::Post.new(uri.request_uri)
     req.set_form_data(
       'code' => code,
@@ -56,6 +58,8 @@ class GithubAuth
   def user_name(token)
     uri = URI.parse('https://api.github.com/user?access_token=' + token)
     http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
+    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
     req = Net::HTTP::Get.new(uri.request_uri)
     req['Accept-Header'] = 'application/json'
     res = http.request(req)
