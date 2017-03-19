@@ -50,6 +50,6 @@ class Endpoints
         ':v' => @user
       },
       key_condition_expression: 'login = :v'
-    )
-  end.items.map { |i| Endpoint.new(@aws, i['uri'].s) }
+    ).items.map { |i| Endpoint.new(@aws, i['uri'].s) }
+  end
 end
