@@ -70,7 +70,7 @@ before '/*' do
     ver: VERSION,
     login_link: settings.oauth.login_uri
   }
-  @locals[:user] = Cookie.Closed.new(cookies[:sixnines]) if cookies[:sixnines]
+  @locals[:user] = Cookie::Closed.new(cookies[:sixnines]) if cookies[:sixnines]
 end
 
 before '/a/*' do
@@ -79,7 +79,7 @@ end
 
 get '/oauth' do
   user = settings.oauth.user_name(settings.oauth.access_token(params[:code]))
-  cookies[:sixnines] = Cookie.Open.new(user)
+  cookies[:sixnines] = Cookie::Open.new(user)
   redirect to('/')
 end
 
