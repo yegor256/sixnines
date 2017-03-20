@@ -51,7 +51,7 @@ configure do
     }
   else
     name = '/code/home/assets/sixnines/config.yml'
-    name = File.join(Dir.pwd, 'config.yml') if !File.exist?(name)
+    name = File.join(Dir.pwd, 'config.yml') unless File.exist?(name)
     YAML.load(File.open(name))
   end
   set :oauth, GithubAuth.new(
