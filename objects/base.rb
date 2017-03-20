@@ -79,7 +79,7 @@ class Base
         ':h' => 'yes',
         ':r' => query
       },
-      key_condition_expression: 'active=:h, BEGINS_WITH(hostname,:r)'
+      key_condition_expression: 'active=:h AND BEGINS_WITH(hostname,:r)'
     ).items.map { |i| Endpoint.new(@aws, i['uri']) }
   end
 

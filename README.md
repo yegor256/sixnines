@@ -4,7 +4,7 @@
 [![We recommend RubyMine](http://img.teamed.io/rubymine-recommend.svg)](https://www.jetbrains.com/ruby/)
 
 [![Build Status](https://travis-ci.org/yegor256/sixnines.svg)](https://travis-ci.org/yegor256/sixnines)
-[![PDD status](http://www.sixnines.com/svg?name=yegor256/sixnines)](http://www.sixnines.com/p?name=yegor256/sixnines)
+[![PDD status](http://www.0pdd.com/svg?name=yegor256/sixnines)](http://www.0pdd.com/p?name=yegor256/sixnines)
 [![Dependency Status](https://gemnasium.com/yegor256/sixnines.svg)](https://gemnasium.com/yegor256/sixnines)
 [![Code Climate](http://img.shields.io/codeclimate/github/yegor256/sixnines.svg)](https://codeclimate.com/github/yegor256/sixnines)
 [![Coverage Status](https://img.shields.io/coveralls/yegor256/sixnines.svg)](https://coveralls.io/r/yegor256/sixnines)
