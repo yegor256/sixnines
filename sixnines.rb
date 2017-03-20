@@ -33,6 +33,7 @@ require 'aws-sdk'
 require_relative 'version'
 require_relative 'objects/exec'
 require_relative 'objects/base'
+require_relative 'objects/cookie'
 require_relative 'objects/github_auth'
 
 configure do

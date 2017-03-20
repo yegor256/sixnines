@@ -65,7 +65,7 @@ class Base
           end
         }
       )
-      reports.join("\n")
+      "Done:\n" + reports.join("\n")
     end
   end
 
