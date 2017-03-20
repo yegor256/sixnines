@@ -42,7 +42,7 @@ class Base
           ':h' => 'yes',
           ':r' => Time.now.to_i
         },
-        key_condition_expression: 'active=:h, expires < :r'
+        key_condition_expression: 'active=:h and expires < :r'
       ).items.map { |i| Endpoint.new(@aws, i['uri']) }
       break if list.empty?
       @aws.batch_write_item(
@@ -65,8 +65,8 @@ class Base
           end
         }
       )
-      "Done:\n" + reports.join("\n")
     end
+    "Done (#{reports.size} endpoints):\n" + reports.join("\n")
   end
 
   def find(query)
@@ -79,8 +79,7 @@ class Base
         ':h' => 'yes',
         ':r' => query
       },
-      key_condition_expression: 'active=:h',
-      filter_expression: 'BEGINS_WIT(hostname,:r)'
+      key_condition_expression: 'active=:h and begins_with(hostname,:r)'
     ).items.map { |i| Endpoint.new(@aws, i['uri']) }
   end
 

@@ -9,16 +9,20 @@
     %input{:type=>'text', :name=>'q'}
     %button{:type=>'submit'}>Search
 
-- if !found.empty?
+- if query
   %p
     Found by
     ='"' + query + '":'
-  %ul
-    - found.each do |e|
-      %li
-        %code
-          =e.uri
-        =e.avt
+  - if found.empty?
+    %p
+      Nothing! Sorry about that.
+  - else
+    %ul
+      - found.each do |e|
+        %li
+          %code
+            =e.uri
+          =e.avt
 
 - if !flips.empty?
   %p

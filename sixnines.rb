@@ -50,7 +50,9 @@ configure do
       }
     }
   else
-    YAML.load(File.open(File.join(Dir.pwd, 'config.yml')))
+    name = '/code/home/assets/sixnines/config.yml'
+    name = File.join(Dir.pwd, 'config.yml') if !File.exist?(name)
+    YAML.load(File.open(name))
   end
   set :oauth, GithubAuth.new(
     config['github']['client_id'],
@@ -90,7 +92,7 @@ end
 
 get '/' do
   haml :index, layout: :layout, locals: @locals.merge(
-    query: params[:q] ? params[:q] : '',
+    query: params[:q] ? params[:q] : nil,
     found: params[:q] ? settings.base.find(params[:q]) : [],
     flips: ENV['RACK_ENV'] == 'test' ? [] : settings.base.flips
   )
