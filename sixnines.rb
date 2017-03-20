@@ -69,7 +69,7 @@ before '/*' do
     ver: VERSION,
     login_link: settings.oauth.login_uri
   }
-  @locals[:user] = cookies[:sixnines] if cookies[:sixnines]
+  @locals[:user] = Cookie.Closed.new(cookies[:sixnines]) if cookies[:sixnines]
 end
 
 before '/a/*' do
@@ -78,7 +78,7 @@ end
 
 get '/oauth' do
   user = settings.oauth.user_name(settings.oauth.access_token(params[:code]))
-  cookies[:sixnines] = user
+  cookies[:sixnines] = Cookie.Open.new(user)
   redirect to('/')
 end
 
@@ -88,7 +88,15 @@ get '/logout' do
 end
 
 get '/' do
-  haml :index, layout: :layout, locals: @locals
+  haml :index, layout: :layout, locals: @locals.merge(
+    query: params[:q] ? params[:q] : '',
+    found: params[:q] ? settings.base.find(params[:q]) : [],
+    flips: ENV['RACK_ENV'] == 'test' ? [] : settings.base.flips
+  )
+end
+
+get '/ping' do
+  settings.base.ping
 end
 
 get '/robots.txt' do

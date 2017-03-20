@@ -30,6 +30,72 @@ class Base
     @aws = aws
   end
 
+  def ping
+    reports = []
+    loop do
+      list = @aws.query(
+        table_name: 'sn-endpoints',
+        index_name: 'expires',
+        select: 'ALL_ATTRIBUTES',
+        limit: 25,
+        expression_attribute_values: {
+          ':h' => 'yes',
+          ':r' => Time.now.to_i
+        },
+        key_condition_expression: 'active=:h, expires < :r'
+      ).items.map { |i| Endpoint.new(@aws, i['uri']) }
+      break if list.empty?
+      @aws.batch_write_item(
+        request_items: {
+          'sn-pings' => list.map(&:ping).map do |d|
+            reports << "#{d.uri}: #{d.code}/#{d.msec}"
+            {
+              put_request: {
+                item: {
+                  'uri' => d.uri,
+                  'time' => d.time.to_i,
+                  'local' => d.local,
+                  'remote' => d.remote,
+                  'msec' => d.msec,
+                  'code' => d.code,
+                  'delete_on' => Time.now + (24 * 60 * 60)
+                }
+              }
+            }
+          end
+        }
+      )
+      reports.join("\n")
+    end
+  end
+
+  def find(query)
+    @aws.query(
+      table_name: 'sn-endpoints',
+      index_name: 'hostnames',
+      select: 'ALL_ATTRIBUTES',
+      limit: 10,
+      expression_attribute_values: {
+        ':h' => 'yes',
+        ':r' => query
+      },
+      key_condition_expression: 'active=:h, BEGINS_WITH(hostname,:r)'
+    ).items.map { |i| Endpoint.new(@aws, i['uri']) }
+  end
+
+  def flips
+    @aws.query(
+      table_name: 'sn-endpoints',
+      index_name: 'flips',
+      select: 'ALL_ATTRIBUTES',
+      limit: 10,
+      expression_attribute_values: {
+        ':h' => 'yes'
+      },
+      key_condition_expression: 'active=:h'
+    ).items.map { |i| Endpoint.new(@aws, i['uri']) }
+  end
+
   def endpoints(user)
     Endpoints.new(@aws, user)
   end

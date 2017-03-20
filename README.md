@@ -14,6 +14,47 @@
 [sixnines.io](http://www.sixnines.io) is a hosted service to validate
 and prove availability of your web service and sites.
 
+## DynamoDB Schema
+
+The `sn-endpoints` table contains all registered end-points:
+
+```
+fields:
+  login/H: GitHub login of the owner
+  uri/R: URI of the endpoint, e.g. "http://www.google.com/?q=hello"
+  active: "yes" if it's alive, "no" otherwise
+  created: Epoch time number of when it was added
+  hostname: Host name of the URI, e.g. "google.com"
+  pings: Total amount of ping's we've done so far
+  failures: Total amount of failed attempts
+  status: Either "up" or "down"
+  updated: Epoch time of the most recent update of this record
+  flipped: Epoch time of recent status change
+  expires: Epoch time when it has to be pinged again
+sn-endpoints/hostnames: (index)
+  active/H
+  hostname/R
+sn-endpoints/flips: (index)
+  active/H
+  flipped/R
+sn-endpoints/expires: (index)
+  active/H
+  expires/R
+```
+
+The `sn-pings` table contains all recent pings:
+
+```
+fields:
+  uri/H: URI of the endpoint we pinged
+  time/R: Epoch time of ping
+  local: IP address where we were pinging from
+  remote: IP address of the endpoint we reached
+  msec: How many milliseconds it took
+  code: HTTP response code (200 means success)
+  delete_on: TTL attribute for DynamoDB (when to delete this item)
+```
+
 ## How to contribute?
 
 Just submit a pull request. Make sure `rake` passes.

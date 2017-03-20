@@ -3,3 +3,32 @@
   availability. Just login, add one of your endpoints,
   and in a few minutes you get a detailed report.
   We ping all websites every minute.
+
+%form{:method=>'get', :action=>'/'}
+  %fieldset
+    %input{:type=>'text', :name=>'q'}
+    %button{:type=>'submit'}>Search
+
+- if !found.empty?
+  %p
+    Found by
+    ='"' + query + '":'
+  %ul
+    - found.each do |e|
+      %li
+        %code
+          =e.uri
+        =e.avt
+
+- if !flips.empty?
+  %p
+    Recent flips:
+  %ul
+    - flips.each do |e|
+      %li
+        %code
+          =e.uri
+        =e.avt
+        =e.status
+        =e.flipped
+

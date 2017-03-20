@@ -21,39 +21,31 @@
 # SOFTWARE.
 
 #
-# Single endpoint
+# Secure cookie
+# @todo #1:30min We are not encrypting cooking anyhow at the moment and
+#  this is not secure at all. Let's introduce some encryption mechanism
+#  with a secret key.
 #
-class Endpoint
-  attr_reader :uri
-  def initialize(aws, uri)
-    @aws = aws
-    @uri = uri
-  end
+class Cookie
+  # Closed
+  class Closed
+    def initialize(text)
+      @text = text
+    end
 
-  def avt
-    if e.pings.zero?
-      0
-    else
-      100 * (1 - e.failures / e.pings)
+    def to_s
+      @text
     end
   end
 
-  def ping
-    uri = URI.parse(uri)
-    http = Net::HTTP.new(uri.host, uri.port)
-    http.use_ssl = true
-    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-    req = Net::HTTP::Head.new(uri.request_uri)
-    req['User-Agent'] = 'sixnines.io'
-    start = Time.now
-    res = http.request(req)
-    {
-      uri: uri,
-      code: res.code,
-      time: Time.now,
-      msec: (Time.now - start) * 1000,
-      local: 'unknown',
-      remote: 'unknown'
-    }
+  # Open
+  class Open
+    def initialize(text)
+      @text = text
+    end
+
+    def to_s
+      @text
+    end
   end
 end
