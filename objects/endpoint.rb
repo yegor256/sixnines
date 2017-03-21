@@ -35,17 +35,18 @@ class Endpoint
   end
 
   def to_h
-    {
+    h = {
       uri: URI.parse(@item['uri']),
       hostname: @item['hostname'],
       failures: @item['failures'].to_i,
       pings: @item['pings'].to_i,
       up: @item['state'] == 'up',
-      created: Time.at(@item['created']),
-      updated: Time.at(@item['updated']),
-      flipped: Time.at(@item['flipped']),
-      expires: Time.at(@item['expires'])
+      created: Time.at(@item['created'])
     }
+    h[:updated] = Time.at(@item['updated']) if @item['updated']
+    h[:flipped] = Time.at(@item['flipped']) if @item['flipped']
+    h[:expires] = Time.at(@item['expires']) if @item['expires']
+    h
   end
 
   def ping
