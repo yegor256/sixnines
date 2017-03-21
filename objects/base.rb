@@ -37,7 +37,7 @@ class Base
         table_name: 'sn-endpoints',
         index_name: 'expires',
         select: 'ALL_ATTRIBUTES',
-        limit: 25,
+        limit: 10,
         expression_attribute_values: {
           ':h' => 'yes',
           ':r' => Time.now.to_i
@@ -62,7 +62,9 @@ class Base
                 }
               }
             }
-          end
+          end,
+          'sn-endpoints' => [
+          ]
         }
       )
     end

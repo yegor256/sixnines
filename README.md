@@ -1,4 +1,4 @@
-<img src="https://avatars2.githubusercontent.com/u/24456188" width="64px" height="64px"/>
+<img src="http://www.sixnines.io/images/logo.png" width="64px" height="64px"/>
 
 [![DevOps By Rultor.com](http://www.rultor.com/b/yegor256/sixnines)](http://www.rultor.com/p/yegor256/sixnines)
 [![We recommend RubyMine](http://img.teamed.io/rubymine-recommend.svg)](https://www.jetbrains.com/ruby/)
