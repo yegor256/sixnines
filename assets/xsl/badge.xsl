@@ -35,10 +35,10 @@
         <path fill="#555" d="M0 0h37v20H0z"/>
         <path d="M37 0h77v20H37z">
           <xsl:attribute name="fill">
-            <xsl:if test="state='UP'">
+            <xsl:if test="state='true'">
               <xsl:text>#4c1</xsl:text>
             </xsl:if>
-            <xsl:if test="state='DOWN'">
+            <xsl:if test="state='false'">
               <xsl:text>#d9644d</xsl:text>
             </xsl:if>
           </xsl:attribute>
@@ -46,8 +46,22 @@
         <path fill="url(#b)" d="M0 0h106v20H0z"/>
       </g>
       <g fill="#fff" text-anchor="middle" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="11">
-        <text x="19.5" y="15" fill="#010101" fill-opacity=".3">avlbl</text>
-        <text x="19.5" y="14">avlbl</text>
+        <text x="19.5" y="15" fill="#010101" fill-opacity=".3">
+          <xsl:if test="state='true'">
+            <xsl:text>up</xsl:text>
+          </xsl:if>
+          <xsl:if test="state='false'">
+            <xsl:text>down</xsl:text>
+          </xsl:if>
+        </text>
+        <text x="19.5" y="14">
+          <xsl:if test="state='true'">
+            <xsl:text>up</xsl:text>
+          </xsl:if>
+          <xsl:if test="state='false'">
+            <xsl:text>down</xsl:text>
+          </xsl:if>
+        </text>
         <text x="102.5" y="15" fill="#010101" fill-opacity=".3" text-anchor="end">
             <xsl:value-of select="availability"/>
         </text>

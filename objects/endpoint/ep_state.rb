@@ -28,8 +28,12 @@ class EpState
     @endpoint = endpoint
   end
 
+  def to_b
+    @endpoint.to_h[:up]
+  end
+
   def to_s
-    @endpoint.to_h[:up] ? 'UP' : 'DOWN'
+    to_b ? 'UP' : 'DOWN'
   end
 
   def to_html

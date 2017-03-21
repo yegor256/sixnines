@@ -36,17 +36,20 @@ class EpGraph
 
   def to_svg
     h = @endpoint.history
-    xorder = h.sort { |a, b| a[:time] <=> b[:time] }
-    yorder = h.sort { |a, b| a[:msec] <=> b[:msec] }
-    Nokogiri::XSLT(File.read('assets/xsl/graph.xsl')).transform(
-      Nokogiri::XML(
-        "<history \
+    xml = if h.empty?
+      '<history minx="0" maxx="0" miny="0" maxy="0"/>'
+    else
+      xorder = h.sort { |a, b| a[:time] <=> b[:time] }
+      yorder = h.sort { |a, b| a[:msec] <=> b[:msec] }
+      "<history \
 minx='#{xorder.first[:time].to_i}' maxx='#{xorder.last[:time].to_i}' \
 miny='#{yorder.first[:msec]}' maxy='#{xorder.last[:msec]}'>" +
-        @endpoint.history.map do |p|
-          "<p time='#{p[:time].to_i}' msec='#{p[:msec]}' code='#{p[:code]}'/>"
-        end.join('') + '</history>'
-      )
+      @endpoint.history.map do |p|
+        "<p time='#{p[:time].to_i}' msec='#{p[:msec]}' code='#{p[:code]}'/>"
+      end.join('') + '</history>'
+    end
+    Nokogiri::XSLT(File.read('assets/xsl/graph.xsl')).transform(
+      Nokogiri::XML(xml)
     ).to_s
   end
 end
