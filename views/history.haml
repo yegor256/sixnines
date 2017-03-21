@@ -1,0 +1,26 @@
+%p
+  =EpBadge.new(e).to_html
+
+%p
+  =EpGraph.new(e).to_html
+
+%p
+  ID:
+  %code
+    =e.to_h[:id]
+
+%p
+  URI:
+  =EpUri.new(e).to_html
+
+%p
+  State:
+  =EpState.new(e).to_html
+
+%p
+  Availability:
+  =EpAvailability.new(e).full
+
+%p
+  Next ping on:
+  =e.to_h[:expires]

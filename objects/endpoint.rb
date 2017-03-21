@@ -25,6 +25,7 @@ require_relative 'endpoint/ep_uri'
 require_relative 'endpoint/ep_state'
 require_relative 'endpoint/ep_availability'
 require_relative 'endpoint/ep_badge'
+require_relative 'endpoint/ep_graph'
 
 #
 # Single endpoint
@@ -50,6 +51,25 @@ class Endpoint
     h[:flipped] = Time.at(@item['flipped']) if @item['flipped']
     h[:expires] = Time.at(@item['expires']) if @item['expires']
     h
+  end
+
+  def history
+    @aws.query(
+      table_name: 'sn-pings',
+      select: 'SPECIFIC_ATTRIBUTES',
+      attributes_to_get: %w(time msec code),
+      limit: 1000,
+      expression_attribute_values: {
+        ':u' => @item['uri']
+      },
+      key_condition_expression: 'uri = :v'
+    ).items.map do |i|
+      {
+        time: Time.at(i['time']),
+        msec: i['msec'],
+        code: i['code']
+      }
+    end
   end
 
   def ping

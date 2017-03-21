@@ -20,32 +20,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  -->
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/2000/svg" version="1.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/2000/svg" version="2.0">
   <xsl:output method="xml" omit-xml-declaration="yes"/>
-  <xsl:template match="/endpoint">
-    <svg width="106" height="20">
-      <linearGradient id="b" x2="0" y2="100%">
-        <stop offset="0" stop-color="#bbb" stop-opacity=".1"/>
-        <stop offset="1" stop-opacity=".1"/>
-      </linearGradient>
-      <mask id="a">
-        <rect width="106" height="20" rx="3" fill="#fff"/>
-      </mask>
-      <g mask="url(#a)">
-        <path fill="#555" d="M0 0h37v20H0z"/>
-        <path fill="#4c1" d="M37 0h77v20H37z"/>
-        <path fill="url(#b)" d="M0 0h106v20H0z"/>
-      </g>
-      <g fill="#fff" text-anchor="middle" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="11">
-        <text x="19.5" y="15" fill="#010101" fill-opacity=".3">avlbl</text>
-        <text x="19.5" y="14">avlbl</text>
-        <text x="102.5" y="15" fill="#010101" fill-opacity=".3" text-anchor="end">
-            <xsl:value-of select="availability"/>
-        </text>
-        <text x="102.5" y="14" text-anchor="end">
-            <xsl:value-of select="availability"/>
-        </text>
-      </g>
+  <xsl:template match="/history">
+    <xsl:variable name="minx" select="@minx"/>
+    <xsl:variable name="maxx" select="@maxx"/>
+    <xsl:variable name="width" select="$maxx - $minx"/>
+    <xsl:variable name="miny" select="@miny"/>
+    <xsl:variable name="maxy" select="@maxy"/>
+    <xsl:variable name="height" select="$maxy - $miny"/>
+    <svg width="800" height="600">
+      <xsl:for-each select="p">
+        <circle r="2" stroke-width="0" fill="black"
+          cx="(@time - $minx) / $width * 800"
+          cy="(@msec - $miny) / $height * 600" />
+      </xsl:for-each>
     </svg>
   </xsl:template>
 </xsl:stylesheet>

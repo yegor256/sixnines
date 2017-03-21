@@ -106,10 +106,16 @@ get '/b/:id' do
   EpBadge.new(settings.base.take(params[:id])).to_svg
 end
 
-get '/b/:id' do
+get '/h/:id' do
+  haml :history, layout: :layout, locals: @locals.merge(
+    e: settings.base.take(params[:id])
+  )
+end
+
+get '/g/:id' do
   response.headers['Cache-Control'] = 'no-cache, private'
   content_type 'image/svg+xml'
-  EpBadge.new(settings.base.take(params[:id])).to_svg
+  EpGraph.new(settings.base.take(params[:id])).to_svg
 end
 
 get '/ping' do
