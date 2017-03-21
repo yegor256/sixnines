@@ -57,12 +57,15 @@ class Endpoint
     @aws.query(
       table_name: 'sn-pings',
       select: 'SPECIFIC_ATTRIBUTES',
-      attributes_to_get: %w(time msec code),
+      projection_expression: '#time, msec, code',
       limit: 1000,
+      expression_attribute_names: {
+        '#time' => 'time'
+      },
       expression_attribute_values: {
         ':u' => @item['uri']
       },
-      key_condition_expression: 'uri = :v'
+      key_condition_expression: 'uri = :u'
     ).items.map do |i|
       {
         time: Time.at(i['time']),

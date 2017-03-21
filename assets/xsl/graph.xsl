@@ -20,7 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  -->
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/2000/svg" version="2.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/2000/svg" version="1.0">
   <xsl:output method="xml" omit-xml-declaration="yes"/>
   <xsl:template match="/history">
     <xsl:variable name="minx" select="@minx"/>
@@ -29,11 +29,25 @@
     <xsl:variable name="miny" select="@miny"/>
     <xsl:variable name="maxy" select="@maxy"/>
     <xsl:variable name="height" select="$maxy - $miny"/>
-    <svg width="800" height="600">
+    <svg width="640" height="320">
+      <xsl:comment>
+        <xsl:text>minx=</xsl:text>
+        <xsl:value-of select="$minx"/>
+        <xsl:text>; maxx=</xsl:text>
+        <xsl:value-of select="$maxx"/>
+        <xsl:text>; width=</xsl:text>
+        <xsl:value-of select="$width"/>
+        <xsl:text>; miny=</xsl:text>
+        <xsl:value-of select="$miny"/>
+        <xsl:text>; maxy=</xsl:text>
+        <xsl:value-of select="$maxy"/>
+        <xsl:text>; height=</xsl:text>
+        <xsl:value-of select="$height"/>
+      </xsl:comment>
       <xsl:for-each select="p">
         <circle r="2" stroke-width="0" fill="black"
-          cx="(@time - $minx) / $width * 800"
-          cy="(@msec - $miny) / $height * 600" />
+          cx="{(@time - $minx) div $width * 640}"
+          cy="{(@msec - $miny) div $height * 320}" />
       </xsl:for-each>
     </svg>
   </xsl:template>

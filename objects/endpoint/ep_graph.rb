@@ -41,7 +41,7 @@ class EpGraph
     Nokogiri::XSLT(File.read('assets/xsl/graph.xsl')).transform(
       Nokogiri::XML(
         "<history \
-minx='#{xorder.first[:time]}' maxx='#{xorder.last[:time]}' \
+minx='#{xorder.first[:time].to_i}' maxx='#{xorder.last[:time].to_i}' \
 miny='#{yorder.first[:msec]}' maxy='#{xorder.last[:msec]}'>" +
         @endpoint.history.map do |p|
           "<p time='#{p[:time].to_i}' msec='#{p[:msec]}' code='#{p[:code]}'/>"
