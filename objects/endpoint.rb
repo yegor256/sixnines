@@ -38,6 +38,8 @@ class Endpoint
   def to_h
     h = {
       uri: URI.parse(@item['uri']),
+      login: @item['login'],
+      id: @item['id'],
       hostname: @item['hostname'],
       failures: @item['failures'].to_i,
       pings: @item['pings'].to_i,
