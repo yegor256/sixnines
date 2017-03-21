@@ -47,7 +47,16 @@
       <xsl:for-each select="p">
         <circle r="2" stroke-width="0" fill="black"
           cx="{(@time - $minx) div $width * 640}"
-          cy="{(@msec - $miny) div $height * 320}" />
+          cy="{(@msec - $miny) div $height * 320}">
+          <xsl:attribute name="fill">
+            <xsl:if test="@code='200'">
+              <xsl:text>#4c1</xsl:text>
+            </xsl:if>
+            <xsl:if test="@code!='200'">
+              <xsl:text>#d9644d</xsl:text>
+            </xsl:if>
+          </xsl:attribute>
+        </circle>
       </xsl:for-each>
     </svg>
   </xsl:template>
