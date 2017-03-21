@@ -52,6 +52,6 @@ class EpAvailability
 
   def full
     h = @endpoint.to_h
-    "#{short} (#{h[:failures]}/#{h[:pings]}"
+    "#{short} (#{h[:failures]}/#{h[:pings]})"
   end
 end

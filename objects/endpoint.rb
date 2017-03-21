@@ -37,8 +37,9 @@ class Endpoint
   def to_h
     {
       uri: URI.parse(@item['uri']),
-      failures: @item['failures'],
-      pings: @item['pings'],
+      hostname: @item['hostname'],
+      failures: @item['failures'].to_i,
+      pings: @item['pings'].to_i,
       up: @item['state'] == 'up',
       created: Time.at(@item['created']),
       updated: Time.at(@item['updated']),
