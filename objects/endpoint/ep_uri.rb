@@ -37,6 +37,6 @@ class EpUri
   end
 
   def to_html
-    "<code>#{self}</code>"
+    "<a href='#{self}'>#{@endpoint.to_h[:hostname]}</a>"
   end
 end

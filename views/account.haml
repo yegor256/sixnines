@@ -11,8 +11,8 @@
     Your endpoints are:
   - endpoints.each do |e|
     %p
-      =EpUri.new(uri).to_html
-      %a{:href=>'/a/del?endpoint=' + URI.escape(EpUri.new(uri).to_url)}
+      =EpUri.new(e).to_html
+      %a{:href=>'/a/del?endpoint=' + URI.escape(EpUri.new(e).to_url)}
         delete
     %ul
       %li
