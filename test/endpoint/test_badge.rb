@@ -14,36 +14,27 @@
 #
 # THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFINGEMENT. IN NO EVENT SHALL THE
 # AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-require 'nokogiri'
-require_relative 'ep_availability'
+require 'test/unit'
+require 'rack/test'
+require_relative '../../objects/endpoint/ep_badge'
 
-#
-# Badge of endpoint
-#
-class EpBadge
-  def initialize(endpoint)
-    @endpoint = endpoint
-  end
-
-  def to_html
-    h = @endpoint.to_h
-    "<a href='http://www.sixnines.io/h/#{h[:id]}'>\
-<img src='http://www.sixnines.io/b/#{h[:id]}'/></a>"
-  end
-
-  def to_svg
-    Nokogiri::XSLT(File.read('assets/xsl/badge.xsl')).transform(
-      Nokogiri::XML(
-        '<endpoint><availability>' +
-        EpAvailability.new(@endpoint).to_s +
-        '</availability></endpoint>'
-      )
-    ).to_s
+class BadgeTest < Test::Unit::TestCase
+  def test_renders_svg
+    endpoint = Class.new do
+      def to_h
+        {
+          id: '1234567',
+          pings: 100,
+          failures: 5
+        }
+      end
+    end.new
+    assert(EpBadge.new(endpoint).to_svg.include?('<svg'))
   end
 end
