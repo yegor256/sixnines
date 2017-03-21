@@ -41,6 +41,16 @@ class Endpoints
     )
   end
 
+  def del(uri)
+    @aws.delete_item(
+      table_name: 'sn-endpoints',
+      key: {
+        'login' => @user,
+        'uri' => uri
+      }
+    )
+  end
+
   def list
     @aws.query(
       table_name: 'sn-endpoints',
