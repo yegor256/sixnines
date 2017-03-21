@@ -107,6 +107,7 @@ get '/b/:id' do
 end
 
 get '/ping' do
+  content_type 'text/plain'
   settings.base.ping
 end
 
