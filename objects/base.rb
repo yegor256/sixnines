@@ -42,7 +42,8 @@ class Base
           ':h' => 'yes',
           ':r' => Time.now.to_i
         },
-        key_condition_expression: 'active=:h and expires < :r'
+        key_condition_expression:
+          'active=:h and (expires < :r or attribute_not_exists(expires))'
       ).items.map { |i| Endpoint.new(@aws, i['uri']) }
       break if list.empty?
       @aws.batch_write_item(
