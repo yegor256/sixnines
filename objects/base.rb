@@ -31,43 +31,17 @@ class Base
   end
 
   def ping
-    reports = []
-    loop do
-      list = @aws.query(
-        table_name: 'sn-endpoints',
-        index_name: 'expires',
-        select: 'ALL_ATTRIBUTES',
-        limit: 10,
-        expression_attribute_values: {
-          ':h' => 'yes',
-          ':r' => Time.now.to_i
-        },
-        key_condition_expression:
-          'active=:h and (expires < :r or attribute_not_exists(expires))'
-      ).items.map { |i| Endpoint.new(@aws, i['uri']) }
-      break if list.empty?
-      @aws.batch_write_item(
-        request_items: {
-          'sn-pings' => list.map(&:ping).map do |d|
-            reports << "#{d.uri}: #{d.code}/#{d.msec}"
-            {
-              put_request: {
-                item: {
-                  'uri' => d.uri,
-                  'time' => d.time.to_i,
-                  'local' => d.local,
-                  'remote' => d.remote,
-                  'msec' => d.msec,
-                  'code' => d.code,
-                  'delete_on' => Time.now + (24 * 60 * 60)
-                }
-              }
-            }
-          end
-        }
-      )
-    end
-    "Done (#{reports.size} endpoints):\n" + reports.join("\n")
+    "Done:\n" + @aws.query(
+      table_name: 'sn-endpoints',
+      index_name: 'expires',
+      select: 'ALL_ATTRIBUTES',
+      limit: 10,
+      expression_attribute_values: {
+        ':h' => 'yes',
+        ':r' => Time.now.to_i
+      },
+      key_condition_expression: 'active=:h and expires < :r'
+    ).items.map { |i| Endpoint.new(@aws, i) }.map(&:ping).join("\n")
   end
 
   def find(query)
@@ -81,7 +55,7 @@ class Base
         ':r' => query
       },
       key_condition_expression: 'active=:h and begins_with(hostname,:r)'
-    ).items.map { |i| Endpoint.new(@aws, i['uri']) }
+    ).items.map { |i| Endpoint.new(@aws, i) }
   end
 
   def flips
@@ -94,7 +68,7 @@ class Base
         ':h' => 'yes'
       },
       key_condition_expression: 'active=:h'
-    ).items.map { |i| Endpoint.new(@aws, i['uri']) }
+    ).items.map { |i| Endpoint.new(@aws, i) }
   end
 
   def endpoints(user)

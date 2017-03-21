@@ -27,9 +27,9 @@ fields:
   hostname: Host name of the URI, e.g. "google.com"
   pings: Total amount of ping's we've done so far
   failures: Total amount of failed attempts
-  status: Either "up" or "down"
+  state: Either "up" or "down"
   updated: Epoch time of the most recent update of this record
-  flipped: Epoch time of recent status change
+  flipped: Epoch time of recent state change
   expires: Epoch time when it has to be pinged again
 sn-endpoints/hostnames: (index)
   active/H
