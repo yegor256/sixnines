@@ -41,7 +41,7 @@ class EpBadge
     Nokogiri::XSLT(File.read('assets/xsl/badge.xsl')).transform(
       Nokogiri::XML(
         '<endpoint><availability>' +
-        EpAvailability.new(@endpoint).to_s +
+        EpAvailability.new(@endpoint).short +
         '</availability></endpoint>'
       )
     ).to_s
