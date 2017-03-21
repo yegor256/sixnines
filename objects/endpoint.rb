@@ -87,7 +87,15 @@ class Endpoint
     req = Net::HTTP::Head.new(h[:uri].request_uri)
     req['User-Agent'] = 'sixnines.io'
     start = Time.now
-    res = http.request(req)
+    begin
+      res = http.request(req)
+    rescue
+      res = Class.new do
+        def code
+          500
+        end
+      end.new
+    end
     puts "ping #{res.code}: #{h[:uri]}"
     @aws.put_item(
       table_name: 'sn-pings',
