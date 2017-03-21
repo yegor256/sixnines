@@ -21,6 +21,9 @@
 # SOFTWARE.
 
 require 'uri'
+require_relative 'endpoint/ep_uri'
+require_relative 'endpoint/ep_state'
+require_relative 'endpoint/ep_availability'
 
 #
 # Single endpoint
@@ -31,27 +34,17 @@ class Endpoint
     @item = item
   end
 
-  def uri
-    URI.parse(@item['uri'])
-  end
-
-  def state
-    @item['state']
-  end
-
-  def flipped
-    Time.at(@item['flipped'])
-  end
-
-  def avt
-    format(
-      '%.04f',
-      if @item['pings'].zero?
-        0
-      else
-        100 * (1 - @item['failures'] / @item['pings'])
-      end
-    )
+  def to_h
+    {
+      uri: URI.parse(@item['uri']),
+      failures: @item['failures'],
+      pings: @item['pings'],
+      up: @item['state'] == 'up',
+      created: Time.at(@item['created']),
+      updated: Time.at(@item['updated']),
+      flipped: Time.at(@item['flipped']),
+      expires: Time.at(@item['expires'])
+    }
   end
 
   def ping

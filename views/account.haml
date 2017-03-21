@@ -9,13 +9,18 @@
 - else
   %p
     Your endpoints are:
-  %ul
-    - endpoints.each do |e|
+  - endpoints.each do |e|
+    %p
+      =EpUri.new(uri).to_html
+      %a{:href=>'/a/del?endpoint=' + URI.escape(EpUri.new(uri).to_url)}
+        delete
+    %ul
       %li
-        %code
-          =e.uri
-        =e.avt + '%'
-        =e.state
-        %a{:href=>'/a/del?endpoint=' + URI.escape(e.uri.to_s)}
-          delete
-
+        Availability:
+        =EpAvailability.new(e).full
+      %li
+        State:
+        =EpState.new(e).to_html
+      %li
+        Next ping on:
+        =e.to_h[:expires]

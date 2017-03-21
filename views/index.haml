@@ -20,9 +20,8 @@
     %ul
       - found.each do |e|
         %li
-          %code
-            =e.uri
-          =e.avt + '%'
+          =EpUri.new(e).to_html
+          =EpAvailability.new(e).short
 
 - if !flips.empty?
   %p
@@ -30,9 +29,8 @@
   %ul
     - flips.each do |e|
       %li
-        %code
-          =e.uri
-        =e.avt + '%'
-        =e.state
-        =e.flipped
+        =EpUri.new(e).to_html
+        =EpAvailability.new(e).short
+        =EpState.new(e).to_html
+        =e.to_h['flipped']
 
