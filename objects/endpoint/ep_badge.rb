@@ -42,7 +42,7 @@ class EpBadge
       Nokogiri::XML(
         "<endpoint>\
           <availability>#{EpAvailability.new(@endpoint).short}</availability>\
-          <state>#{EpState.new(@endpoint).to_s}</state>\
+          <state>#{EpState.new(@endpoint)}</state>\
         </endpoint>"
       )
     ).to_s
