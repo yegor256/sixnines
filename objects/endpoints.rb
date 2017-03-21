@@ -39,7 +39,7 @@ class Endpoints
         'uri' => uri,
         'active' => 'yes',
         'created' => Time.now.to_i,
-        'hostname' => URI.parse(uri).host,
+        'hostname' => URI.parse(uri).host.gsub(/^www\./, ''),
         'pings' => 0,
         'failures' => 0,
         'expires' => 0
