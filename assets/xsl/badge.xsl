@@ -34,8 +34,8 @@
             <rect width="106" height="20" rx="3" fill="#fff"/>
           </mask>
           <g mask="url(#a)">
-            <path fill="#555" d="M0 0h47v20H0z"/>
-            <path fill="#4c1" d="M47 0h67v20H47z"/>
+            <path fill="#555" d="M0 0h37v20H0z"/>
+            <path fill="#4c1" d="M37 0h77v20H37z"/>
             <path fill="url(#b)" d="M0 0h106v20H0z"/>
           </g>
           <g fill="#fff" text-anchor="middle" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="11">
