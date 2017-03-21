@@ -7,32 +7,44 @@
     %meta{:name => 'description', :content => 'Hosted web site availability checker'}
     %link{:type => 'text/css', :href => url('css/main.css'), :rel => 'stylesheet'}
     %link{:rel => 'shortcut icon', :href => '/images/favicon.png'}
+    %link{:rel => 'stylesheet', :href => 'http://yegor256.github.io/tacit/tacit.min.css'}
   %body
-    %p
-      %a{:href => '/'}
-        %img.logo{:src => '/images/logo.svg'}
-    %p
-      - if defined? user
-        ='@' + user
-        |
-        %a{:href=>'/a'}>account
-        |
-        %a{:href=>'/logout'}>exit
-      - else
-        %a{:href=>login_link}>login
-    =yield
-    %p
-      Version
-      = succeed "." do
-        =ver
-    %p
-      It is open source, please
-      = succeed "." do
-        %a{:href => 'https://github.com/yegor256/sixnines'} contribute
-    %p
-      Made by
-      = succeed "." do
-        %a{:href => 'http://www.yegor256.com'} @yegor256
+    %section
+      %header
+        %nav
+          %ul
+            %li
+              %a{:href => '/'}
+                %img.logo{:src => '/images/logo.svg'}
+        %nav
+          %ul
+            - if defined? user
+              %li
+                '@' + user
+              %li
+                %a{:href=>'/a'}>account
+              %li
+                %a{:href=>'/logout'}>exit
+            - else
+              %li
+                %a{:href=>login_link}>login
+      %article
+        =yield
+      %footer
+        %nav
+          %ul
+            %li
+              =ver
+        %nav
+          %ul
+            %li
+              %a{:href=>'https://github.com/yegor256/sixnines/stargazers'}
+                %img{:src=>'https://img.shields.io/github/stars/yegor256/sixnines.svg?style=flat-square'}
+        %nav
+          %ul
+            %li
+              Made by
+              %a{:href => 'http://www.yegor256.com'} @yegor256
     :javascript
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

@@ -63,9 +63,7 @@ class Base
                 }
               }
             }
-          end,
-          'sn-endpoints' => [
-          ]
+          end
         }
       )
     end
