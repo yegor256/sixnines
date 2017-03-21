@@ -33,7 +33,7 @@ class Cookie
       @text = text
     end
 
-    def to_str
+    def to_s
       @text
     end
   end
@@ -44,7 +44,7 @@ class Cookie
       @text = text
     end
 
-    def to_str
+    def to_s
       @text
     end
   end
