@@ -31,7 +31,8 @@ class EpGraph
   end
 
   def to_html
-    "<img src='http://www.sixnines.io/g/#{@endpoint.to_h[:id]}'/>"
+    "<img src='http://www.sixnines.io/g/#{@endpoint.to_h[:id]}' \
+width='640px' height='320px'/>"
   end
 
   def to_svg
