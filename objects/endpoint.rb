@@ -79,6 +79,14 @@ class Endpoint
       }
     )
     up = res.code == '200'
+    update = [
+      'updated = :t',
+      'expires = :e',
+      'pings = pings + :o',
+      '#state = :s'
+    ]
+    update << 'failures = failures + :o' unless up
+    update << 'flipped = :t' unless up == h[:up]
     @aws.update_item(
       table_name: 'sn-endpoints',
       key: {
@@ -94,9 +102,7 @@ class Endpoint
         ':t' => Time.now.to_i,
         ':e' => (Time.now + (5 * 60)).to_i, # ping again in 5 minutes
       },
-      update_expression: 'set updated = :t, expires = :e, pings = pings + :o' +
-        (up ? '' : ', failures = failures + :o') +
-        (up == h[:up] ? '' : ', flipped = :t, #state = :s')
+      update_expression: 'set ' + update.join(', ')
     )
     "#{h[:uri]}: #{res.code}"
   end
