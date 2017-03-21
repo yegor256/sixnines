@@ -14,8 +14,8 @@
       %li
         %code
           =e.uri
-        =e.avt
+        =e.avt + '%'
         =e.state
-        %a{:href=>'/a/del?endpoint=' + URI.escape(e.uri)}
+        %a{:href=>'/a/del?endpoint=' + URI.escape(e.uri.to_s)}
           delete
 
