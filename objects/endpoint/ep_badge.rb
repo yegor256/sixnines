@@ -20,54 +20,22 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-require 'digest/md5'
-require_relative 'endpoint'
+require 'nokogiri'
+require_relative 'ep_availability'
 
 #
-# Endpoints of a user
+# Badge of endpoint
 #
-class Endpoints
-  def initialize(aws, user)
-    @aws = aws
-    @user = user
+class EpBadge
+  def initialize(endpoint)
+    @endpoint = endpoint
   end
 
-  def add(uri)
-    @aws.put_item(
-      table_name: 'sn-endpoints',
-      item: {
-        'login' => @user,
-        'uri' => uri,
-        'id' => Digest::MD5.hexdigest(uri)[0, 8],
-        'active' => 'yes',
-        'created' => Time.now.to_i,
-        'hostname' => URI.parse(uri).host.gsub(/^www\./, ''),
-        'pings' => 0,
-        'failures' => 0,
-        'expires' => 0
-      }
-    )
-  end
-
-  def del(uri)
-    @aws.delete_item(
-      table_name: 'sn-endpoints',
-      key: {
-        'login' => @user,
-        'uri' => uri
-      }
-    )
-  end
-
-  def list
-    @aws.query(
-      table_name: 'sn-endpoints',
-      select: 'ALL_ATTRIBUTES',
-      limit: 50,
-      expression_attribute_values: {
-        ':v' => @user
-      },
-      key_condition_expression: 'login = :v'
-    ).items.map { |i| Endpoint.new(@aws, i) }
+  def to_svg
+    Nokogiri::XSLT(File.read('assets/xsl/badge.xsl')).transform(
+      '<endpoint><availability>' +
+      EpAvailability.new(@endpoint).to_s +
+      '</availability></endpoint>'
+    ).to_s
   end
 end

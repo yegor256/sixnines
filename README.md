@@ -22,6 +22,7 @@ The `sn-endpoints` table contains all registered end-points:
 fields:
   login/H: GitHub login of the owner
   uri/R: URI of the endpoint, e.g. "http://www.google.com/?q=hello"
+  id: Unique ID of the endpoint
   active: "yes" if it's alive, "no" otherwise
   created: Epoch time number of when it was added
   hostname: Host name of the URI, e.g. "google.com"
@@ -31,6 +32,8 @@ fields:
   updated: Epoch time of the most recent update of this record
   flipped: Epoch time of recent state change
   expires: Epoch time when it has to be pinged again
+sn-endpoints/unique: (index)
+  id/H
 sn-endpoints/hostnames: (index)
   active/H
   hostname/R

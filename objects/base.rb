@@ -58,6 +58,22 @@ class Base
     ).items.map { |i| Endpoint.new(@aws, i) }
   end
 
+  def take(id)
+    Endpoint.new(
+      @aws,
+      @aws.query(
+        table_name: 'sn-endpoints',
+        index_name: 'unique',
+        select: 'ALL_ATTRIBUTES',
+        limit: 1,
+        expression_attribute_values: {
+          ':h' => id
+        },
+        key_condition_expression: 'id=:h'
+      ).items[0]
+    )
+  end
+
   def flips
     @aws.query(
       table_name: 'sn-endpoints',

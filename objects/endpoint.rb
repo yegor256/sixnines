@@ -24,6 +24,7 @@ require 'uri'
 require_relative 'endpoint/ep_uri'
 require_relative 'endpoint/ep_state'
 require_relative 'endpoint/ep_availability'
+require_relative 'endpoint/ep_badge'
 
 #
 # Single endpoint
@@ -50,23 +51,23 @@ class Endpoint
   end
 
   def ping
-    u = uri
-    http = Net::HTTP.new(u.host, u.port)
-    if u.scheme == 'https'
+    h = to_h
+    http = Net::HTTP.new(h[:uri].host, h[:uri].port)
+    if h[:uri].scheme == 'https'
       http.use_ssl = true
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
     end
     http.read_timeout = 5
     http.continue_timeout = 5
-    req = Net::HTTP::Head.new(u.request_uri)
+    req = Net::HTTP::Head.new(h[:uri].request_uri)
     req['User-Agent'] = 'sixnines.io'
     start = Time.now
     res = http.request(req)
-    puts "ping #{res.code}: #{u}"
+    puts "ping #{res.code}: #{h[:uri]}"
     @aws.put_item(
       table_name: 'sn-pings',
       item: {
-        uri: u.to_s,
+        uri: h[:uri].to_s,
         code: res.code.to_i,
         time: Time.now.to_i,
         msec: ((Time.now - start) * 1000).to_i,
@@ -75,26 +76,26 @@ class Endpoint
         delete_on: (Time.now + (24 * 60 * 60)).to_i
       }
     )
-    stt = res.code == '200' ? 'up' : 'down'
+    up = res.code == '200'
     @aws.update_item(
       table_name: 'sn-endpoints',
       key: {
-        'login' => @item['login'],
-        'uri' => u.to_s
+        'login' => h[:login],
+        'uri' => h[:uri].to_s
       },
       expression_attribute_names: {
         '#state' => 'state'
       },
       expression_attribute_values: {
-        ':s' => stt,
+        ':s' => up ? 'up' : 'down',
         ':o' => 1,
         ':t' => Time.now.to_i,
         ':e' => (Time.now + (5 * 60)).to_i, # ping again in 5 minutes
       },
       update_expression: 'set updated = :t, expires = :e, pings = pings + :o' +
-        (stt == 'up' ? '' : ', failures = failures + :o') +
-        (stt == state ? '' : ', flipped = :t, #state = :s')
+        (up ? '' : ', failures = failures + :o') +
+        (up == h[:up] ? '' : ', flipped = :t, #state = :s')
     )
-    "#{u}: #{res.code}"
+    "#{h[:uri]}: #{res.code}"
   end
 end
