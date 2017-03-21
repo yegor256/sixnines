@@ -16,6 +16,9 @@
         delete
     %ul
       %li
+        Badge:
+        =EpBadge.new(e).to_html
+      %li
         Availability:
         =EpAvailability.new(e).full
       %li
