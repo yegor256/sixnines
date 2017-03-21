@@ -72,7 +72,9 @@ before '/*' do
     ver: VERSION,
     login_link: settings.oauth.login_uri
   }
-  @locals[:user] = Cookie::Closed.new(cookies[:sixnines]) if cookies[:sixnines]
+  if cookies[:sixnines]
+    @locals[:user] = Cookie::Closed.new(cookies[:sixnines].to_s)
+  end
 end
 
 before '/a/*' do
