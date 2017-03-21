@@ -36,7 +36,13 @@ class Endpoints
       table_name: 'sn-endpoints',
       item: {
         'login' => @user,
-        'uri' => uri
+        'uri' => uri,
+        'active' => 'yes',
+        'created' => Time.now.to_i,
+        'hostname' => URI.parse(uri).host,
+        'pings' => 0,
+        'failures' => 0,
+        'expires' => 0
       }
     )
   end

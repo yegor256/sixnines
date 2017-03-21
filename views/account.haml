@@ -1,6 +1,6 @@
 %form{:method=>'post', :action=>'/a/add'}
   %fieldset
-    %input{:type=>'text', :name=>'endpoint'}
+    %input{:type=>'text', :name=>'endpoint', :size=>'50', :placeholder=>'URI of a new endpoint'}
     %button{:type=>'submit'}>Add
 
 - if endpoints.empty?
