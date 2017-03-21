@@ -26,39 +26,52 @@ require 'uri'
 # Single endpoint
 #
 class Endpoint
-  attr_reader :uri, :state
   def initialize(aws, item)
     @aws = aws
-    @uri = URI.parse(item['uri'])
-    @login = item['login']
-    @state = item['state']
+    @item = item
+  end
+
+  def uri
+    URI.parse(@item['uri'])
+  end
+
+  def state
+    @item['state']
+  end
+
+  def flipped
+    Time.at(@item['flipped'])
   end
 
   def avt
-    if e.pings.zero?
-      0
-    else
-      100 * (1 - e.failures / e.pings)
-    end
+    format(
+      '%.04f',
+      if @item['pings'].zero?
+        0
+      else
+        100 * (1 - @item['failures'] / @item['pings'])
+      end
+    )
   end
 
   def ping
-    http = Net::HTTP.new(@uri.host, @uri.port)
-    if @uri.scheme == 'https'
+    u = uri
+    http = Net::HTTP.new(u.host, u.port)
+    if u.scheme == 'https'
       http.use_ssl = true
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
     end
     http.read_timeout = 5
     http.continue_timeout = 5
-    req = Net::HTTP::Head.new(@uri.request_uri)
+    req = Net::HTTP::Head.new(u.request_uri)
     req['User-Agent'] = 'sixnines.io'
     start = Time.now
     res = http.request(req)
-    puts "ping #{res.code}: #{@uri}"
+    puts "ping #{res.code}: #{u}"
     @aws.put_item(
       table_name: 'sn-pings',
       item: {
-        uri: @uri.to_s,
+        uri: u.to_s,
         code: res.code.to_i,
         time: Time.now.to_i,
         msec: ((Time.now - start) * 1000).to_i,
@@ -67,26 +80,26 @@ class Endpoint
         delete_on: (Time.now + (24 * 60 * 60)).to_i
       }
     )
-    state = res.code == '200' ? 'up' : 'down'
+    stt = res.code == '200' ? 'up' : 'down'
     @aws.update_item(
       table_name: 'sn-endpoints',
       key: {
-        'login' => @login,
-        'uri' => @uri.to_s
+        'login' => @item['login'],
+        'uri' => u.to_s
       },
       expression_attribute_names: {
         '#state' => 'state'
       },
       expression_attribute_values: {
-        ':s' => state,
+        ':s' => stt,
         ':o' => 1,
         ':t' => Time.now.to_i,
         ':e' => (Time.now + (5 * 60)).to_i, # ping again in 5 minutes
       },
       update_expression: 'set updated = :t, expires = :e, pings = pings + :o' +
-        (state == 'up' ? '' : ', failures = failures + :o') +
-        (state == @state ? '' : ', flipped = :t, #state = :s')
+        (stt == 'up' ? '' : ', failures = failures + :o') +
+        (stt == state ? '' : ', flipped = :t, #state = :s')
     )
-    "#{@uri}: #{res.code}"
+    "#{u}: #{res.code}"
   end
 end
