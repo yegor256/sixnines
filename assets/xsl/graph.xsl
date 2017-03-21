@@ -29,7 +29,9 @@
     <xsl:variable name="miny" select="@miny"/>
     <xsl:variable name="maxy" select="@maxy"/>
     <xsl:variable name="height" select="$maxy - $miny"/>
-    <svg width="640" height="320">
+    <xsl:variable name="W" select="640"/>
+    <xsl:variable name="H" select="320"/>
+    <svg width="{$W}" height="{$H}">
       <xsl:comment>
         <xsl:text>minx=</xsl:text>
         <xsl:value-of select="$minx"/>
@@ -44,15 +46,16 @@
         <xsl:text>; height=</xsl:text>
         <xsl:value-of select="$height"/>
       </xsl:comment>
+      <rect width="{$W}" height="{$H}" style="fill:rgb(255,255,255);stroke-width:1;stroke:rgb(20,20,20)" />
       <xsl:for-each select="p">
-        <circle r="2" stroke-width="0" fill="black"
-          cx="{(@time - $minx) div $width * 640}"
-          cy="{(@msec - $miny) div $height * 320}">
+        <circle r="2" stroke-width="0"
+          cx="{(@time - $minx) div $width * $W}"
+          cy="{(@msec - $miny) div $height * $H}">
           <xsl:attribute name="fill">
-            <xsl:if test="@code='200'">
+            <xsl:if test="@code=200">
               <xsl:text>#4c1</xsl:text>
             </xsl:if>
-            <xsl:if test="@code!='200'">
+            <xsl:if test="@code!=200">
               <xsl:text>#d9644d</xsl:text>
             </xsl:if>
           </xsl:attribute>
