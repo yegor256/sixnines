@@ -33,7 +33,16 @@
       </mask>
       <g mask="url(#a)">
         <path fill="#555" d="M0 0h37v20H0z"/>
-        <path fill="#4c1" d="M37 0h77v20H37z"/>
+        <path d="M37 0h77v20H37z">
+          <xsl:attribute name="fill">
+            <xsl:if test="state='UP'">
+              <xsl:text>#4c1</xsl:text>
+            </xsl:if>
+            <xsl:if test="state='DOWN'">
+              <xsl:text>#d9644d</xsl:text>
+            </xsl:if>
+          </xsl:attribute>
+        </path>
         <path fill="url(#b)" d="M0 0h106v20H0z"/>
       </g>
       <g fill="#fff" text-anchor="middle" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="11">

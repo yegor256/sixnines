@@ -29,13 +29,11 @@ class EpState
   end
 
   def to_s
-    h = @endpoint.to_h
-    h[:up] ? 'UP' : 'DOWN'
+    @endpoint.to_h[:up] ? 'UP' : 'DOWN'
   end
 
   def to_html
-    h = @endpoint.to_h
-    color = h[:up] ? 'green' : 'red'
+    color = @endpoint.to_h[:up] ? 'green' : 'red'
     "<span style='color:#{color}'>#{self}</span>"
   end
 end

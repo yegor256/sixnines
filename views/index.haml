@@ -21,7 +21,7 @@
       - found.each do |e|
         %li
           =EpUri.new(e).to_html
-          =EpAvailability.new(e).short
+          =EpBadge.new(e).to_html
 
 - if !flips.empty?
   %p
@@ -30,7 +30,7 @@
     - flips.each do |e|
       %li
         =EpUri.new(e).to_html
-        =EpAvailability.new(e).short
+        =EpBadge.new(e).to_html
         =EpState.new(e).to_html
         =e.to_h['flipped']
 

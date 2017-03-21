@@ -40,9 +40,10 @@ class EpBadge
   def to_svg
     Nokogiri::XSLT(File.read('assets/xsl/badge.xsl')).transform(
       Nokogiri::XML(
-        '<endpoint><availability>' +
-        EpAvailability.new(@endpoint).short +
-        '</availability></endpoint>'
+        "<endpoint>\
+          <availability>#{EpAvailability.new(@endpoint).short}</availability>\
+          <state>#{EpState.new(@endpoint).to_s}</state>\
+        </endpoint>"
       )
     ).to_s
   end
