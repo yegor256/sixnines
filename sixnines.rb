@@ -123,7 +123,7 @@ post '/a/add' do
   redirect to('/a')
 end
 
-post '/a/del' do
+get '/a/del' do
   settings.base.endpoints(@locals[:user]).del(params[:endpoint])
   redirect to('/a')
 end
