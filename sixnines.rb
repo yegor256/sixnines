@@ -130,12 +130,14 @@ end
 
 get '/ping' do
   content_type 'text/plain'
-  f = open('/tmp/sixnines.lck', 'w')
-  txt = if f.flock(File::LOCK_NB | File::LOCK_EX)
-    settings.base.ping
-  else
-    status(403)
-    'Locked, try again a bit later'
+  txt = ''
+  open('/tmp/sixnines.lock', 'w') do |f|
+    txt << if f.flock(File::LOCK_NB | File::LOCK_EX)
+      settings.base.ping
+    else
+      status(403)
+      'Locked, try again a bit later'
+    end
   end
   status(204) if txt.empty?
   Process.detach(
