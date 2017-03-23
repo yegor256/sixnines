@@ -10,7 +10,7 @@
         $('#form').submit();
       }
     });
-    $('#submit').on('click', function (e) {
+    $('#go').on('click', function (e) {
       if ($("#form")[0].checkValidity()) {
         handler.open({
           name: 'One-time charge',
@@ -29,7 +29,7 @@
   %input#endpoint{:type=>'text', :name=>'endpoint', :size=>'50', :placeholder=>'URI of a new endpoint'}
   %input#stripeToken{type: 'hidden', name: 'stripeToken'}
   %input#stripeEmail{type: 'hidden', name: 'stripeEmail'}
-  %input#submit{:type=>'submit', :value=>'Add ($4.95)'}
+  %input#go{:type=>'submit', :value=>'Add ($4.95)'}
 
 - if endpoints.empty?
   %p
