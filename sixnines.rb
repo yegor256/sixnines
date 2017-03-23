@@ -143,7 +143,7 @@ get '/ping' do
   Process.detach(
     fork do
       sleep(10)
-      Net::HTTP.get_response(URI.parse('http://www.sixnines.io/ping'))
+      Net::HTTP.get_response(URI.parse('http://www.sixnines.io/ping?fork'))
     end
   )
   txt
