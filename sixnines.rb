@@ -137,7 +137,7 @@ get '/ping' do
       'busy'
     end
   end
-  `sleep 5; curl --silent http://www.sixnines.io/ping`
+  `(sleep 5; curl --silent http://www.sixnines.io/ping) &`
   txt
 end
 
