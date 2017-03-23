@@ -136,18 +136,18 @@ get '/ping' do
       settings.base.ping
     else
       status(403)
-      if Random.rand(10) < 2
-        Process.detach(
-          fork do
-            sleep(10)
-            Net::HTTP.get_response(URI.parse('http://www.sixnines.io/ping?fork'))
-          end
-        )
-      end
       'Locked, try again a bit later'
     end
   end
-  status(204) if txt.empty?
+  if txt.empty?
+    status(204)
+    Process.detach(
+      fork do
+        sleep(10)
+        Net::HTTP.get_response(URI.parse('http://www.sixnines.io/ping?fork'))
+      end
+    )
+  end
   txt
 end
 
