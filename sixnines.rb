@@ -131,7 +131,7 @@ end
 get '/ping' do
   content_type 'text/plain'
   txt = open('/tmp/sixnines.lck', 'w') do |f|
-    if flock(f, File::LOCK_NB | File::LOCK_EX)
+    if f.flock(File::LOCK_NB | File::LOCK_EX)
       settings.base.ping
     else
       'busy'
