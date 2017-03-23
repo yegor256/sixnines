@@ -59,6 +59,7 @@ class Endpoint
       select: 'SPECIFIC_ATTRIBUTES',
       projection_expression: '#time, msec, code',
       limit: 1000,
+      scan_index_forward: false,
       expression_attribute_names: {
         '#time' => 'time'
       },
