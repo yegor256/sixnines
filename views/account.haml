@@ -1,3 +1,10 @@
+%form#form{:method=>'post', :action=>'/a/add'}
+  %fieldset
+    %input#endpoint{:type=>'text', :name=>'endpoint', :size=>'50', :placeholder=>'URI of a new endpoint'}
+    %input#stripeToken{type: 'hidden', name: 'stripeToken'}
+    %input#stripeEmail{type: 'hidden', name: 'stripeEmail'}
+    %button#submit{:type=>'submit'}>Add ($4.95)
+
 :javascript
   var handler = StripeCheckout.configure({
     key: 'pk_test_XSWDZtDYNmlFfav5SnLtOhPl',
@@ -22,13 +29,6 @@
   $(window).on('popstate', function () {
     handler.close();
   });
-
-%form#form{:method=>'post', :action=>'/a/add'}
-  %fieldset
-    %input#endpoint{:type=>'text', :name=>'endpoint', :size=>'50', :placeholder=>'URI of a new endpoint'}
-    %input#stripeToken{type: 'hidden', name: 'stripeToken'}
-    %input#stripeEmail{type: 'hidden', name: 'stripeEmail'}
-    %button#submit{:type=>'submit'}>Add ($4.95)
 
 - if endpoints.empty?
   %p
