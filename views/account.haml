@@ -39,7 +39,7 @@
     %p
       =EpUri.new(e).to_html
       %a{:href=>'/a/del?endpoint=' + URI.escape(EpUri.new(e).to_url),
-        :onclick=>'return confirm("Attention! Be aware that you won&apos;t be able to restore it and to add a new one you will have to pay another $4.95!");'}
+        :onclick=>'return confirm("Attention! Be aware that you will not be able to restore it and to add a new one you will have to pay another $4.95!");'}
         delete
     %ul
       %li
