@@ -79,7 +79,8 @@ before '/*' do
       @locals[:user] = Cookie::Closed.new(
         cookies[:sixnines], settings.config['cookie_secret']
       ).to_s
-    rescue OpenSSL::Cipher::CipherError => e
+    rescue OpenSSL::Cipher::CipherError => _
+      @locals.delete(:user)
     end
   end
 end
