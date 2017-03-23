@@ -31,7 +31,7 @@ class EpGraph
   end
 
   def to_html
-    "<img src='/g/#{@endpoint.to_h[:id]}' width='640px' height='320px'/>"
+    "<img src='/g/#{@endpoint.to_h[:id]}' width='640px' height='160px'/>"
   end
 
   def to_svg
