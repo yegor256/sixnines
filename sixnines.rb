@@ -130,7 +130,15 @@ end
 
 get '/ping' do
   content_type 'text/plain'
-  settings.base.ping
+  open('/tmp/sixnines.lck', 'w') do |f|
+    txt = if flock(f, File::LOCK_NB | File::LOCK_EX)
+      settings.base.ping
+    else
+      'busy'
+    end
+  end
+  `sleep 5; curl --silent http://www.sixnines.io/ping`
+  txt
 end
 
 get '/robots.txt' do
