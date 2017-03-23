@@ -70,8 +70,8 @@ class Endpoint
     ).items.map do |i|
       {
         time: Time.at(i['time']),
-        msec: i['msec'],
-        code: i['code']
+        msec: i['msec'].to_i,
+        code: i['code'].to_i
       }
     end
   end

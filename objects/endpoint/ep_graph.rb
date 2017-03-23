@@ -31,8 +31,7 @@ class EpGraph
   end
 
   def to_html
-    "<img src='http://www.sixnines.io/g/#{@endpoint.to_h[:id]}' \
-width='640px' height='320px'/>"
+    "<img src='/g/#{@endpoint.to_h[:id]}' width='640px' height='320px'/>"
   end
 
   def to_svg
@@ -44,7 +43,7 @@ width='640px' height='320px'/>"
       yorder = h.sort { |a, b| a[:msec] <=> b[:msec] }
       "<history \
 minx='#{xorder.first[:time].to_i}' maxx='#{xorder.last[:time].to_i}' \
-miny='#{yorder.first[:msec]}' maxy='#{xorder.last[:msec]}'>" +
+miny='#{yorder.first[:msec]}' maxy='#{yorder.last[:msec]}'>" +
         @endpoint.history.map do |p|
           "<p time='#{p[:time].to_i}' msec='#{p[:msec]}' code='#{p[:code]}'/>"
         end.join('') + '</history>'

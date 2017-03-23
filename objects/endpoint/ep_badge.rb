@@ -33,8 +33,7 @@ class EpBadge
 
   def to_html
     h = @endpoint.to_h
-    "<a href='http://www.sixnines.io/h/#{h[:id]}'>\
-<img src='http://www.sixnines.io/b/#{h[:id]}'/></a>"
+    "<a href='/h/#{h[:id]}'><img src='http://www.sixnines.io/b/#{h[:id]}'/></a>"
   end
 
   def to_svg
