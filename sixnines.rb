@@ -75,9 +75,12 @@ before '/*' do
     login_link: settings.oauth.login_uri
   }
   if cookies[:sixnines]
-    @locals[:user] = Cookie::Closed.new(
-      cookies[:sixnines], settings.config['cookie_secret']
-    ).to_s
+    begin
+      @locals[:user] = Cookie::Closed.new(
+        cookies[:sixnines], settings.config['cookie_secret']
+      ).to_s
+    rescue OpenSSL::Cipher::CipherError => e
+    end
   end
 end
 
