@@ -39,6 +39,7 @@ require_relative 'objects/github_auth'
 configure do
   config = if ENV['RACK_ENV'] == 'test'
     {
+      'cookie_secret' => 'nothing',
       'github' => {
         'client_id' => 'nothing',
         'client_secret' => 'nothing'
@@ -54,6 +55,7 @@ configure do
     name = File.join(Dir.pwd, 'config.yml') unless File.exist?(name)
     YAML.load(File.open(name))
   end
+  set :config, config
   set :oauth, GithubAuth.new(
     config['github']['client_id'],
     config['github']['client_secret']
@@ -73,7 +75,9 @@ before '/*' do
     login_link: settings.oauth.login_uri
   }
   if cookies[:sixnines]
-    @locals[:user] = Cookie::Closed.new(cookies[:sixnines]).to_s
+    @locals[:user] = Cookie::Closed.new(
+      cookies[:sixnines], settings.config['cookie_secret']
+    ).to_s
   end
 end
 
@@ -83,7 +87,9 @@ end
 
 get '/oauth' do
   user = settings.oauth.user_name(settings.oauth.access_token(params[:code]))
-  cookies[:sixnines] = Cookie::Open.new(user).to_s
+  cookies[:sixnines] = Cookie::Open.new(
+    user, settings.config['cookie_secret']
+  ).to_s
   redirect to('/')
 end
 

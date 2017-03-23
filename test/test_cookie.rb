@@ -14,58 +14,34 @@
 #
 # THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFINGEMENT. IN NO EVENT SHALL THE
 # AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-require 'openssl'
-require 'digest/sha1'
-require 'base64'
+require 'test/unit'
+require 'rack/test'
+require_relative '../objects/cookie'
 
-#
-# Secure cookie
-# @todo #1:30min We are not encrypting cooking anyhow at the moment and
-#  this is not secure at all. Let's introduce some encryption mechanism
-#  with a secret key.
-#
-class Cookie
-  # Closed
-  class Closed
-    def initialize(text, secret)
-      @text = text
-      @secret = secret
-    end
-
-    def to_s
-      cpr = Cookie.cipher
-      cpr.decrypt
-      cpr.key = Digest::SHA1.hexdigest(@secret)
-      decrypted = cpr.update(Base64.decode64(@text))
-      decrypted << cpr.final
-      decrypted.to_s
-    end
+class CookieTest < Test::Unit::TestCase
+  def test_encrypts_and_decrypts
+    text = 'yegor256'
+    secret = 'this&84-- (832=_'
+    assert(
+      Cookie::Closed.new(
+        Cookie::Open.new(text, secret).to_s,
+        secret
+      ).to_s == text
+    )
   end
 
-  # Open
-  class Open
-    def initialize(text, secret)
-      @text = text
-      @secret = secret
+  def test_fails_on_broken_text
+    assert_raise OpenSSL::Cipher::CipherError do
+      Cookie::Closed.new(
+        Cookie::Open.new('yegor256', 'secret-1').to_s,
+        'secret-2'
+      ).to_s
     end
-
-    def to_s
-      cpr = Cookie.cipher
-      cpr.encrypt
-      cpr.key = Digest::SHA1.hexdigest(@secret)
-      encrypted = cpr.update(@text)
-      encrypted << cpr.final
-      Base64.encode64(encrypted.to_s)
-    end
-  end
-
-  def self.cipher
-    OpenSSL::Cipher::Cipher.new('aes-256-cbc')
   end
 end
