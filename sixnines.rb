@@ -85,7 +85,7 @@ before '/*' do
   end
 end
 
-before '/a/*' do
+before '/a*' do
   redirect to('/') unless @locals[:user]
 end
 
