@@ -1,0 +1,9 @@
+cookie_secret: 87Ytr=_092@546LurnfsPlsjf6h5$%=_0-Hjkfds
+dynamodb:
+  region: us-east-1
+  key: AKIAJQRGN4FBYOJNBCBA
+  secret: 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
+github:
+  client_id: 289de90368d465439683
+  client_secret: 2518024fbee85de74a3a531523acf2cd5589e811
+
