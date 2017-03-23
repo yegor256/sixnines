@@ -172,12 +172,12 @@ end
 get '/a' do
   haml :account, layout: :layout, locals: @locals.merge(
     endpoints: settings.base.endpoints(@locals[:user]).list,
-    stripe_key: settings.config['stripe']['test']['public_key']
+    stripe_key: settings.config['stripe']['live']['public_key']
   )
 end
 
 post '/a/add' do
-  Stripe.api_key = settings.config['stripe']['test']['secret_key']
+  Stripe.api_key = settings.config['stripe']['live']['secret_key']
   customer = Stripe::Customer.create(
     email: params[:stripeEmail],
     source: params[:stripeToken]
