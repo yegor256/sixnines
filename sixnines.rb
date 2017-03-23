@@ -130,13 +130,17 @@ end
 
 get '/ping' do
   content_type 'text/plain'
-  txt = 'Done: '
-  open('/tmp/sixnines.lck', 'w') do |f|
-    txt << f.flock(File::LOCK_NB | File::LOCK_EX) ? settings.base.ping : 'busy'
+  f = open('/tmp/sixnines.lck', 'w')
+  txt << if f.flock(File::LOCK_NB | File::LOCK_EX)
+    settings.base.ping
+  else
+    status(403)
+    'Locked, try again a bit later'
   end
+  status(204) if txt.empty?
   Process.detach(
     fork do
-      sleep(5)
+      sleep(10)
       Net::HTTP.get_response(URI.parse('http://www.sixnines.io/ping'))
     end
   )
