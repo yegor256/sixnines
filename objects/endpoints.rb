@@ -38,7 +38,7 @@ class Endpoints
       item: {
         'login' => @user,
         'uri' => uri,
-        'id' => Digest::MD5.hexdigest(uri)[0, 8],
+        'id' => unique_id(uri),
         'active' => 'yes',
         'created' => Time.now.to_i,
         'hostname' => URI.parse(uri).host.gsub(/^www\./, ''),
@@ -69,5 +69,24 @@ class Endpoints
       },
       key_condition_expression: 'login = :v'
     ).items.map { |i| Endpoint.new(@aws, i) }
+  end
+
+  private
+
+  def unique_id(uri)
+    len = 4
+    loop do
+      id = Digest::MD5.hexdigest(uri)[0, len]
+      items = @aws.query(
+        table_name: 'sn-endpoints',
+        index_name: 'unique',
+        limit: 1,
+        expression_attribute_values: { ':h' => id },
+        key_condition_expression: 'id=:h'
+      ).items
+      return id if items.empty?
+      len += 1
+      raise "Can't find ID: #{id}" if len > 16
+    end
   end
 end
