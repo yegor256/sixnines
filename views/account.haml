@@ -26,11 +26,10 @@
   });
 
 %form#form{:method=>'post', :action=>'/a/add'}
-  %fieldset
-    %input#endpoint{:type=>'text', :name=>'endpoint', :size=>'50', :placeholder=>'URI of a new endpoint'}
-    %input#stripeToken{type: 'hidden', name: 'stripeToken'}
-    %input#stripeEmail{type: 'hidden', name: 'stripeEmail'}
-    %input#submit{:type=>'submit', :value=>'Add ($4.95)'}
+  %input#endpoint{:type=>'text', :name=>'endpoint', :size=>'50', :placeholder=>'URI of a new endpoint'}
+  %input#stripeToken{type: 'hidden', name: 'stripeToken'}
+  %input#stripeEmail{type: 'hidden', name: 'stripeEmail'}
+  %input#submit{:type=>'submit', :value=>'Add ($4.95)'}
 
 - if endpoints.empty?
   %p
