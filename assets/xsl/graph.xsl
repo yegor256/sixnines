@@ -31,10 +31,10 @@
     <xsl:variable name="height" select="$maxy - $miny"/>
     <xsl:variable name="W" select="640"/>
     <xsl:variable name="H" select="160"/>
-    <xsl:variable name="LM" select="25"/>
-    <xsl:variable name="RM" select="25"/>
-    <xsl:variable name="TM" select="10"/>
-    <xsl:variable name="BM" select="10"/>
+    <xsl:variable name="LM" select="20"/>
+    <xsl:variable name="RM" select="20"/>
+    <xsl:variable name="TM" select="15"/>
+    <xsl:variable name="BM" select="15"/>
     <svg width="{$W}" height="{$H}">
       <xsl:comment>
         <xsl:text>minx=</xsl:text>
@@ -52,14 +52,18 @@
       </xsl:comment>
       <rect width="{$W}" height="{$H}" style="fill:rgb(255,255,255);stroke-width:1;stroke:rgb(20,20,20)" />
       <line x1="{$LM}" y1="{$H - $BM}" x2="{$W - $RM}" y2="{$H - $BM}" style="stroke:rgb(200,200,200);stroke-width:1" />
-      <text x="{$W - $RM}" y="{$H - $BM}" font-family="monospace" font-size="8" fill="#c8c8c8" text-anchor="end" dominant-baseline="hanging">
-        <xsl:value-of select="$miny"/>
-        <xsl:text>ms</xsl:text>
+      <text x="{$W - $RM}" y="{$H - $BM + 2}" font-family="monospace" font-size="8" fill="#c8c8c8" text-anchor="end" dominant-baseline="hanging">
+        <tspan>
+          <xsl:value-of select="$miny"/>
+          <xsl:text>ms</xsl:text>
+        </tspan>
       </text>
       <line x1="{$LM}" y1="{$TM}" x2="{$W - $RM}" y2="{$TM}" style="stroke:rgb(200,200,200);stroke-width:1" />
-      <text x="{$W - $RM}" y="{$TM}" font-family="monospace" font-size="8" fill="#c8c8c8" text-anchor="end">
-        <xsl:value-of select="$maxy"/>
-        <xsl:text>ms</xsl:text>
+      <text x="{$W - $RM}" y="{$TM - 2}" font-family="monospace" font-size="8" fill="#c8c8c8" text-anchor="end">
+        <tspan>
+          <xsl:value-of select="$maxy"/>
+          <xsl:text>ms</xsl:text>
+        </tspan>
       </text>
       <xsl:for-each select="p">
         <xsl:if test="@time &lt; $maxx and @time &gt; $minx">
