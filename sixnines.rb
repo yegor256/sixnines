@@ -102,6 +102,10 @@ get '/logout' do
   redirect to('/')
 end
 
+get '/terms' do
+  haml :terms, layout: :layout, locals: @locals
+end
+
 get '/' do
   haml :index, layout: :layout, locals: @locals.merge(
     query: params[:q] ? params[:q] : nil,
