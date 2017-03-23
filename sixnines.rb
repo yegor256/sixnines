@@ -29,6 +29,7 @@ require 'uri'
 require 'yaml'
 require 'json'
 require 'aws-sdk'
+require 'stripe'
 
 require_relative 'version'
 require_relative 'objects/exec'
@@ -170,13 +171,23 @@ end
 
 get '/a' do
   haml :account, layout: :layout, locals: @locals.merge(
-    endpoints: settings.base.endpoints(@locals[:user]).list
+    endpoints: settings.base.endpoints(@locals[:user]).list,
+    stripe_key: settings.config['stripe']['test']['public_key']
   )
 end
 
 post '/a/add' do
-  puts params[:stripeToken]
-  puts params[:stripeEmail]
+  Stripe.api_key = settings.config['stripe']['test']['secret_key']
+  customer = Stripe::Customer.create(
+    email: params[:stripeEmail],
+    source: params[:stripeToken]
+  )
+  Stripe::Charge.create(
+    amount: 495,
+    description: params[:endpoint],
+    currency: 'usd',
+    customer: customer.id
+  )
   settings.base.endpoints(@locals[:user]).add(params[:endpoint])
   redirect to('/a')
 end

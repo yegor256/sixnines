@@ -34,4 +34,5 @@ gem 'rubocop-rspec', '1.8.0', require: false
 gem 'sass', '3.4.22'
 gem 'sinatra', '1.4.7'
 gem 'sinatra-contrib'
+gem 'stripe'
 gem 'test-unit', '3.0.8', require: false

@@ -1,12 +1,11 @@
 :javascript
   $(function() {
     var handler = StripeCheckout.configure({
-      key: 'pk_test_XSWDZtDYNmlFfav5SnLtOhPl',
+      key: '#{stripe_key}',
       image: '/images/logo.png',
       token: function (token) {
         $('#stripeToken').val(token.id);
         $('#stripeEmail').val(token.email);
-        alert('thanks!');
         $('#form').submit();
       }
     });
