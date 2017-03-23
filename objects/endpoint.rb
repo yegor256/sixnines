@@ -132,11 +132,10 @@ class Endpoint
         ':s' => up ? 'up' : 'down',
         ':o' => 1,
         ':t' => Time.now.to_i,
-        ':e' => (Time.now + (5 * 60)).to_i, # ping again in 5 minutes
+        ':e' => (Time.now + 60).to_i, # ping again in 60 seconds
       },
       update_expression: 'set ' + update.join(', ')
     )
-    `curl --silent http://www.sixnines.io/ping &`
     "#{h[:uri]}: #{res.code}"
   end
 end

@@ -31,7 +31,7 @@ class Base
   end
 
   def ping
-    "Done:\n" + @aws.query(
+    @aws.query(
       table_name: 'sn-endpoints',
       index_name: 'expires',
       select: 'ALL_ATTRIBUTES',
