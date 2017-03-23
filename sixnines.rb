@@ -29,6 +29,7 @@ require 'uri'
 require 'yaml'
 require 'json'
 require 'aws-sdk'
+require 'timeout'
 
 require_relative 'version'
 require_relative 'objects/exec'
@@ -136,7 +137,9 @@ get '/ping' do
   end
   Process.detach(
     fork do
-      Net::HTTP.get_response(URI.parse('http://www.sixnines.io/ping'))
+      Timeout.timeout(5) do
+        Net::HTTP.get_response(URI.parse('http://www.sixnines.io/ping'))
+      end
     end
   )
   txt
