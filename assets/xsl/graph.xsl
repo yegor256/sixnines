@@ -24,7 +24,7 @@
   <xsl:output method="xml" omit-xml-declaration="yes"/>
   <xsl:template match="/history">
     <xsl:variable name="minx" select="@maxx - 60 * 1000"/>
-    <xsl:variable name="maxx" select="@maxx"/>
+    <xsl:variable name="maxx" select="@now"/>
     <xsl:variable name="width" select="$maxx - $minx"/>
     <xsl:variable name="miny" select="@miny"/>
     <xsl:variable name="maxy" select="@maxy"/>
