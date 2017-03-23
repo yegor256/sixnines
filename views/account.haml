@@ -30,7 +30,7 @@
     %input#endpoint{:type=>'text', :name=>'endpoint', :size=>'50', :placeholder=>'URI of a new endpoint'}
     %input#stripeToken{type: 'hidden', name: 'stripeToken'}
     %input#stripeEmail{type: 'hidden', name: 'stripeEmail'}
-    %button#submit{:type=>'submit'}>Add ($4.95)
+    %input#submit{:type=>'submit', :value=>'Add ($4.95)'}
 
 - if endpoints.empty?
   %p
