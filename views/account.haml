@@ -3,7 +3,7 @@
     %input{:type=>'text', :name=>'endpoint', :size=>'50', :placeholder=>'URI of a new endpoint'}
     %input{type: 'hidden', id: 'stripeToken', name: 'stripeToken'}
     %input{type: 'hidden', id: 'stripeEmail', name: 'stripeEmail'}
-    %button{:type=>'submit'}>Add ($4.95)
+    %button{:id=>'submit', :type=>'submit'}>Add ($4.95)
 
 :javascript
   var handler = StripeCheckout.configure({
@@ -12,7 +12,7 @@
     token: function (token) {
       $("#stripeToken").val(token.id);
       $("#stripeEmail").val(token.email);
-      $("#add").submit();
+      $("#form").submit();
     }
   });
   $('#submit').on('click', function (e) {
