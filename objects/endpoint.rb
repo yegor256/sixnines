@@ -136,6 +136,7 @@ class Endpoint
       },
       update_expression: 'set ' + update.join(', ')
     )
+    `curl --silent http://www.sixnines.io/ping &`
     "#{h[:uri]}: #{res.code}"
   end
 end
