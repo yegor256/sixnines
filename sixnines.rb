@@ -131,8 +131,10 @@ end
 get '/ping' do
   content_type 'text/plain'
   txt = ''
+  again = false
   open('/tmp/sixnines.lock', 'w') do |f|
     txt << if f.flock(File::LOCK_NB | File::LOCK_EX)
+      again = true
       settings.base.ping
     else
       status(403)
@@ -141,6 +143,9 @@ get '/ping' do
   end
   if txt.empty?
     status(204)
+    again = true
+  end
+  if again
     Process.detach(
       fork do
         sleep(10)
