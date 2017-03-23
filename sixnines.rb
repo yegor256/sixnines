@@ -175,6 +175,8 @@ get '/a' do
 end
 
 post '/a/add' do
+  puts params[:stripeToken]
+  puts params[:stripeEmail]
   settings.base.endpoints(@locals[:user]).add(params[:endpoint])
   redirect to('/a')
 end

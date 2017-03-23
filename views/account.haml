@@ -1,7 +1,33 @@
-%form{:method=>'post', :action=>'/a/add'}
+%form{:id=>'form', :method=>'post', :action=>'/a/add'}
   %fieldset
     %input{:type=>'text', :name=>'endpoint', :size=>'50', :placeholder=>'URI of a new endpoint'}
+    %input{type: 'hidden', id: 'stripeToken', name: 'stripeToken'}
+    %input{type: 'hidden', id: 'stripeEmail', name: 'stripeEmail'}
     %button{:type=>'submit'}>Add
+
+:javascript
+  var handler = StripeCheckout.configure({
+    key: 'pk_test_XSWDZtDYNmlFfav5SnLtOhPl',
+    image: '/images/logo.png',
+    token: function (token) {
+      $("#stripeToken").val(token.id);
+      $("#stripeEmail").val(token.email);
+      $("#add").submit();
+    }
+  });
+  $('#submit').on('click', function (e) {
+    if ($("#form")[0].checkValidity()) {
+      handler.open({
+        name: 'the name',
+        description: 'the description',
+        amount: 495
+      });
+      e.preventDefault();
+    }
+  });
+  $(window).on('popstate', function () {
+    handler.close();
+  });
 
 - if endpoints.empty?
   %p
@@ -12,7 +38,8 @@
   - endpoints.each do |e|
     %p
       =EpUri.new(e).to_html
-      %a{:href=>'/a/del?endpoint=' + URI.escape(EpUri.new(e).to_url)}
+      %a{:href=>'/a/del?endpoint=' + URI.escape(EpUri.new(e).to_url),
+        :onclick=>'return confirm("Attention! Be aware that you won&apos;t be able to restore it and to add a new one you will have to pay another $4.95!");'}
         delete
     %ul
       %li
