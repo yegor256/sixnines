@@ -37,4 +37,17 @@ class AvailabilityTest < Test::Unit::TestCase
     end.new
     assert_equal('99.9500%', EpAvailability.new(endpoint).short)
   end
+
+  def test_renders_hundred
+    endpoint = Class.new do
+      def to_h
+        {
+          id: '12',
+          pings: 100,
+          failures: 0
+        }
+      end
+    end.new
+    assert_equal('99.0000%', EpAvailability.new(endpoint).short)
+  end
 end
