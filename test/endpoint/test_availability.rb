@@ -14,42 +14,27 @@
 #
 # THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFINGEMENT. IN NO EVENT SHALL THE
 # AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-#
-# Availability of endpoint
-#
-class EpAvailability
-  def initialize(endpoint)
-    @endpoint = endpoint
-  end
+require 'test/unit'
+require 'rack/test'
+require_relative '../../objects/endpoint/ep_availability'
 
-  def to_f
-    h = @endpoint.to_h
-    if h[:pings].zero?
-      0
-    else
-      [
-        (100 * (1 - h[:failures].to_f / h[:pings].to_f)),
-        99.9999
-      ].min.round(Math.log10(h[:pings]).to_i)
-    end
-  end
-
-  def to_s
-    format('%.04f', to_f)
-  end
-
-  def short
-    to_s + '%'
-  end
-
-  def full
-    h = @endpoint.to_h
-    "#{short} (#{h[:failures]}/#{h[:pings]})"
+class AvailabilityTest < Test::Unit::TestCase
+  def test_renders_numbers
+    endpoint = Class.new do
+      def to_h
+        {
+          id: '1234567',
+          pings: 10_000,
+          failures: 5
+        }
+      end
+    end.new
+    assert_equal('99.9500%', EpAvailability.new(endpoint).short)
   end
 end
