@@ -3,6 +3,8 @@
 [![DevOps By Rultor.com](http://www.rultor.com/b/yegor256/sixnines)](http://www.rultor.com/p/yegor256/sixnines)
 [![We recommend RubyMine](http://img.teamed.io/rubymine-recommend.svg)](https://www.jetbrains.com/ruby/)
 
+[![Availability at SixNines](http://www.sixnines.io/b/3b05e836)](http://www.sixnines.io/h/3b05e836)
+
 [![Build Status](https://travis-ci.org/yegor256/sixnines.svg)](https://travis-ci.org/yegor256/sixnines)
 [![PDD status](http://www.0pdd.com/svg?name=yegor256/sixnines)](http://www.0pdd.com/p?name=yegor256/sixnines)
 [![Dependency Status](https://gemnasium.com/yegor256/sixnines.svg)](https://gemnasium.com/yegor256/sixnines)
