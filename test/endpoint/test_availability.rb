@@ -26,28 +26,26 @@ require_relative '../../objects/endpoint/ep_availability'
 
 class AvailabilityTest < Test::Unit::TestCase
   def test_renders_numbers
-    endpoint = Class.new do
-      def to_h
-        {
-          id: '1234567',
-          pings: 10_000,
-          failures: 5
-        }
-      end
-    end.new
-    assert_equal('99.9500%', EpAvailability.new(endpoint).short)
-  end
+    [
+      # { pings: 0, failures: 0, avlbl: '99.0000%' },
+      { pings: 100, failures: 0, avlbl: '99.0000%' },
+      { pings: 100, failures: 95, avlbl: '05.0000%' },
+      { pings: 1_000, failures: 0, avlbl: '99.9000%' },
+      { pings: 10_000, failures: 5, avlbl: '99.9500%' },
+      { pings: 10_000, failures: 0, avlbl: '99.9900%' },
+      { pings: 1_000_000, failures: 0, avlbl: '99.9999%' }
+    ].each do |a|
+      endpoint = Class.new do
+        def initialize(p, f)
+          @p = p
+          @f = f
+        end
 
-  def test_renders_hundred
-    endpoint = Class.new do
-      def to_h
-        {
-          id: '12',
-          pings: 100,
-          failures: 0
-        }
-      end
-    end.new
-    assert_equal('99.0000%', EpAvailability.new(endpoint).short)
+        def to_h
+          { pings: @p, failures: @f }
+        end
+      end.new(a[:pings], a[:failures])
+      assert_equal(a[:avlbl], EpAvailability.new(endpoint).short)
+    end
   end
 end

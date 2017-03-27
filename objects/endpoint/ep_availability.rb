@@ -30,19 +30,14 @@ class EpAvailability
 
   def to_f
     h = @endpoint.to_h
-    avlbl = if h[:pings].zero?
-      100
-    else
-      [
-        (100 * (1 - h[:failures].to_f / h[:pings].to_f)),
-        99.9999
-      ].min.round(Math.log10(h[:pings]).to_i)
-    end
-    avlbl == 100 ? 99 : avlbl
+    [
+      (100 * (1 - nz(h[:failures].to_f) / nz(h[:pings].to_f))),
+      99.9999
+    ].min.round(Math.log10(nz(h[:pings])).to_i)
   end
 
   def to_s
-    format('%.04f', to_f)
+    format('%07.04f', to_f)
   end
 
   def short
@@ -52,5 +47,9 @@ class EpAvailability
   def full
     h = @endpoint.to_h
     "#{short} (#{h[:failures]}/#{h[:pings]})"
+  end
+
+  def nz(n)
+    [n, 1].max
   end
 end
