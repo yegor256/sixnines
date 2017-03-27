@@ -177,17 +177,23 @@ get '/a' do
 end
 
 post '/a/add' do
-  Stripe.api_key = settings.config['stripe']['live']['secret_key']
-  customer = Stripe::Customer.create(
-    email: params[:stripeEmail],
-    source: params[:stripeToken]
-  )
-  Stripe::Charge.create(
-    amount: 495,
-    description: params[:endpoint],
-    currency: 'usd',
-    customer: customer.id
-  )
+  if params[:coupon]
+    unless settings.config['coupons'].include?(params[:coupon])
+      raise "Invalid coupon \"#{params[:coupon]}\""
+    end
+  else
+    Stripe.api_key = settings.config['stripe']['live']['secret_key']
+    customer = Stripe::Customer.create(
+      email: params[:stripeEmail],
+      source: params[:stripeToken]
+    )
+    Stripe::Charge.create(
+      amount: 495,
+      description: params[:endpoint],
+      currency: 'usd',
+      customer: customer.id
+    )
+  end
   settings.base.endpoints(@locals[:user]).add(params[:endpoint])
   redirect to('/a')
 end
