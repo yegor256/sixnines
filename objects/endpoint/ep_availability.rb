@@ -30,14 +30,15 @@ class EpAvailability
 
   def to_f
     h = @endpoint.to_h
-    if h[:pings].zero?
-      0
+    avlbl = if h[:pings].zero?
+      100
     else
       [
         (100 * (1 - h[:failures].to_f / h[:pings].to_f)),
         99.9999
       ].min.round(Math.log10(h[:pings]).to_i)
     end
+    avlbl == 100 ? 99 : avlbl
   end
 
   def to_s
