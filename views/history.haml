@@ -22,5 +22,13 @@
   =EpAvailability.new(e).full
 
 %p
+  Created on:
+  =e.to_h[:created]
+
+%p
+  Age:
+  =TimeDifference.between(e.to_h[:created], Time.now).humanize
+
+%p
   Next ping on:
   =e.to_h[:expires]
