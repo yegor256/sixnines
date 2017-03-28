@@ -1,0 +1,24 @@
+cookie_secret: 87Ytr=_092@546LurnfsPlsjf6h5$%=_0-Hjkfds
+stripe:
+  test:
+    secret_key: sk_test_Cousowu0HHsRsk7t5bWRfcWk
+    public_key: pk_test_XSWDZtDYNmlFfav5SnLtOhPl
+  live:
+    secret_key: sk_live_iAxsqpmPKM4jFJpN8C8Oh54d
+    public_key: pk_live_UaaZoQlsFOSZ51pOFWeGwq7e
+dynamodb:
+  region: us-east-1
+  key: AKIAJQRGN4FBYOJNBCBA
+  secret: 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
+github:
+  client_id: 289de90368d465439683
+  client_secret: 2518024fbee85de74a3a531523acf2cd5589e811
+coupons:
+  - batata
+  - Hyri9JK
+  - UUyrn7K
+  - 7Yhhf8K
+  - tRe3Fge
+  - 8UUksj7
+  - Egdr8kM
+
