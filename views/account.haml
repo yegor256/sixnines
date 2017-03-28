@@ -54,5 +54,11 @@
         State:
         =EpState.new(e).to_html
       %li
+        Created on:
+        =e.to_h[:created]
+      %li
+        Age:
+        =TimeDifference.between(e.to_h[:created], Time.now).humanize
+      %li
         Next ping on:
         =e.to_h[:expires]

@@ -30,6 +30,7 @@ require 'yaml'
 require 'json'
 require 'aws-sdk'
 require 'stripe'
+require 'time_difference'
 
 require_relative 'version'
 require_relative 'objects/exec'
