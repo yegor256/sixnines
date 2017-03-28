@@ -21,6 +21,7 @@
 # SOFTWARE.
 
 require 'uri'
+require 'timeout'
 require_relative 'endpoint/ep_uri'
 require_relative 'endpoint/ep_state'
 require_relative 'endpoint/ep_availability'
@@ -77,27 +78,9 @@ class Endpoint
   end
 
   def ping
-    h = to_h
-    http = Net::HTTP.new(h[:uri].host, h[:uri].port)
-    if h[:uri].scheme == 'https'
-      http.use_ssl = true
-      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-    end
-    http.read_timeout = 5
-    http.continue_timeout = 5
-    req = Net::HTTP::Head.new(h[:uri].request_uri)
-    req['User-Agent'] = 'sixnines.io'
     start = Time.now
-    begin
-      res = http.request(req)
-    rescue
-      res = Class.new do
-        def code
-          500
-        end
-      end.new
-    end
-    puts "ping #{res.code}: #{h[:uri]}"
+    res = fetch
+    h = to_h
     @aws.put_item(
       table_name: 'sn-pings',
       item: {
@@ -137,5 +120,29 @@ class Endpoint
       update_expression: 'set ' + update.join(', ')
     )
     "#{h[:uri]}: #{res.code}"
+  end
+
+  def fetch
+    h = to_h
+    http = Net::HTTP.new(h[:uri].host, h[:uri].port)
+    if h[:uri].scheme == 'https'
+      http.use_ssl = true
+      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    end
+    req = Net::HTTP::Head.new(h[:uri].request_uri)
+    req['User-Agent'] = 'sixnines.io'
+    res = begin
+      Timeout.timeout(5) do
+        http.request(req)
+      end
+    rescue
+      Class.new do
+        def code
+          '500'
+        end
+      end.new
+    end
+    puts "ping #{res.code}: #{h[:uri]}"
+    res
   end
 end

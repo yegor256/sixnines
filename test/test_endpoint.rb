@@ -22,38 +22,24 @@
 
 require 'test/unit'
 require 'rack/test'
-require_relative '../sixnines'
+require_relative '../objects/endpoint'
 
-class AppTest < Test::Unit::TestCase
-  include Rack::Test::Methods
-
-  def app
-    Sinatra::Application
+class EndpointTest < Test::Unit::TestCase
+  def test_pings_valid_uri
+    ep = Endpoint.new(
+      nil,
+      'uri' => 'http://www.sixnines.io',
+      'created' => 1_490_177_388
+    )
+    assert_equal('200', ep.fetch.code)
   end
 
-  def test_renders_version
-    get('/version')
-    assert(last_response.ok?)
-  end
-
-  def test_robots_txt
-    get('/robots.txt')
-    assert(last_response.ok?)
-  end
-
-  def test_it_renders_home_page
-    get('/')
-    assert(last_response.ok?)
-    assert(last_response.body.include?('SixNines'))
-  end
-
-  def test_it_renders_logo
-    get('/images/logo.svg')
-    assert(last_response.ok?)
-  end
-
-  def test_renders_page_not_found
-    get('/the-url-that-is-absent')
-    assert(last_response.status == 404)
+  def test_pings_broken_uri
+    ep = Endpoint.new(
+      nil,
+      'uri' => 'http://www.sixnines-broken-uri.io',
+      'created' => 1_490_177_365
+    )
+    assert_equal('500', ep.fetch.code)
   end
 end
