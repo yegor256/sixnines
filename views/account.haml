@@ -48,6 +48,10 @@
         Badge:
         =EpBadge.new(e).to_html
       %li
+        URI:
+        %code
+          =EpUri.new(e).to_s
+      %li
         Availability:
         =EpAvailability.new(e).full
       %li

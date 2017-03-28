@@ -1,4 +1,7 @@
 %p
+  =EpUri.new(e).to_html
+
+%p
   =EpBadge.new(e).to_html
 
 %p
@@ -11,7 +14,8 @@
 
 %p
   URI:
-  =EpUri.new(e).to_html
+  %code
+    =EpUri.new(e).to_s
 
 %p
   State:
