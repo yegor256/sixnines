@@ -29,7 +29,9 @@
 
 - if !flips.empty?
   %p
-    Recent flips:
+    Recent
+    =flips.size
+    flips:
   %ul
     - flips.each do |e|
       %li

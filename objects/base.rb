@@ -78,6 +78,7 @@ class Base
     @aws.query(
       table_name: 'sn-endpoints',
       index_name: 'flips',
+      scan_index_forward: false,
       select: 'ALL_ATTRIBUTES',
       limit: 10,
       expression_attribute_values: {
