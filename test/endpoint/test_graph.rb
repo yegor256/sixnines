@@ -38,4 +38,18 @@ class GraphTest < Test::Unit::TestCase
     end.new
     assert(EpGraph.new(endpoint).to_svg.include?('<svg'))
   end
+
+  def test_calculates_avg
+    endpoint = Class.new do
+      def history
+        [
+          { time: Time.now - 180, msec: 1298, code: 200 },
+          { time: Time.now - 120, msec: 217, code: 200 },
+          { time: Time.now - 60, msec: 451, code: 503 },
+          { time: Time.now, msec: 75, code: 200 }
+        ]
+      end
+    end.new
+    assert_equal(510, EpGraph.new(endpoint).avg)
+  end
 end

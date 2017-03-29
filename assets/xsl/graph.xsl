@@ -22,19 +22,19 @@
  -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/2000/svg" version="1.0">
   <xsl:output method="xml" omit-xml-declaration="yes"/>
+  <xsl:variable name="W" select="640"/>
+  <xsl:variable name="H" select="160"/>
+  <xsl:variable name="LM" select="20"/>
+  <xsl:variable name="RM" select="20"/>
+  <xsl:variable name="TM" select="15"/>
+  <xsl:variable name="BM" select="15"/>
+  <xsl:variable name="minx" select="/history/@maxx - 60 * 1000"/>
+  <xsl:variable name="maxx" select="/history/@now"/>
+  <xsl:variable name="width" select="$maxx - $minx"/>
+  <xsl:variable name="miny" select="/history/@miny"/>
+  <xsl:variable name="maxy" select="/history/@maxy"/>
+  <xsl:variable name="height" select="$maxy - $miny"/>
   <xsl:template match="/history">
-    <xsl:variable name="minx" select="@maxx - 60 * 1000"/>
-    <xsl:variable name="maxx" select="@now"/>
-    <xsl:variable name="width" select="$maxx - $minx"/>
-    <xsl:variable name="miny" select="@miny"/>
-    <xsl:variable name="maxy" select="@maxy"/>
-    <xsl:variable name="height" select="$maxy - $miny"/>
-    <xsl:variable name="W" select="640"/>
-    <xsl:variable name="H" select="160"/>
-    <xsl:variable name="LM" select="20"/>
-    <xsl:variable name="RM" select="20"/>
-    <xsl:variable name="TM" select="15"/>
-    <xsl:variable name="BM" select="15"/>
     <svg width="{$W}" height="{$H}">
       <xsl:comment>
         <xsl:text>minx=</xsl:text>
@@ -51,6 +51,29 @@
         <xsl:value-of select="$height"/>
       </xsl:comment>
       <rect width="{$W}" height="{$H}" style="fill:rgb(255,255,255);stroke-width:1;stroke:rgb(20,20,20)" />
+      <line x1="{$LM}" x2="{$W - $RM}" style="stroke:rgb(74,141,152);stroke-width:1">
+        <xsl:attribute name="y1">
+          <xsl:call-template name="msec-to-y">
+            <xsl:with-param name="msec" select="@avg"/>
+          </xsl:call-template>
+        </xsl:attribute>
+        <xsl:attribute name="y2">
+          <xsl:call-template name="msec-to-y">
+            <xsl:with-param name="msec" select="@avg"/>
+          </xsl:call-template>
+        </xsl:attribute>
+      </line>
+      <text x="{$LM}" font-family="monospace" font-size="8" fill="#4A8D98" dominant-baseline="hanging">
+        <xsl:attribute name="y">
+          <xsl:call-template name="msec-to-y">
+            <xsl:with-param name="msec" select="@avg"/>
+          </xsl:call-template>
+        </xsl:attribute>
+        <tspan>
+          <xsl:value-of select="@avg"/>
+          <xsl:text>ms</xsl:text>
+        </tspan>
+      </text>
       <line x1="{$LM}" y1="{$H - $BM}" x2="{$W - $RM}" y2="{$H - $BM}" style="stroke:rgb(200,200,200);stroke-width:1" />
       <text x="{$W - $RM}" y="{$H - $BM + 2}" font-family="monospace" font-size="8" fill="#c8c8c8" text-anchor="end" dominant-baseline="hanging">
         <tspan>
@@ -75,9 +98,17 @@
             <xsl:text>; code=</xsl:text>
             <xsl:value-of select="@code"/>
           </xsl:comment>
-          <circle r="2" stroke-width="0"
-            cx="{(@time - $minx) div $width * ($W - $LM - $RM) + $LM}"
-            cy="{($H - $TM - $BM) - ((@msec - $miny) div $height * ($H - $TM - $BM)) + $TM}">
+          <circle r="2" stroke-width="0">
+            <xsl:attribute name="cx">
+              <xsl:call-template name="time-to-x">
+                <xsl:with-param name="time" select="@time"/>
+              </xsl:call-template>
+            </xsl:attribute>
+            <xsl:attribute name="cy">
+              <xsl:call-template name="msec-to-y">
+                <xsl:with-param name="msec" select="@msec"/>
+              </xsl:call-template>
+            </xsl:attribute>
             <xsl:attribute name="fill">
               <xsl:if test="@code=200">
                 <xsl:text>#4c1</xsl:text>
@@ -90,5 +121,13 @@
         </xsl:if>
       </xsl:for-each>
     </svg>
+  </xsl:template>
+  <xsl:template name="msec-to-y">
+    <xsl:param name="msec"/>
+    <xsl:value-of select="($H - $TM - $BM) - (($msec - $miny) div $height * ($H - $TM - $BM)) + $TM"/>
+  </xsl:template>
+  <xsl:template name="time-to-x">
+    <xsl:param name="time"/>
+    <xsl:value-of select="($time - $minx) div $width * ($W - $LM - $RM) + $LM"/>
   </xsl:template>
 </xsl:stylesheet>
