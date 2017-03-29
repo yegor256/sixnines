@@ -65,9 +65,10 @@ class Endpoint
         '#time' => 'time'
       },
       expression_attribute_values: {
-        ':u' => @item['uri']
+        ':u' => @item['uri'],
+        ':t' => (Time.now - 1000 * 60).to_i
       },
-      key_condition_expression: 'uri = :u'
+      key_condition_expression: 'uri = :u and #time > :t'
     ).items.map do |i|
       {
         time: Time.at(i['time']),
