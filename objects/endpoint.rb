@@ -32,6 +32,31 @@ require_relative 'endpoint/ep_graph'
 # Single endpoint
 #
 class Endpoint
+  # Cached endpoint
+  class Cached
+    def initialize(ep)
+      @ep = ep
+      @history = nil
+    end
+
+    def to_h
+      @ep.to_h
+    end
+
+    def history
+      @history = @ep.history if @history.nil?
+      @history
+    end
+
+    def ping
+      @ep.ping
+    end
+
+    def fetch
+      @ep.fetch
+    end
+  end
+
   def initialize(aws, item)
     @aws = aws
     @item = item
