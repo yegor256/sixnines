@@ -35,6 +35,10 @@ class EpGraph
     h.inject(&:+) / (h.empty? ? 1 : h.size)
   end
 
+  def avg_full
+    "#{avg}ms"
+  end
+
   def to_html
     "<img src='/g/#{@endpoint.to_h[:id]}' class='graph'/>"
   end
