@@ -126,7 +126,7 @@ class Endpoint
       'expires = :e',
       'pings = pings + :o',
       '#state = :s',
-      'log = :g'
+      '#log = :g'
     ]
     update << 'failures = failures + :o' unless up
     update << 'flipped = :t' unless up == h[:up]
@@ -137,7 +137,8 @@ class Endpoint
         'uri' => h[:uri].to_s
       },
       expression_attribute_names: {
-        '#state' => 'state'
+        '#state' => 'state',
+        '#log' => 'log'
       },
       expression_attribute_values: {
         ':s' => up ? 'up' : 'down',
