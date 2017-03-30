@@ -198,6 +198,6 @@ HTTP/#{res.http_version} #{res.code} #{res.message}
   end
 
   def body(body)
-    body.nil? ? '' : body.gsub(/^(.{300,}?).*$/m, '\1...')
+    body.nil? ? '' : body.trim.gsub(/^(.{300,}?).*$/m, '\1...')
   end
 end
