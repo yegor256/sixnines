@@ -105,7 +105,7 @@ class Endpoint
 
   def ping
     start = Time.now
-    res = fetch
+    res, log = fetch
     h = to_h
     @aws.put_item(
       table_name: 'sn-pings',
@@ -142,6 +142,7 @@ class Endpoint
         ':o' => 1,
         ':t' => Time.now.to_i,
         ':e' => (Time.now + 60).to_i, # ping again in 60 seconds
+        ':g' => log
       },
       update_expression: 'set ' + update.join(', ')
     )
@@ -157,18 +158,22 @@ class Endpoint
     end
     req = Net::HTTP::Head.new(h[:uri].request_uri)
     req['User-Agent'] = 'sixnines.io'
-    res = begin
-      Timeout.timeout(5) do
-        http.request(req)
-      end
-    rescue
-      Class.new do
-        def code
-          '500'
-        end
-      end.new
+    begin
+      [
+        Timeout.timeout(5) do
+          http.request(req)
+        end,
+        ''
+      ]
+    rescue Exception => e
+      [
+        Class.new do
+          def code
+            '500'
+          end
+        end.new,
+        "#{e.message}\n#{e.backtrace.inspect}"
+      ]
     end
-    puts "ping #{res.code}: #{h[:uri]}"
-    res
   end
 end

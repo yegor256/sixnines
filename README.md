@@ -34,6 +34,7 @@ fields:
   updated: Epoch time of the most recent update of this record
   flipped: Epoch time of recent state change
   expires: Epoch time when it has to be pinged again
+  log: Detailed log of the most recent request
 sn-endpoints/unique: (index)
   id/H
 sn-endpoints/hostnames: (index)

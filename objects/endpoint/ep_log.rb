@@ -14,32 +14,21 @@
 #
 # THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFINGEMENT. IN NO EVENT SHALL THE
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 # AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-require 'test/unit'
-require 'rack/test'
-require_relative '../objects/endpoint'
-
-class EndpointTest < Test::Unit::TestCase
-  def test_pings_valid_uri
-    ep = Endpoint.new(
-      nil,
-      'uri' => 'http://www.sixnines.io',
-      'created' => 1_490_177_388
-    )
-    assert_equal('200', ep.fetch[0].code)
+#
+# Log of endpoint
+#
+class EpLog
+  def initialize(endpoint)
+    @endpoint = endpoint
   end
 
-  def test_pings_broken_uri
-    ep = Endpoint.new(
-      nil,
-      'uri' => 'http://www.sixnines-broken-uri.io',
-      'created' => 1_490_177_365
-    )
-    assert_equal('500', ep.fetch[0].code)
+  def to_html
+    "<pre>#{@endpoint.to_h[:log]}</pre>"
   end
 end
