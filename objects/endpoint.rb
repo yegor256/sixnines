@@ -165,7 +165,7 @@ class Endpoint
         Timeout.timeout(5) do
           http.request(req)
         end,
-        ''
+        'success'
       ]
     rescue Exception => e
       [
