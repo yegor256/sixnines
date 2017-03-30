@@ -186,7 +186,7 @@ class Endpoint
   private
 
   def to_text(req, res)
-    "#{req.method} #{req.path}\n\
+    "#{req.method} #{req.path} HTTP/1.1\n\
 #{headers(req)}\n#{body(req.body)}\n\n\
 HTTP/#{res.http_version} #{res.code} #{res.message}\n\
 #{headers(res)}\n#{body(res.body)}"
