@@ -176,7 +176,7 @@ class Endpoint
             '500'
           end
         end.new,
-        "#{e.message}\n#{e.backtrace.join("\n")}"
+        "#{e.class}: #{e.message}\n\t#{e.backtrace.join("\n\t")}"
       ]
     end
   end
