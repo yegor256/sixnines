@@ -72,7 +72,8 @@ class Endpoint
       failures: @item['failures'].to_i,
       pings: @item['pings'].to_i,
       up: @item['state'] == 'up',
-      created: Time.at(@item['created'])
+      created: Time.at(@item['created']),
+      log: @item['log']
     }
     h[:updated] = Time.at(@item['updated']) if @item['updated']
     h[:flipped] = Time.at(@item['flipped']) if @item['flipped']
