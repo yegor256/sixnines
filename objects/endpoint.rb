@@ -169,7 +169,7 @@ class Endpoint
         res,
         to_text(req, res)
       ]
-    rescue Exception => e
+    rescue SocketError => e
       [
         Class.new do
           def code
@@ -198,6 +198,6 @@ HTTP/#{res.http_version} #{res.code} #{res.message}
   end
 
   def body(body)
-    body.nil? ? '' : body.trim.gsub(/^(.{300,}?).*$/m, '\1...')
+    body.nil? ? '' : body.strip.gsub(/^(.{300,}?).*$/m, '\1...')
   end
 end
