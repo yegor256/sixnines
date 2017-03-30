@@ -41,9 +41,7 @@ class Base
         ':r' => Time.now.to_i
       },
       key_condition_expression: 'active=:h and expires < :r'
-    ).items
-    .map { |i| Endpoint::Cached.new(Endpoint.new(@aws, i)) }
-    .map(&:ping).join("\n")
+    ).items.map { |i| Endpoint.new(@aws, i) }.map(&:ping).join("\n")
   end
 
   def find(query)
@@ -57,7 +55,7 @@ class Base
         ':r' => query
       },
       key_condition_expression: 'active=:h and begins_with(hostname,:r)'
-    ).items.map { |i| Endpoint::Cached.new(Endpoint.new(@aws, i)) }
+    ).items.map { |i| Endpoint.new(@aws, i) }
   end
 
   def take(id)
@@ -87,7 +85,7 @@ class Base
         ':h' => 'yes'
       },
       key_condition_expression: 'active=:h'
-    ).items.map { |i| Endpoint::Cached.new(Endpoint.new(@aws, i)) }
+    ).items.map { |i| Endpoint.new(@aws, i) }
   end
 
   def endpoints(user)

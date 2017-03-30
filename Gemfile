@@ -38,3 +38,4 @@ gem 'stripe'
 gem 'test-unit', '3.0.8', require: false
 gem 'time_difference'
 gem 'timeout'
+gem 'twitter'
