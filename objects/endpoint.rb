@@ -163,11 +163,12 @@ class Endpoint
     req = Net::HTTP::Head.new(h[:uri].request_uri)
     req['User-Agent'] = 'sixnines.io (not Firefox, Chrome, or Safari)'
     begin
+      res = Timeout.timeout(5) do
+        http.request(req)
+      end
       [
-        Timeout.timeout(5) do
-          http.request(req)
-        end,
-        'success'
+        res,
+        "#{req}\n\n#{res}"
       ]
     rescue Exception => e
       [
