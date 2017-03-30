@@ -45,5 +45,4 @@
   Most recent HTTP request log:
 
 %pre
-  :preserve
-    =@endpoint.to_h[:log]
+  :preserve= @endpoint.to_h[:log]
