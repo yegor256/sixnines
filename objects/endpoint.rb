@@ -159,7 +159,7 @@ class Endpoint
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
     end
     req = Net::HTTP::Head.new(h[:uri].request_uri)
-    req['User-Agent'] = 'sixnines.io'
+    req['User-Agent'] = 'sixnines.io (not Firefox, Chrome, or Safari)'
     begin
       [
         Timeout.timeout(5) do
