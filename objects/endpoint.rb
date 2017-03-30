@@ -161,6 +161,7 @@ class Endpoint
     end
     req = Net::HTTP::Get.new(h[:uri].request_uri)
     req['User-Agent'] = 'SixNines.io (not Firefox, Chrome, or Safari)'
+    tries = 3
     begin
       res = Timeout.timeout(5) do
         http.request(req)
@@ -170,6 +171,7 @@ class Endpoint
         to_text(req, res)
       ]
     rescue SocketError => e
+      retry unless (tries -= 1).zero?
       [
         Class.new do
           def code

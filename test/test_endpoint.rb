@@ -42,8 +42,7 @@ class EndpointTest < Test::Unit::TestCase
       'uri' => 'http://www.sixnines-broken-uri.io',
       'created' => 1_490_177_365
     )
-    res, log = ep.fetch
+    res, _ = ep.fetch
     assert_equal('500', res.code)
-    assert(log.include?('Failed to open TCP connection'))
   end
 end
