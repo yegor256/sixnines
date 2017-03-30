@@ -31,6 +31,7 @@ require 'json'
 require 'aws-sdk'
 require 'stripe'
 require 'time_difference'
+require 'twitter'
 
 require_relative 'version'
 require_relative 'objects/exec'
@@ -50,6 +51,12 @@ configure do
         'region' => 'us-east-1',
         'key' => 'nothing',
         'secret' => 'nothing'
+      },
+      'twitter' => {
+        'consumer_key' => 'nothing',
+        'consumer_secret' => 'nothing',
+        'access_token' => 'nothing',
+        'access_token_secret' => 'nothing'
       }
     }
   else
@@ -69,6 +76,12 @@ configure do
       secret_access_key: config['dynamodb']['secret']
     )
   )
+  set :twitter, (Twitter::REST::Client.new do |c|
+    c.consumer_key = config['twitter']['consumer_key']
+    c.consumer_secret = config['twitter']['consumer_secret']
+    c.access_token = config['twitter']['access_token']
+    c.access_token_secret = config['twitter']['access_token_secret']
+  end)
 end
 
 before '/*' do
@@ -141,7 +154,15 @@ get '/ping' do
   open('/tmp/sixnines.lock', 'w') do |f|
     txt << if f.flock(File::LOCK_NB | File::LOCK_EX)
       again = true
-      settings.base.ping
+      settings.base.ping do |up, ep|
+        settings.twitter.update(
+          if up
+            "#{ep.to_h[:hostname]} went back up! #{EpBadge.new(ep).to_href}"
+          else
+            "#{ep.to_h[:hostname]} is down! #{EpBadge.new(ep).to_href}"
+          end
+        )
+      end
     else
       status(403)
       'Locked, try again a bit later'

@@ -148,6 +148,7 @@ class Endpoint
       },
       update_expression: 'set ' + update.join(', ')
     )
+    yield(up, self) if block_given? && up != h[:up]
     "#{h[:uri]}: #{res.code}"
   end
 
