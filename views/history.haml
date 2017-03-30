@@ -44,4 +44,6 @@
 %p
   Most recent HTTP request log:
 
-=EpLog.new(e).to_html
+%pre
+  :preserve
+    =@endpoint.to_h[:log]
