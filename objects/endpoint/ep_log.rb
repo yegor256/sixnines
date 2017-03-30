@@ -20,6 +20,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+require 'htmlentities'
+
 #
 # Log of endpoint
 #
@@ -29,6 +31,6 @@ class EpLog
   end
 
   def to_html
-    "<pre>#{@endpoint.to_h[:log]}</pre>"
+    "<pre>#{HTMLEntities.new.encode(@endpoint.to_h[:log])}</pre>"
   end
 end
