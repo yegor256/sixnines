@@ -27,6 +27,7 @@ require_relative 'endpoint/ep_state'
 require_relative 'endpoint/ep_availability'
 require_relative 'endpoint/ep_badge'
 require_relative 'endpoint/ep_graph'
+require_relative 'endpoint/ep_log'
 
 #
 # Single endpoint
