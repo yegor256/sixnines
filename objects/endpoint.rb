@@ -125,7 +125,8 @@ class Endpoint
       'updated = :t',
       'expires = :e',
       'pings = pings + :o',
-      '#state = :s'
+      '#state = :s',
+      'log = :g'
     ]
     update << 'failures = failures + :o' unless up
     update << 'flipped = :t' unless up == h[:up]
