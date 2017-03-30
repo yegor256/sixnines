@@ -44,8 +44,7 @@ class Endpoint
     end
 
     def history
-      @history = @ep.history if @history.nil?
-      @history
+      @history ||= @ep.history
     end
 
     def ping
