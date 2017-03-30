@@ -184,20 +184,17 @@ class Endpoint
   private
 
   def to_text(req, res)
-    "#{req.method} #{req.path}
-#{headers(req)}\n
-#{body(req.body)}\n
-\n
-HTTP/#{res.http_version} #{res.code} #{res.message}
-#{headers(res)}\n
-#{body(res.body)}"
+    "#{req.method} #{req.path}\n\
+#{headers(req)}\n#{body(req.body)}\n\n\
+HTTP/#{res.http_version} #{res.code} #{res.message}\n\
+#{headers(res)}\n#{body(res.body)}"
   end
 
   def headers(headers)
-    headers.to_hash.map { |k, v| v.map { |h| k + ': ' + h + "\n" } }.join
+    headers.to_hash.map { |k, v| v.map { |h| k + ': ' + h } }.join("\n")
   end
 
   def body(body)
-    body.nil? ? '' : body.strip.gsub(/^(.{300,}?).*$/m, '\1...')
+    body.nil? ? '' : body.strip.gsub(/^(.{200,}?).*$/m, '\1...')
   end
 end
