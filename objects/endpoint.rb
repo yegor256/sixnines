@@ -168,7 +168,7 @@ class Endpoint
       end
       [
         res,
-        "#{req}\n\n#{res}"
+        to_text(req, res)
       ]
     rescue Exception => e
       [
@@ -177,8 +177,28 @@ class Endpoint
             '500'
           end
         end.new,
-        "#{e.message}\n#{e.backtrace.inspect}"
+        "#{e.message}\n#{e.backtrace.join("\n")}"
       ]
     end
+  end
+
+  private
+
+  def to_text(req, res)
+    "#{req.method} #{req.path}
+#{headers(req)}\n
+#{body(req.body)}\n
+\n
+HTTP/#{res.http_version} #{res.code} #{res.message}
+#{headers(res)}\n
+#{body(res.body)}"
+  end
+
+  def headers(headers)
+    headers.to_hash.map { |k, v| v.map { |h| k + ': ' + h + "\n" } }.join
+  end
+
+  def body(body)
+    body.nil? ? '' : body.gsub(/^(.{300,}?).*$/m, '\1...')
   end
 end
