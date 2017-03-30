@@ -42,7 +42,7 @@ class EndpointTest < Test::Unit::TestCase
       'uri' => 'http://www.sixnines-broken-uri.io',
       'created' => 1_490_177_365
     )
-    res, _ = ep.fetch
+    res, = ep.fetch
     assert_equal('500', res.code)
   end
 end
