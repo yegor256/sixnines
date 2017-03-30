@@ -41,7 +41,9 @@ class Base
         ':r' => Time.now.to_i
       },
       key_condition_expression: 'active=:h and expires < :r'
-    ).items.map { |i| Endpoint.new(@aws, i) }.map { |e| e.ping(b) }.join("\n")
+    ).items
+    .map { |i| Endpoint.new(@aws, i) }
+    .map { |e| e.ping(&b) }.join("\n")
   end
 
   def find(query)
