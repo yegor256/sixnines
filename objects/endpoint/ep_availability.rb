@@ -33,7 +33,7 @@ class EpAvailability
     [
       (100 * (1 - nz(h[:failures].to_f) / nz(h[:pings].to_f))),
       99.9999
-    ].min.round(Math.log10(nz(h[:pings])).to_i)
+    ].min.round(Math.log10(nz(h[:pings])).to_i - 1)
   end
 
   def to_s
