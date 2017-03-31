@@ -33,6 +33,7 @@ class AvailabilityTest < Test::Unit::TestCase
       { pings: 1_000, failures: 0, avlbl: '99.9000%' },
       { pings: 10_000, failures: 5, avlbl: '99.9500%' },
       { pings: 10_000, failures: 0, avlbl: '99.9900%' },
+      { pings: 10_568, failures: 2, avlbl: '99.9810%' },
       { pings: 1_000_000, failures: 0, avlbl: '99.9999%' }
     ].each do |a|
       endpoint = Class.new do
