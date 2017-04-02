@@ -124,11 +124,11 @@ class Endpoint
       'updated = :t',
       'expires = :e',
       'pings = pings + :o',
-      '#state = :s',
-      '#log = :g'
+      '#state = :s'
     ]
     update << 'failures = failures + :o' unless up
     update << 'flipped = :t' unless up == h[:up]
+    update << '#log = :g' unless up
     @aws.update_item(
       table_name: 'sn-endpoints',
       key: {

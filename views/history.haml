@@ -34,6 +34,10 @@
   =e.to_h[:created]
 
 %p
+  Flipped on:
+  =e.to_h[:flipped]
+
+%p
   Age:
   =TimeDifference.between(e.to_h[:created], Time.now).humanize
 
@@ -41,7 +45,7 @@
   Next ping on:
   =e.to_h[:expires]
 
-%p
-  Most recent HTTP request log:
-
-%pre=html_escape(e.to_h[:log])
+- if e.to_h[:log]
+  %p
+    Most recent failed HTTP request log:
+  %pre=html_escape(e.to_h[:log])

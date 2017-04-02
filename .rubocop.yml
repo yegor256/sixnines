@@ -4,6 +4,8 @@ AllCops:
     - 'assets/**/*'
   DisplayCopNames: true
 
+Metrics/CyclomaticComplexity:
+  Max: 10
 Lint/RescueException:
   Enabled: false
 Metrics/MethodLength:
