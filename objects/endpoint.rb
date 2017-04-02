@@ -126,19 +126,22 @@ class Endpoint
       'pings = pings + :o',
       '#state = :s'
     ]
+    ean = {
+      '#state' => 'state'
+    }
     update << 'failures = failures + :o' unless up
     update << 'flipped = :t' unless up == h[:up]
-    update << '#log = :g' unless up
+    unless up
+      update << '#log = :g'
+      ean['#log'] = 'log'
+    end
     @aws.update_item(
       table_name: 'sn-endpoints',
       key: {
         'login' => h[:login],
         'uri' => h[:uri].to_s
       },
-      expression_attribute_names: {
-        '#state' => 'state',
-        '#log' => 'log'
-      },
+      expression_attribute_names: ean,
       expression_attribute_values: {
         ':s' => up ? 'up' : 'down',
         ':o' => 1,
