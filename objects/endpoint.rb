@@ -144,7 +144,7 @@ class Endpoint
         ':o' => 1,
         ':t' => Time.now.to_i,
         ':e' => (Time.now + 60).to_i, # ping again in 60 seconds
-        ':g' => log
+        ':g' => "#{Time.now}\n\n#{log}"
       },
       update_expression: 'set ' + update.join(', ')
     )
