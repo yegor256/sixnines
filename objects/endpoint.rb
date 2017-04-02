@@ -129,11 +129,18 @@ class Endpoint
     ean = {
       '#state' => 'state'
     }
+    eav = {
+      ':s' => up ? 'up' : 'down',
+      ':o' => 1,
+      ':t' => Time.now.to_i,
+      ':e' => (Time.now + 60).to_i # ping again in 60 seconds
+    }
     update << 'failures = failures + :o' unless up
     update << 'flipped = :t' unless up == h[:up]
     unless up
       update << '#log = :g'
       ean['#log'] = 'log'
+      eav[':g'] = "#{Time.now}\n\n#{log}"
     end
     @aws.update_item(
       table_name: 'sn-endpoints',
@@ -142,13 +149,7 @@ class Endpoint
         'uri' => h[:uri].to_s
       },
       expression_attribute_names: ean,
-      expression_attribute_values: {
-        ':s' => up ? 'up' : 'down',
-        ':o' => 1,
-        ':t' => Time.now.to_i,
-        ':e' => (Time.now + 60).to_i, # ping again in 60 seconds
-        ':g' => "#{Time.now}\n\n#{log}"
-      },
+      expression_attribute_values: eav,
       update_expression: 'set ' + update.join(', ')
     )
     yield(up, self) if block_given? && up != h[:up]
