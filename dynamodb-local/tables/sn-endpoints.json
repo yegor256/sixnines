@@ -1,0 +1,129 @@
+{
+  "TableName": "sn-endpoints",
+  "AttributeDefinitions": [
+    {
+      "AttributeName": "login",
+      "AttributeType": "S"
+    },
+    {
+      "AttributeName": "uri",
+      "AttributeType": "S"
+    },
+    {
+      "AttributeName": "active",
+      "AttributeType": "S"
+    },
+    {
+      "AttributeName": "id",
+      "AttributeType": "S"
+    },
+    {
+      "AttributeName": "hostname",
+      "AttributeType": "S"
+    },
+    {
+      "AttributeName": "flipped",
+      "AttributeType": "N"
+    },
+    {
+      "AttributeName": "expires",
+      "AttributeType": "N"
+    }
+  ],
+  "KeySchema": [
+    {
+      "AttributeName": "login",
+      "KeyType": "HASH"
+    },
+    {
+      "AttributeName": "uri",
+      "KeyType": "RANGE"
+    }
+  ],
+  "ProvisionedThroughput": {
+    "ReadCapacityUnits": "1",
+    "WriteCapacityUnits": "1"
+  },
+  "GlobalSecondaryIndexes": [
+    {
+      "IndexName": "unique",
+      "KeySchema": [
+        {
+          "AttributeName": "id",
+          "KeyType": "HASH"
+        },
+        {
+          "AttributeName": "hostname",
+          "KeyType": "RANGE"
+        }
+      ],
+      "Projection": {
+        "ProjectionType": "ALL"
+      },
+      "ProvisionedThroughput": {
+        "ReadCapacityUnits": "1",
+        "WriteCapacityUnits": "1"
+      }
+    },
+    {
+      "IndexName": "hostnames",
+      "KeySchema": [
+        {
+          "AttributeName": "active",
+          "KeyType": "HASH"
+        },
+        {
+          "AttributeName": "hostname",
+          "KeyType": "RANGE"
+        }
+      ],
+      "Projection": {
+        "ProjectionType": "ALL"
+      },
+      "ProvisionedThroughput": {
+        "ReadCapacityUnits": "1",
+        "WriteCapacityUnits": "1"
+      }
+    },
+    {
+      "IndexName": "flips",
+      "KeySchema": [
+        {
+          "AttributeName": "active",
+          "KeyType": "HASH"
+        },
+        {
+          "AttributeName": "flipped",
+          "KeyType": "RANGE"
+        }
+      ],
+      "Projection": {
+        "ProjectionType": "ALL"
+      },
+      "ProvisionedThroughput": {
+        "ReadCapacityUnits": "1",
+        "WriteCapacityUnits": "1"
+      }
+    },
+    {
+      "IndexName": "expires",
+      "KeySchema": [
+        {
+          "AttributeName": "active",
+          "KeyType": "HASH"
+        },
+        {
+          "AttributeName": "expires",
+          "KeyType": "RANGE"
+        }
+      ],
+      "Projection": {
+        "ProjectionType": "ALL"
+      },
+      "ProvisionedThroughput": {
+        "ReadCapacityUnits": "1",
+        "WriteCapacityUnits": "1"
+      }
+    }
+  ]
+}

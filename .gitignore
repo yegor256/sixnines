@@ -1,6 +1,7 @@
 coverage/
 .idea/
 *.gem
+target/
 .bundle/
 .DS_Store
 rdoc/
