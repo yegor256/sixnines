@@ -56,4 +56,19 @@ class AppTest < Test::Unit::TestCase
     get('/the-url-that-is-absent')
     assert(last_response.status == 404)
   end
+
+  def test_history_endpoint_not_found
+    get('/h/absent')
+    assert(last_response.status == 404)
+  end
+
+  def test_badge_endpoint_not_found
+    get('/b/absent')
+    assert(last_response.status == 404)
+  end
+
+  def test_graph_endpoint_not_found
+    get('/g/absent')
+    assert(last_response.status == 404)
+  end
 end

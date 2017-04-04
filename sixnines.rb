@@ -124,21 +124,33 @@ get '/' do
 end
 
 get '/b/:id' do
-  response.headers['Cache-Control'] = 'no-cache, private'
-  content_type 'image/svg+xml'
-  EpBadge.new(settings.base.take(params[:id])).to_svg
+  begin
+    response.headers['Cache-Control'] = 'no-cache, private'
+    content_type 'image/svg+xml'
+    EpBadge.new(settings.base.take(params[:id])).to_svg
+  rescue Base::EndpointNotFound
+    404
+  end
 end
 
 get '/h/:id' do
-  haml :history, layout: :layout, locals: @locals.merge(
-    e: Endpoint::Cached.new(settings.base.take(params[:id]))
-  )
+  begin
+    haml :history, layout: :layout, locals: @locals.merge(
+      e: Endpoint::Cached.new(settings.base.take(params[:id]))
+    )
+  rescue Base::EndpointNotFound
+    404
+  end
 end
 
 get '/g/:id' do
-  response.headers['Cache-Control'] = 'no-cache, private'
-  content_type 'image/svg+xml'
-  EpGraph.new(Endpoint::Cached.new(settings.base.take(params[:id]))).to_svg
+  begin
+    response.headers['Cache-Control'] = 'no-cache, private'
+    content_type 'image/svg+xml'
+    EpGraph.new(Endpoint::Cached.new(settings.base.take(params[:id]))).to_svg
+  rescue Base::EndpointNotFound
+    404
+  end
 end
 
 get '/ping' do
