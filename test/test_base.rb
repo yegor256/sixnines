@@ -28,4 +28,10 @@ class BaseTest < Test::Unit::TestCase
   def test_lists_flips
     assert(!Base.new(Dynamo.new.aws).flips.nil?)
   end
+
+  def test_tries_to_take_absent_endpoint
+    assert_raise do
+      Base.new(Dynamo.new.aws).take('absent')
+    end
+  end
 end
