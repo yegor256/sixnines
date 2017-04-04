@@ -33,7 +33,7 @@ task default: [:clean, :test, :rubocop, :copyright]
 
 require 'rake/testtask'
 desc 'Run all unit tests'
-Rake::TestTask.new(:test => :dynamo) do |test|
+Rake::TestTask.new(test: :dynamo) do |test|
   Rake::Cleaner.cleanup_files(['coverage'])
   test.libs << 'lib' << 'test'
   test.pattern = 'test/**/test_*.rb'
@@ -49,14 +49,11 @@ end
 
 task :dynamo do
   FileUtils.rm_rf('dynamodb-local/target')
-  pid = Process.spawn(
-    'mvn', 'install',
-    chdir: 'dynamodb-local',
-  )
-  END {
+  pid = Process.spawn('mvn', 'install', chdir: 'dynamodb-local')
+  at_exit do
     `kill -TERM #{pid}`
     puts "DynamoDB Local killed in PID #{pid}"
-  }
+  end
   begin
     puts 'DynamoDB Local table: ' + Dynamo.new.aws.describe_table(
       table_name: 'sn-endpoints'
