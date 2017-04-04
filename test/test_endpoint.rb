@@ -28,7 +28,7 @@ class EndpointTest < Test::Unit::TestCase
   def test_pings_valid_uri
     ep = Endpoint.new(
       nil,
-      'uri' => 'http://www.sixnines.io',
+      'uri' => 'http://www.yegor256.com',
       'created' => 1_490_177_388
     )
     res, log = ep.fetch
