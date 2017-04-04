@@ -71,6 +71,14 @@ Prerequisites:
   * [Bundler](http://bundler.io/)
   * [Maven](https://maven.apache.org/) 3.2+
 
+To run it locally:
+
+```
+$ rake run
+```
+
+Then, point your browser to `http://localhost:4567` and enjoy.
+
 ## License
 
 (The MIT License)
