@@ -236,6 +236,6 @@ error do
   haml(
     :error,
     layout: :layout,
-    locals: @locals.merge(error: "#{e.message}\n#{e.backtrace}")
+    locals: @locals.merge(error: "#{e.message}\n\t#{e.backtrace.join("\n\t")}")
   )
 end
