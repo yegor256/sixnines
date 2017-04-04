@@ -65,6 +65,12 @@ fields:
 
 Just submit a pull request. Make sure `rake` passes.
 
+Prerequisites:
+
+  * [Ruby](https://www.ruby-lang.org/en/) 2.0+
+  * [Bundler](http://bundler.io/)
+  * [Maven](https://maven.apache.org/) 3.2+
+
 ## License
 
 (The MIT License)

@@ -24,12 +24,14 @@ require 'rubygems'
 require 'rake'
 require 'rdoc'
 require 'rake/clean'
+require 'yaml'
+require 'aws-sdk'
 
 task default: [:clean, :test, :rubocop, :copyright]
 
 require 'rake/testtask'
 desc 'Run all unit tests'
-Rake::TestTask.new(:test) do |test|
+Rake::TestTask.new(:test => :dynamo) do |test|
   Rake::Cleaner.cleanup_files(['coverage'])
   test.libs << 'lib' << 'test'
   test.pattern = 'test/**/test_*.rb'
@@ -41,6 +43,33 @@ desc 'Run RuboCop on all directories'
 RuboCop::RakeTask.new(:rubocop) do |task|
   task.fail_on_error = true
   task.requires << 'rubocop-rspec'
+end
+
+task :dynamo do
+  cfg = File.join(Dir.pwd, 'dynamodb-local/target/dynamo.yml')
+  File.delete(cfg) if File.exist?(cfg)
+  pid = Process.spawn(
+    'mvn', '--quiet', 'install',
+    chdir: 'dynamodb-local',
+  )
+  END {
+    `kill -TERM #{pid}`
+    puts "DynamoDB Local killed in PID #{pid}"
+  }
+  begin
+    yaml = YAML.load(File.open(cfg))
+    puts 'Table status: ' + Aws::DynamoDB::Client.new(
+      region: 'us-east-1',
+      endpoint: "http://localhost:#{yaml['port']}",
+      access_key_id: yaml['key'],
+      secret_access_key: yaml['secret'],
+      http_open_timeout: 5,
+      http_read_timeout: 5
+    ).describe_table(table_name: 'sn-endpoints')[:table][:table_status]
+  rescue
+    retry
+  end
+  puts "DynamoDB Local is running in PID #{pid}, port=#{yaml['port']}"
 end
 
 task :copyright do
