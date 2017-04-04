@@ -37,18 +37,16 @@ require_relative 'version'
 require_relative 'objects/exec'
 require_relative 'objects/base'
 require_relative 'objects/cookie'
+require_relative 'objects/dynamo'
 require_relative 'objects/github_auth'
 
 configure do
   config = if ENV['RACK_ENV'] == 'test'
-    yaml = {
+    {
       'cookie_secret' => 'nothing',
       'github' => {
         'client_id' => 'nothing',
         'client_secret' => 'nothing'
-      },
-      'dynamodb' => {
-        'region' => 'us-east-1'
       },
       'twitter' => {
         'consumer_key' => 'nothing',
@@ -57,15 +55,6 @@ configure do
         'access_token_secret' => 'nothing'
       }
     }
-    extra = YAML.load(
-      File.open(
-        File.join(Dir.pwd, 'dynamodb-local/target/dynamo.yml')
-      )
-    )
-    yaml['dynamodb']['port'] = extra['port']
-    yaml['dynamodb']['key'] = extra['key']
-    yaml['dynamodb']['secret'] = extra['secret']
-    yaml
   else
     YAML.load(File.open(File.join(Dir.pwd, 'config.yml')))
   end
@@ -74,17 +63,7 @@ configure do
     config['github']['client_id'],
     config['github']['client_secret']
   )
-  opts = {
-    region: config['dynamodb']['region'],
-    access_key_id: config['dynamodb']['key'],
-    secret_access_key: config['dynamodb']['secret']
-  }
-  if config['dynamodb']['port']
-    opts[:endpoint] = "http://localhost:#{config['dynamodb']['port']}/"
-    opts[:http_open_timeout] = 5
-    opts[:http_read_timeout] = 5
-  end
-  set :base, Base.new(Aws::DynamoDB::Client.new(opts))
+  set :base, Base.new(Dynamo.new.aws)
   set :twitter, (Twitter::REST::Client.new do |c|
     c.consumer_key = config['twitter']['consumer_key']
     c.consumer_secret = config['twitter']['consumer_secret']

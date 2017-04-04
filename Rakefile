@@ -21,11 +21,13 @@
 # SOFTWARE.
 
 require 'rubygems'
+require 'fileutils'
 require 'rake'
 require 'rdoc'
 require 'rake/clean'
-require 'yaml'
-require 'aws-sdk'
+require_relative 'objects/dynamo'
+
+ENV['RACK_ENV'] = 'test'
 
 task default: [:clean, :test, :rubocop, :copyright]
 
@@ -46,8 +48,7 @@ RuboCop::RakeTask.new(:rubocop) do |task|
 end
 
 task :dynamo do
-  cfg = File.join(Dir.pwd, 'dynamodb-local/target/dynamo.yml')
-  File.delete(cfg) if File.exist?(cfg)
+  FileUtils.rm_rf('dynamodb-local/target')
   pid = Process.spawn(
     'mvn', 'install',
     chdir: 'dynamodb-local',
@@ -57,21 +58,16 @@ task :dynamo do
     puts "DynamoDB Local killed in PID #{pid}"
   }
   begin
-    yaml = YAML.load(File.open(cfg))
-    puts 'Table status: ' + Aws::DynamoDB::Client.new(
-      region: 'us-east-1',
-      endpoint: "http://localhost:#{yaml['port']}",
-      access_key_id: yaml['key'],
-      secret_access_key: yaml['secret'],
-      http_open_timeout: 5,
-      http_read_timeout: 5
-    ).describe_table(table_name: 'sn-endpoints')[:table][:table_status]
+    puts 'DynamoDB Local table: ' + Dynamo.new.aws.describe_table(
+      table_name: 'sn-endpoints'
+    )[:table][:table_status]
   rescue Exception => e
     puts e.message
+    # puts e.backtrace
     sleep(5)
     retry
   end
-  puts "DynamoDB Local is running in PID #{pid}, port=#{yaml['port']}"
+  puts "DynamoDB Local is running in PID #{pid}"
 end
 
 task :copyright do
