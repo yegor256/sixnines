@@ -26,6 +26,14 @@ require_relative 'endpoints'
 # Base
 #
 class Base
+  # When not found
+  class EndpointNotFound < StandardError
+    attr_reader :id
+    def initialize(id)
+      @id = id
+    end
+  end
+
   def initialize(aws)
     @aws = aws
   end
@@ -71,7 +79,7 @@ class Base
       },
       key_condition_expression: 'id=:h'
     ).items
-    raise "Endpoint #{id} not found" if items.empty?
+    raise EndpointNotFound, id if items.empty?
     Endpoint.new(@aws, items[0])
   end
 

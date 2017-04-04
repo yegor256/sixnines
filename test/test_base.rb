@@ -30,7 +30,7 @@ class BaseTest < Test::Unit::TestCase
   end
 
   def test_tries_to_take_absent_endpoint
-    assert_raise do
+    assert_raise Base::EndpointNotFound do
       Base.new(Dynamo.new.aws).take('absent')
     end
   end
