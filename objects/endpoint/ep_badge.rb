@@ -32,11 +32,11 @@ class EpBadge
   end
 
   def to_src
-    "http://www.sixnines.io/b/#{@endpoint.to_h[:id]}"
+    "/b/#{@endpoint.to_h[:id]}"
   end
 
   def to_href
-    "http://www.sixnines.io/h/#{@endpoint.to_h[:id]}"
+    "/h/#{@endpoint.to_h[:id]}"
   end
 
   def to_html

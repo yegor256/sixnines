@@ -32,7 +32,7 @@ class EpGraph
 
   def avg
     h = @endpoint.history.map { |p| p[:msec] }
-    h.inject(&:+) / (h.empty? ? 1 : h.size)
+    (h.inject(&:+) || 1) / (h.empty? ? 1 : h.size)
   end
 
   def avg_full

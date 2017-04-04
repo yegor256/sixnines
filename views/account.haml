@@ -1,28 +1,29 @@
-:javascript
-  $(function() {
-    var handler = StripeCheckout.configure({
-      key: '#{stripe_key}',
-      image: '/images/logo.png',
-      token: function (token) {
-        $('#stripeToken').val(token.id);
-        $('#stripeEmail').val(token.email);
-        $('#form').submit();
-      }
+- if stripe_key != 'test'
+  :javascript
+    $(function() {
+      var handler = StripeCheckout.configure({
+        key: '#{stripe_key}',
+        image: '/images/logo.png',
+        token: function (token) {
+          $('#stripeToken').val(token.id);
+          $('#stripeEmail').val(token.email);
+          $('#form').submit();
+        }
+      });
+      $('#go').on('click', function (e) {
+        if ($("#form")[0].checkValidity() && !$("#coupon").val()) {
+          handler.open({
+            name: 'One-time charge',
+            description: $('#endpoint').val(),
+            amount: 495
+          });
+          e.preventDefault();
+        }
+      });
+      $(window).on('popstate', function () {
+        handler.close();
+      });
     });
-    $('#go').on('click', function (e) {
-      if ($("#form")[0].checkValidity() && !$("#coupon").val()) {
-        handler.open({
-          name: 'One-time charge',
-          description: $('#endpoint').val(),
-          amount: 495
-        });
-        e.preventDefault();
-      }
-    });
-    $(window).on('popstate', function () {
-      handler.close();
-    });
-  });
 
 %form#form{:method=>'post', :action=>'/a/add'}
   %input#endpoint{:type=>'url', :name=>'endpoint', :size=>'70', :placeholder=>'URI of a new endpoint'}

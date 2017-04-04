@@ -43,17 +43,23 @@ require_relative 'objects/github_auth'
 configure do
   config = if ENV['RACK_ENV'] == 'test'
     {
-      'cookie_secret' => 'nothing',
+      'cookie_secret' => 'test',
       'github' => {
-        'client_id' => 'nothing',
-        'client_secret' => 'nothing'
+        'client_id' => 'test',
+        'client_secret' => 'test'
       },
       'twitter' => {
-        'consumer_key' => 'nothing',
-        'consumer_secret' => 'nothing',
-        'access_token' => 'nothing',
-        'access_token_secret' => 'nothing'
-      }
+        'consumer_key' => 'test',
+        'consumer_secret' => 'test',
+        'access_token' => 'test',
+        'access_token_secret' => 'test'
+      },
+      'stripe' => {
+        'live' => {
+          'public_key' => 'test'
+        }
+      },
+      'coupons' => ['test']
     }
   else
     YAML.load(File.open(File.join(Dir.pwd, 'config.yml')))
@@ -77,7 +83,7 @@ before '/*' do
     ver: VERSION,
     login_link: settings.oauth.login_uri
   }
-  if cookies[:sixnines]
+  if cookies[:sixnines] || ENV['RACK_ENV'] == 'test'
     begin
       @locals[:user] = Cookie::Closed.new(
         cookies[:sixnines], settings.config['cookie_secret']
@@ -226,9 +232,10 @@ end
 
 error do
   status 503
+  e = env['sinatra.error']
   haml(
     :error,
     layout: :layout,
-    locals: @locals.merge(error: env['sinatra.error'].message)
+    locals: @locals.merge(error: "#{e.message}\n#{e.backtrace}")
   )
 end
