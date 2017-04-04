@@ -33,9 +33,9 @@ gem 'rubocop', '0.46.0', require: false
 gem 'rubocop-rspec', '1.8.0', require: false
 gem 'sass', '3.4.22'
 gem 'sinatra', '1.4.7'
-gem 'sinatra-contrib'
-gem 'stripe'
+gem 'sinatra-contrib', '1.4.7'
+gem 'stripe', '2.1.0'
 gem 'test-unit', '3.0.8', require: false
-gem 'time_difference'
-gem 'timeout'
-gem 'twitter'
+gem 'time_difference', '0.5.0'
+gem 'timeout', '0.0.1'
+gem 'twitter', '6.1.0'
