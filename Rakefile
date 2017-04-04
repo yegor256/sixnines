@@ -67,6 +67,10 @@ task :dynamo do
   puts "DynamoDB Local is running in PID #{pid}"
 end
 
+task run: :dynamo do
+  `RACK_ENV=test ruby ./sixnines.rb`
+end
+
 task :copyright do
   sh "grep -q -r '#{Date.today.strftime('%Y')}' \
     --include '*.rb' \
