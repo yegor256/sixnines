@@ -48,7 +48,7 @@
                                 <artifactItem>
                                     <groupId>com.jcabi</groupId>
                                     <artifactId>DynamoDBLocal</artifactId>
-                                    <version>2014-10-07</version>
+                                    <version>2015-07-16</version>
                                     <type>zip</type>
                                     <outputDirectory>${project.build.directory}/dynamodb-dist</outputDirectory>
                                     <overWrite>false</overWrite>
@@ -115,6 +115,9 @@
                             <dist>${project.build.directory}/dynamodb-dist</dist>
                             <key>${dynamo.key}</key>
                             <secret>${dynamo.secret}</secret>
+                            <arguments>
+                                <argument>-inMemory</argument>
+                            </arguments>
                             <tables>
                                 <table>${basedir}/tables/sn-endpoints.json</table>
                                 <table>${basedir}/tables/sn-pings.json</table>

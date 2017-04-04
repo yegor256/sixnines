@@ -49,7 +49,7 @@ task :dynamo do
   cfg = File.join(Dir.pwd, 'dynamodb-local/target/dynamo.yml')
   File.delete(cfg) if File.exist?(cfg)
   pid = Process.spawn(
-    'mvn', '--quiet', 'install',
+    'mvn', 'install',
     chdir: 'dynamodb-local',
   )
   END {
@@ -66,7 +66,9 @@ task :dynamo do
       http_open_timeout: 5,
       http_read_timeout: 5
     ).describe_table(table_name: 'sn-endpoints')[:table][:table_status]
-  rescue
+  rescue Exception => e
+    puts e.message
+    sleep(5)
     retry
   end
   puts "DynamoDB Local is running in PID #{pid}, port=#{yaml['port']}"
