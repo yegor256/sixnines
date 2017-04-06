@@ -161,11 +161,12 @@ get '/ping' do
     txt << if f.flock(File::LOCK_NB | File::LOCK_EX)
       again = true
       settings.base.ping do |up, ep|
+        href = 'http://www.sixnines.io' + EpBadge.new(ep).to_href
         settings.twitter.update(
           if up
-            "#{ep.to_h[:hostname]} went back up! #{EpBadge.new(ep).to_href}"
+            "#{ep.to_h[:hostname]} went back up! #{href}"
           else
-            "#{ep.to_h[:hostname]} is down! #{EpBadge.new(ep).to_href}"
+            "#{ep.to_h[:hostname]} is down! #{href}"
           end
         )
       end
