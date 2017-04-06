@@ -123,6 +123,10 @@ get '/' do
   )
 end
 
+get '/rss' do
+  'not implemented yet'
+end
+
 get '/b/:id' do
   begin
     response.headers['Cache-Control'] = 'no-cache, private'
