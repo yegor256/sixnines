@@ -6,4 +6,4 @@ target/
 .DS_Store
 rdoc/
 .sass-cache/
-Gemfile.lock
+
