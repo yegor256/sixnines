@@ -29,6 +29,7 @@ gem 'mail', '2.6.4'
 gem 'nokogiri', '1.6.8.1'
 gem 'rack-test', '0.6.3'
 gem 'rake', '12.0.0', require: false
+gem 'rerun', require: false
 gem 'rubocop', '0.46.0', require: false
 gem 'rubocop-rspec', '1.8.0', require: false
 gem 'sass', '3.4.22'

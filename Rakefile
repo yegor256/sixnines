@@ -68,7 +68,7 @@ task :dynamo do
 end
 
 task run: :dynamo do
-  `RACK_ENV=test ruby ./sixnines.rb`
+  `rerun -b "RACK_ENV=test ruby ./sixnines.rb"`
 end
 
 task :copyright do
