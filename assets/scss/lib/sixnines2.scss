@@ -1,0 +1,79 @@
+@import 'variables';
+@import 'responsive';
+@import 'fonts';
+@import 'colors';
+@import 'general';
+@import 'typography';
+@import 'paddings';
+@import 'layouts';
+@import 'buttons';
+@import 'form';
+@import 'menus';
+@import 'inputs';
+@import 'mixins';
+
+body {
+  @extend .center;
+  @extend .font-pro-400;
+  line-height: 1.4em;
+  overflow-x: scroll;
+  padding-bottom: 4em;
+  padding-top: 1.5em;
+
+  @include mobile() {
+    padding: 3em;
+  }
+
+  @include tablet() {
+    padding: 2em;
+  }
+}
+
+.normal {
+  @extend .font-pro-400;
+}
+
+.bold {
+  @extend .font-pro-700;
+  font-weight: 600;
+}
+
+fieldset {
+  border: 0 solid;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+
+  &:hover {
+    border-bottom: 2px solid;
+  }
+}
+
+p {
+  padding-bottom: $base-font-size;
+  padding-top: $base-font-size;
+}
+
+.favicon-small {
+  height: 20px;
+  width: 20px;
+}
+
+.favicon-big {
+  height: 40px;
+  width: 40px;
+}
+
+.sh {
+  text-shadow: 1px 1px 0 #fff;
+}
+
+.no-overflow {
+  overflow-x: hidden;
+}
+
+.endpoint-header {
+  line-height: 60px;
+}

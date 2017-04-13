@@ -12,35 +12,32 @@
   %body.left
     %section
       %header
-        .container.shift2
-          .span3
-            %nav.menu-horizontal
-              %ul
-                %li
-                  %a.bold{:href => '/'}
-                    SIXNINES
-          .span9.right
-            %nav
-              %ul.menu-horizontal.sh
-                - if defined? user
-                  %li
-                    ='@' + user
-                  %li
-                    %a{:href=>'/a'}>account
-                  %li
-                    %a{:href=>'/logout'}>exit
-                - else
-                  %li
-                    %a{:href=>login_link}>login
+        %nav
+          %ul.hor
+            %li
+              %img{src: url('images/uptime.png'), width: '50px'}
+              %a.bold{:href => '/'}
+                SIXNINES
+          %ul.hor.shadowed
+            - if defined? user
+              %li
+                ='@' + user
+              %li
+                %a{:href=>'/a'}>account
+              %li
+                %a{:href=>'/logout'}>exit
+            - else
+              %li
+                %a{:href=>login_link}>login
       %article.container.shift2.padding-vertical-large
         =yield
       %footer
-        %nav.container.shift2.sh
-          %ul.menu-horizontal
+        %nav
+          %ul.hor
             %li
               = '--'
-        %nav.container.shift2.sh
-          %ul.menu-horizontal
+        %nav
+          %ul.hor
             %li
               %a{:href => 'https://twitter.com/sxnns'} Twitter
             %li
@@ -49,8 +46,8 @@
               %a{:href => '/terms'} Terms of use
             %li
               %a{:href => 'http://www.yegor256.com'} @yegor256
-        %nav.container.shift2
-          %ul.menu-horizontal
+        %nav
+          %ul.hor
             %li
               %a{:href=>'https://github.com/yegor256/sixnines/stargazers'}
                 %img{:src=>'https://img.shields.io/github/stars/yegor256/sixnines.svg?style=flat-square'}

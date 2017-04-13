@@ -1,41 +1,41 @@
-@import 'lib/variables';
-@import 'lib/responsive';
-@import 'lib/fonts';
-@import 'lib/colors';
-@import 'lib/general';
-@import 'lib/typography';
-@import 'lib/paddings';
-@import 'lib/layouts';
-@import 'lib/buttons';
-@import 'lib/form';
-@import 'lib/menus';
-@import 'lib/inputs';
-@import 'lib/mixins';
+@import 'responsive';
+
+// elements variables
+$radius: 3px;
+$base: 16px;
+$controls-padding: $base / 3;
+
+// switch to different screens
+$switch-mobile: 450;
+$switch-tablet: 700;
+$switch-wide: 1600;
+
+// colors
+$background: #fcfcfc;
+$text: #6f6f6f;
+$green: #4c1;
+$blue: #07a;
+$orange: #e90;
+$bright: #dd4a68;
+$red: #dc5b21;
+$input: #fff;
 
 body {
-  @extend .center;
-  @extend .font-pro-400;
   line-height: 1.4em;
   overflow-x: scroll;
-  padding-bottom: 4em;
-  padding-top: 1.5em;
-
-  @include mobile() {
-    padding: 3em;
-  }
-
-  @include tablet() {
-    padding: 2em;
-  }
+  background-color: $background;
+  color: $text;
+  font-size: $base;
+  font-family: monospace;
+  padding: 1.5em 4em;
 }
 
 .normal {
-  @extend .font-pro-400;
+  font-weight: normal;
 }
 
 .bold {
-  @extend .font-pro-700;
-  font-weight: 600;
+  font-weight: bold;
 }
 
 fieldset {
@@ -45,15 +45,11 @@ fieldset {
 a {
   color: inherit;
   text-decoration: none;
+  cursor: pointer;
 
   &:hover {
     border-bottom: 2px solid;
   }
-}
-
-p {
-  padding-bottom: $base-font-size;
-  padding-top: $base-font-size;
 }
 
 .favicon-small {
@@ -66,14 +62,51 @@ p {
   width: 40px;
 }
 
-.sh {
+.shadowed {
   text-shadow: 1px 1px 0 #fff;
 }
 
-.no-overflow {
-  overflow-x: hidden;
+ul.hor {
+
+  li {
+    //background-color: red;
+    display: inline-block;
+  }
 }
 
-.endpoint-header {
-  line-height: 60px;
+%control {
+  border-radius: $radius;
+  outline: none;
+  position: relative;
+  white-space: nowrap;
+  padding: $controls-padding *2 $controls-padding;
+  margin: 0 $controls-padding $controls-padding 0;
+  font-size: $base;
+}
+
+
+input[type='text'],
+input[type='url'] {
+  @extend %control;
+  background-color: $input;
+  border: 1px solid darken($background, 20);
+  cursor: text;
+
+  &:focus,
+  &:active {
+    box-shadow: inset 0 0 10px darken($background, 10);
+  }
+}
+
+:input-placeholder {
+  color: $text;
+}
+
+button[type='submit'],
+input[type='submit'] {
+  @extend %control, .bold;
+  background-color: $blue;
+  color: $background;
+  border: 0;
+  padding: $controls-padding * 2;
 }

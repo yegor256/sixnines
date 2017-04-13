@@ -6,8 +6,8 @@
 
 %form{:method=>'get', :action=>'/'}
   %fieldset
-    %input.text.b.f-span8{placeholder: 'Your keyword for URI', type: 'text', name: 'q', value: query}
-    %button.button-blue.light.b.f-span3{type: 'submit'} Search
+    %input{placeholder: 'Your keyword for URI', type: 'text', name: 'q', value: query}
+    %button{type: 'submit'} Search
 
 - if query
   %p
