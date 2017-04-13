@@ -60,7 +60,6 @@ task :dynamo do
     )[:table][:table_status]
   rescue Exception => e
     puts e.message
-    # puts e.backtrace
     sleep(5)
     retry
   end
