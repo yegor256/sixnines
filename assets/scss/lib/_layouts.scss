@@ -1,0 +1,72 @@
+@import 'lib/mixins';
+
+.container {
+  margin: 0 auto;
+  width: 100%;
+
+  &::after {
+    clear: both;
+    content: '';
+    display: block;
+  }
+}
+
+%span-column {
+  float: left;
+  position: relative;
+  vertical-align: top;
+}
+
+@for $i from 1 through 12 {
+
+  .span#{$i} {
+    @extend %span-column;
+    @if mixin-exists(transition) {
+      @include transition();
+    }
+    @if mixin-exists(calc-prefixed) {
+      @include calc-prefixed(width, 100% / 12 * $i);
+    }
+
+    @include tablet {
+      @if mixin-exists(transition) {
+        @include transition();
+      }
+      @include calc-prefixed(width, 100% / 12 * $i);
+    }
+
+    @include mobile {
+      @if mixin-exists(transition) {
+        @include transition();
+      }
+      width: 100%;
+    }
+  }
+
+  .mobile-span#{$i} {
+    @extend %span-column;
+    @if mixin-exists(transition) {
+      @include transition();
+    }
+
+    @if mixin-exists(calc-prefixed) {
+      @include calc-prefixed(width, 100% / 12 * $i);
+    }
+  }
+}
+
+@for $i from 1 through 5 {
+  .shift#{$i} {
+    @if mixin-exists(calc-prefixed) {
+      @include calc-prefixed(width, 100% - (100% / 12 * $i) * 2);
+    }
+
+    @include tablet {
+      width: 100%;
+    }
+
+    @include mobile {
+      width: 100%;
+    }
+  }
+}

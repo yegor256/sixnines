@@ -1,0 +1,27 @@
+%control {
+  @extend .normal;
+  border-radius: $controls-border-radius;
+  cursor: pointer;
+  font-size: $base-font-size;
+  outline: none;
+  position: relative;
+  white-space: nowrap;
+
+  &.l {
+    color: color('brown');
+    text-shadow: 0 1px 0 color('lighter');
+  }
+
+  &.d {
+    color: color('lighter');
+    text-shadow: 0 1px 0 color('brown');
+  }
+
+  &.s {
+    padding: 9px 3px;
+  }
+
+  &.b {
+    padding: 15px 6px;
+  }
+}

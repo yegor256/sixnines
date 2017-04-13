@@ -29,7 +29,7 @@
         <stop offset="1" stop-opacity=".1"/>
       </linearGradient>
       <mask id="a">
-        <rect width="106" height="20" rx="3" fill="#fff"/>
+        <rect width="106" height="20" rx="3" fill="#fff" style="fill:#fcfcfc;stroke-width:0;stroke:rgb(20,20,20)"/>
       </mask>
       <g mask="url(#a)">
         <path fill="#555" d="M0 0h37v20H0z"/>
@@ -48,18 +48,18 @@
       <g fill="#fff" text-anchor="middle" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="11">
         <text x="19.5" y="15" fill="#010101" fill-opacity=".3">
           <xsl:if test="state='true'">
-            <xsl:text>up</xsl:text>
+            <xsl:text>&#x21e1;</xsl:text>
           </xsl:if>
           <xsl:if test="state='false'">
-            <xsl:text>down</xsl:text>
+            <xsl:text>&#x21e3;</xsl:text>
           </xsl:if>
         </text>
         <text x="19.5" y="14">
           <xsl:if test="state='true'">
-            <xsl:text>up</xsl:text>
+            <xsl:text>&#x21e1;</xsl:text>
           </xsl:if>
           <xsl:if test="state='false'">
-            <xsl:text>down</xsl:text>
+            <xsl:text>&#x21e3;</xsl:text>
           </xsl:if>
         </text>
         <text x="102.5" y="15" fill="#010101" fill-opacity=".3" text-anchor="end">

@@ -1,0 +1,65 @@
+@import 'lib/mixins';
+
+.no-padding {
+  padding: 0;
+}
+
+.no-margin {
+  margin: 0;
+}
+
+.no-horizontal-padding {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.no-left-padding {
+  padding-left: 0;
+}
+
+.no-vertical-padding {
+  padding-bottom: 0;
+  padding-top: 0;
+}
+
+$padding-or-margin: (
+  padding (
+    around: (top, right, bottom, left),
+    top: (top),
+    left: (left),
+    right: (right),
+    bottom: (bottom),
+    vertical: (top, bottom),
+    horizontal: (left, right)
+  ),
+  margin (
+    around: (top, right, bottom, left),
+    vertical: (top, bottom),
+    horizontal: (left, right),
+    bottom: (bottom),
+    right: (right),
+    top: (top)
+  )
+);
+
+// generate padding classes
+
+@each $kind in $padding-or-margin {
+  @each $direction in nth($kind, 2) {
+    @each $size in $sizes {
+      .#{nth($kind, 1)}-#{nth($direction, 1)}-#{nth($size, 1)} {
+        @each $side in nth($direction, 2) {
+          @include calc-prefixed(#{nth($kind, 1)}-#{nth($side, 1)}, $base-font-size * nth($size, 2), '!important');
+
+          @include mobile {
+            @include calc-prefixed(#{nth($kind, 1)}-#{nth($side, 1)}, $base-font-size, '!important');
+          }
+
+          @include tablet {
+            @include calc-prefixed(#{nth($kind, 1)}-#{nth($side, 1)}, $base-font-size * nth($size, 2) / 1.5, '!important');
+          }
+        }
+      }
+    }
+  }
+}

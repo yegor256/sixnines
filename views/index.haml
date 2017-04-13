@@ -6,8 +6,8 @@
 
 %form{:method=>'get', :action=>'/'}
   %fieldset
-    %input{:type=>'text', :name=>'q', :value=>query}
-    %button{:type=>'submit'}>Search
+    %input.text.b.f-span8{placeholder: 'Your keyword for URI', type: 'text', name: 'q', value: query}
+    %button.button-blue.light.b.f-span3{type: 'submit'} Search
 
 - if query
   %p
@@ -24,14 +24,15 @@
           =EpBadge.new(e).to_html
 
 - if !flips.empty?
+  -#%p
+  -#  Recent
+  -#  =flips.size
+  -#  flips:
   %p
-    Recent
-    =flips.size
-    flips:
-  %ul
-    - flips.each do |e|
-      %li
-        =EpUri.new(e).to_html
-        =EpBadge.new(e).to_html
-        =e.to_h[:flipped]
-
+    %ul.menu-vertical
+      - flips.each do |e|
+        %li
+          =EpUri.new(e).favicon('small')
+          =EpUri.new(e).to_html
+          =EpBadge.new(e).to_html
+          %span.gray= e.to_h[:flipped]

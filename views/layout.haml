@@ -5,59 +5,60 @@
     %meta{:name => 'viewport', :content => 'width=device-width, initial-scale=1.0'}
     %meta{:name => 'keywords', :content => 'availability, six nines, web site'}
     %meta{:name => 'description', :content => 'Hosted web site availability checker'}
-    %link{:type => 'text/css', :href => url('css/main.css'), :rel => 'stylesheet'}
+    %link{:type => 'text/css', :href => url('css/sixnines.css'), :rel => 'stylesheet'}
     %link{:rel => 'shortcut icon', :href => '/images/favicon.png'}
-    %link{:rel => 'stylesheet', :href => 'http://yegor256.github.io/tacit/tacit.min.css'}
     %script{:src => 'https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'}
     %script{:src => 'https://checkout.stripe.com/checkout.js'}
-  %body
+  %body.left
     %section
       %header
-        %nav
-          %ul
-            %li
-              %a{:href => '/'}
-                %img.logo{:src => '/images/logo.svg'}
-        %nav
-          %ul
-            - if defined? user
-              %li
-                ='@' + user
-              %li
-                %a{:href=>'/a'}>account
-              %li
-                %a{:href=>'/logout'}>exit
-            - else
-              %li
-                %a{:href=>login_link}>login
-      %article
+        .container.shift2
+          .span3
+            %nav.menu-horizontal
+              %ul
+                %li
+                  %a.bold{:href => '/'}
+                    SIXNINES
+          .span9.right
+            %nav
+              %ul.menu-horizontal.sh
+                - if defined? user
+                  %li
+                    ='@' + user
+                  %li
+                    %a{:href=>'/a'}>account
+                  %li
+                    %a{:href=>'/logout'}>exit
+                - else
+                  %li
+                    %a{:href=>login_link}>login
+      %article.container.shift2.padding-vertical-large
         =yield
       %footer
-        %nav
-          %ul
+        %nav.container.shift2.sh
+          %ul.menu-horizontal
             %li
-              =ver
-            %li
-              %a{:href=>'https://github.com/yegor256/sixnines/stargazers'}
-                %img{:src=>'https://img.shields.io/github/stars/yegor256/sixnines.svg?style=flat-square'}
-            %li
-              By
-              %a{:href => 'http://www.yegor256.com'} @yegor256
-        %nav
-          %ul
+              = '--'
+        %nav.container.shift2.sh
+          %ul.menu-horizontal
             %li
               %a{:href => 'https://twitter.com/sxnns'} Twitter
             %li
               %a{:href => '/rss'} RSS
-        %nav
-          %ul
+            %li
+              %a{:href => '/terms'} Terms of use
+            %li
+              %a{:href => 'http://www.yegor256.com'} @yegor256
+        %nav.container.shift2
+          %ul.menu-horizontal
+            %li
+              %a{:href=>'https://github.com/yegor256/sixnines/stargazers'}
+                %img{:src=>'https://img.shields.io/github/stars/yegor256/sixnines.svg?style=flat-square'}
             %li
               %a{:href=>'http://www.sixnines.io/h/3b05e836'}
                 %img{:src=>'http://www.sixnines.io/b/3b05e836'}
-        %nav
-          %ul
             %li
-              %a{:href => '/terms'} Terms of use
+              =ver
     :javascript
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

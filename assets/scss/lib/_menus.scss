@@ -1,0 +1,39 @@
+%menu {
+  list-style-type: decimal;
+  pointer-events: none;
+  width: 100%;
+
+  li {
+    cursor: pointer;
+    margin: 0 $base-font-size / 3;
+    pointer-events: auto;
+
+    @include mobile() {
+      margin: 0;
+    }
+  }
+}
+
+.menu-spread {
+  @extend %menu;
+
+  li {
+    padding: 0 $base-font-size * .2;
+  }
+}
+
+.menu-horizontal {
+  @extend %menu;
+
+  li {
+    display: inline-block;
+  }
+}
+
+.menu-vertical {
+  @extend %menu;
+
+  li {
+    display: block;
+  }
+}

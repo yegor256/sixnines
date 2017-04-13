@@ -1,0 +1,58 @@
+@import 'lib/mixins';
+
+.left {
+  text-align: left;
+}
+
+.right {
+  text-align: right;
+}
+
+.center {
+  text-align: center;
+}
+
+.base {
+  font-size: $base-font-size;
+}
+
+.tight {
+  letter-spacing: -.1em;
+}
+
+.spread {
+  letter-spacing: .3em;
+}
+
+.upper {
+  text-transform: uppercase;
+}
+
+.lower {
+  text-transform: lowercase;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+.no-wrap {
+  white-space: nowrap;
+}
+
+.pull-left {
+  float: left;
+}
+
+.pull-right {
+  float: right;
+}
+
+.no-underline {
+  text-decoration: none;
+
+  &:hover {
+    border: 0;
+    text-decoration: none;
+  }
+}
