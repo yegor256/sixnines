@@ -66,6 +66,13 @@ task :dynamo do
   puts "DynamoDB Local is running in PID #{pid}"
 end
 
+task :sleep do
+  loop do
+    sleep(5)
+    puts 'Still alive...'
+  end
+end
+
 task run: :dynamo do
   `rerun -b "RACK_ENV=test rackup"`
 end
