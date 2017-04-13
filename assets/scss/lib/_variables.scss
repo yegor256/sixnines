@@ -1,0 +1,28 @@
+$webfonts: (
+  pro: (family: 'Roboto Mono', styles: (100, 200, 300, 400, 500, 700))
+);
+
+
+$colors: (
+  'lighter' #fefbf9,
+  'light' #fcfcfc,
+  'gray' #9f9f9f,
+  'red' #dc5b21,
+  'green' #4c1,
+  'blue' #07a,
+  'bright' #dd4a68,
+  'orange' #e90
+);
+
+$base-font-size: 16px;
+$switch-mobile: 450;
+$switch-tablet: 700;
+$switch-wide: 1600;
+$background-color: #fcfcfc;
+$controls-depth: 0;
+$controls-text-color: #fbfbfb;
+$controls-border-radius: 3px;
+$controls-default-color: darken($background-color, 25);
+$text-color: #383127;
+$inputs-background: #fff;
+$do-not-switch: false;

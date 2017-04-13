@@ -1,0 +1,112 @@
+@import 'lib/mixins';
+
+@each $attr, $val in $colors {
+
+  .background-#{$attr} {
+    background-color: unquote($val);
+  }
+
+  .darken-background-#{$attr} {
+    background-color: darken(unquote($val), 10);
+  }
+
+  .double-darken-background-#{$attr} {
+    background-color: darken(unquote($val), 15);
+  }
+
+  .lighten-background-#{$attr} {
+    background-color: lighten(unquote($val), 10);
+  }
+
+  .double-lighten-background-#{$attr} {
+    background-color: lighten(unquote($val), 15);
+  }
+
+  .#{$attr} {
+    color: unquote($val);
+  }
+
+  .darken-#{$attr} {
+    color: darken(unquote($val), 10);
+  }
+
+  .lighten-#{$attr} {
+    color: lighten(unquote($val), 10);
+  }
+
+  .border-bottom-#{$attr} {
+    border-bottom: 1px solid unquote($val);
+  }
+
+  .hover-#{$attr} {
+
+    &:hover {
+      @if mixin-exists(transition) {
+        @include transition(.1s);
+      }
+      color: unquote($val);
+    }
+  }
+
+  .hover-background-#{$attr} {
+
+    &:hover {
+      @if mixin-exists(transition) {
+        @include transition(.1s);
+      }
+      background-color: unquote($val);
+    }
+  }
+}
+
+.light {
+  color: lookup($colors, 'light');
+}
+
+.background-color {
+  background-color: $background-color;
+}
+
+.controls-text-color {
+  color: $controls-text-color;
+}
+
+.background-controls-text-color {
+  background-color: $controls-text-color;
+}
+
+.lighten-text {
+  color: lighten($controls-text-color, 25);
+}
+
+.double-lighten-text {
+  color: lighten($controls-text-color, 45);
+}
+
+.darken-text {
+  color: darken($text-color, 25);
+}
+
+.double-darken-text {
+  color: darken($text-color, 45);
+}
+
+.text-color {
+  color: $text-color;
+}
+
+.lighten-background {
+  background-color: lighten($background-color, 5);
+}
+
+.double-lighten-background {
+  background-color: lighten($background-color, 10);
+}
+
+.darken-background {
+  background-color: darken($background-color, 5);
+}
+
+.double-darken-background {
+  background-color: darken($background-color, 10);
+}

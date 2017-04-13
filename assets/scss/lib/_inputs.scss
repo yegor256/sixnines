@@ -1,0 +1,43 @@
+@import 'lib/mixins';
+@import 'lib/controls';
+
+.text {
+  @extend %control;
+  background-color: $inputs-background;
+  border: 1px solid darken($inputs-background, 20);
+  cursor: text;
+
+  &:hover {
+    @if mixin-exists(transition) {
+      @include transition(.3s);
+    }
+    background-color: lighten($inputs-background, 4);
+  }
+
+  &:focus {
+    @if mixin-exists(transition) {
+      @include transition();
+    }
+    background-color: lighten($inputs-background, 3);
+  }
+
+  @if mixin-exists(transition) {
+    @include transition();
+  }
+
+  @if mixin-exists(main-font) {
+    @include main-font();
+  }
+}
+
+:input-placeholder {
+  color: darken($inputs-background, 40);
+}
+
+//::-moz-placeholder {
+//  color: darken($inputs-background, 40);
+//}
+//
+//:-ms-input-placeholder {
+//  color: darken($inputs-background, 40);
+//}

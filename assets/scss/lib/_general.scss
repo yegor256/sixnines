@@ -1,0 +1,29 @@
+@import 'lib/mixins';
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body,
+html {
+  background: $background-color;
+  color: $text-color;
+  font-size: $base-font-size;
+
+  &.hidden {
+    overflow-x: hidden;
+  }
+}
+
+img {
+  max-width: 100%;
+  vertical-align: middle;
+}
+
+@each $size in $sizes {
+  .#{nth($size, 1)} {
+    font-size: calc(#{$base-font-size} * #{nth($size, 2)});
+  }
+}

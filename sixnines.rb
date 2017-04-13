@@ -236,11 +236,11 @@ get '/a/del' do
   redirect to('/a')
 end
 
-get '/css/*.css' do
-  content_type 'text/css', charset: 'utf-8'
-  file = params[:splat].first
-  sass file.to_sym, views: "#{settings.root}/assets/sass"
-end
+# get '/css/*.css' do
+#   content_type 'text/css', charset: 'utf-8'
+#   file = params[:splat].first
+#   sass file.to_sym, views: "#{settings.root}/assets/sass"
+# end
 
 not_found do
   status 404
