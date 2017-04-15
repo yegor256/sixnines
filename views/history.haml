@@ -1,51 +1,39 @@
-%p.large.tight.bold
-  = EpUri.new(e).favicon('big')
-  = EpUri.new(e).to_html
+%p.light
+  %span.left= EpUri.new(e).favicon('big')
+  %span.dark.big= EpUri.new(e).to_html
+  = MetaInspector.new(EpUri.new(e).to_url).best_description
+%ul
+  %li
+    = EpBadge.new(e).to_html
+  %li
+    Avail.
+    %span.badge
+      = EpAvailability.new(e).full
+      = EpState.new(e).to_html
+  %li
+    ID
+    %span.badge.bold= e.to_h[:id]
+  %li
+    Avg.
+    %span.badge.bold= EpGraph.new(e).avg_full
 
 %p
-  = EpBadge.new(e).to_html
+  =EpGraph.new(e).to_html
 
--#%p
--#  =EpGraph.new(e).to_html
-
-%ul.menu-vertical
+%ul.list-v
   %li
-    ID:
-    %code
-      =e.to_h[:id]
+    Age
+    %span.badge= TimeDifference.between(e.to_h[:created], Time.now).humanize
   %li
-    URI:
-    %code
-      =EpUri.new(e).to_s
+    Flipped
+    %span.badge= human_date(e.to_h[:flipped])
+    Next ping:
+    %span.badge
+      in
+      = ago(Time.now, e.to_h[:expires])
   %li
-    State:
-    =EpState.new(e).to_html
-
-  %li
-    Availability:
-    =EpAvailability.new(e).full
-
-  %li
-    Avg:
-    =EpGraph.new(e).avg_full
-
-  %li
-    Created on:
-    =e.to_h[:created]
-
-  %li
-    Flipped on:
-    =e.to_h[:flipped]
-
-  %li
-    Age:
-    =TimeDifference.between(e.to_h[:created], Time.now).humanize
-
-  %li
-    Next ping on:
-    =e.to_h[:expires]
-
-  - if e.to_h[:log]
-    %p
-      Most recent failed HTTP request log:
-    %pre=html_escape(e.to_h[:log])
+    - if e.to_h[:log]
+      %p
+        %i.fa.fa-code.dark
+        %a View last failed HTTP log
+      %pre=html_escape(e.to_h[:log])

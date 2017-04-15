@@ -8,54 +8,75 @@
     %link{:type => 'text/css', :href => url('css/sixnines.css'), :rel => 'stylesheet'}
     %link{:rel => 'shortcut icon', :href => '/images/favicon.png'}
     %script{:src => 'https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'}
+    %script{src: 'https://use.fontawesome.com/fd6d9d1f31.js'}
     %script{:src => 'https://checkout.stripe.com/checkout.js'}
-  %body.left
+  %body
     %section
       %header
         %nav
-          %ul.hor
+          %ul
             %li
-              %img{src: url('images/uptime.png'), width: '50px'}
-              %a.bold{:href => '/'}
-                SIXNINES
-          %ul.hor.shadowed
+              %a.no-underline{:href => '/'}
+                %img.avatar{src: url('images/sixnines.svg')}
+              %span.shadowed 24x7 website availability monitor.
             - if defined? user
-              %li
-                ='@' + user
-              %li
-                %a{:href=>'/a'}>account
-              %li
-                %a{:href=>'/logout'}>exit
+              %li.right
+                %ul
+                  %li
+                    %a.bold.dark{:href=>'/a'}
+                      %img.avatar{src: 'http://cf.jare.io/?u=http://www.yegor256.com/images/yegor-bugayenko-192x192.png', width: '50px'}
+                  %li
+                    %a{:href=>'/logout'}
+                      Logout
             - else
-              %li
-                %a{:href=>login_link}>login
-      %article.container.shift2.padding-vertical-large
+              %li.right
+                %a.no-underline{:href=>login_link}
+                  %i.fa.fa-toggle-off
+                  Sign-in
+      %p.light
+        = '---'
+      %article.content
         =yield
       %footer
-        %nav
-          %ul.hor
+        %p.light
+          = '---'
+        %nav.light
+          %ul
             %li
-              = '--'
-        %nav
-          %ul.hor
+              %span.badge= ver
+              ·
             %li
-              %a{:href => 'https://twitter.com/sxnns'} Twitter
+              %a.light.bold{:href => '/terms'} Terms of use
+              ·
             %li
-              %a{:href => '/rss'} RSS
+              Contribute to
+              %i.fa.fa-github.light
+              %a.light.bold{:href => 'http://www.yegor256.com'}
+                GitHub Repo
+          %ul
             %li
-              %a{:href => '/terms'} Terms of use
+              Follow us
+              %i.fa.fa-twitter.light
+              %a.light.bold{:href => 'https://twitter.com/sxnns'} sxnns
+              ·
             %li
-              %a{:href => 'http://www.yegor256.com'} @yegor256
-        %nav
-          %ul.hor
+              Subscribe to
+              %i.fa.fa-rss.light
+              %a.light.bold{:href => '/rss'} latest news
+          %ul
+            %li
+              Created by
+              %i.fa.fa-external-link-square.light
+              %a.light.bold{:href => 'http://www.yegor256.com'} Yegor Bugayenko
+              ·
+          %br
+          %ul
             %li
               %a{:href=>'https://github.com/yegor256/sixnines/stargazers'}
                 %img{:src=>'https://img.shields.io/github/stars/yegor256/sixnines.svg?style=flat-square'}
             %li
               %a{:href=>'http://www.sixnines.io/h/3b05e836'}
                 %img{:src=>'http://www.sixnines.io/b/3b05e836'}
-            %li
-              =ver
     :javascript
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

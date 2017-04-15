@@ -1,8 +1,8 @@
-@import 'responsive';
-
 // elements variables
 $radius: 3px;
 $base: 16px;
+$big: $base * 1.5;
+$small: $base * .7;
 $controls-padding: $base / 3;
 
 // switch to different screens
@@ -12,7 +12,9 @@ $switch-wide: 1600;
 
 // colors
 $background: #fcfcfc;
-$text: #6f6f6f;
+$text: #787878;
+$light: #cfcfcf;
+$gray: #787878;
 $green: #4c1;
 $blue: #07a;
 $orange: #e90;
@@ -21,13 +23,37 @@ $red: #dc5b21;
 $input: #fff;
 
 body {
-  line-height: 1.4em;
-  overflow-x: scroll;
   background-color: $background;
   color: $text;
-  font-size: $base;
   font-family: monospace;
-  padding: 1.5em 4em;
+  font-size: $base;
+  line-height: 1.4em;
+  overflow-x: scroll;
+  padding: 1.5em 6em;
+}
+
+.big {
+  font-size: $big;
+}
+
+.blue {
+  color: $blue;
+}
+
+.green {
+  color: $green;
+}
+
+.dark {
+  color: $text;
+}
+
+.light {
+  color: $light;
+}
+
+.gray {
+  color: $gray;
 }
 
 .normal {
@@ -38,63 +64,117 @@ body {
   font-weight: bold;
 }
 
+.hint {
+  font-size: $small;
+}
+
 fieldset {
   border: 0 solid;
+  padding: 0;
 }
 
 a {
   color: inherit;
-  text-decoration: none;
   cursor: pointer;
+  text-decoration: underline;
 
   &:hover {
-    border-bottom: 2px solid;
+    color: darken($text, 20);
+    text-decoration: underline;
+  }
+}
+
+.no-underline {
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
   }
 }
 
 .favicon-small {
+  border-radius: 50%;
   height: 20px;
   width: 20px;
 }
 
 .favicon-big {
+  border-radius: 50%;
   height: 40px;
+  margin-right: $base;
   width: 40px;
 }
 
 .shadowed {
-  text-shadow: 1px 1px 0 #fff;
+  text-shadow: 1px 1px 0 $input;
 }
 
-ul.hor {
+header {
+  width: 100%;
+}
+
+.right {
+  float: right;
+}
+
+.left {
+  float: left;
+}
+
+header ul,
+footer ul,
+%list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+
+  * {
+    vertical-align: middle;
+  }
+}
+
+ul {
+  @extend %list;
 
   li {
-    //background-color: red;
     display: inline-block;
   }
 }
 
-%control {
-  border-radius: $radius;
-  outline: none;
-  position: relative;
-  white-space: nowrap;
-  padding: $controls-padding *2 $controls-padding;
-  margin: 0 $controls-padding $controls-padding 0;
-  font-size: $base;
+.list-v {
+  @extend %list;
+
+  li {
+    display: block;
+  }
 }
 
+.content {
+  margin: 2em 0;
+}
+
+%control {
+  border-radius: $radius;
+  font-family: monospace;
+  font-size: $base;
+  margin: 0 $controls-padding $controls-padding 0;
+  outline: none;
+  padding: $controls-padding * 2 $controls-padding;
+  position: relative;
+  white-space: nowrap;
+}
 
 input[type='text'],
 input[type='url'] {
   @extend %control;
   background-color: $input;
-  border: 1px solid darken($background, 20);
+  border: 2px solid darken($background, 5);
+  color: $text;
   cursor: text;
 
   &:focus,
   &:active {
-    box-shadow: inset 0 0 10px darken($background, 10);
+    border: 2px solid $light;
   }
 }
 
@@ -102,11 +182,65 @@ input[type='url'] {
   color: $text;
 }
 
-button[type='submit'],
+button,
 input[type='submit'] {
-  @extend %control, .bold;
+  @extend %control;
   background-color: $blue;
-  color: $background;
   border: 0;
+  color: $background;
+  cursor: pointer;
+  font-weight: bold;
   padding: $controls-padding * 2;
+}
+
+table {
+  font-size: $base;
+
+  .no-wrap {
+    white-space: nowrap;
+  }
+
+  * {
+    vertical-align: middle;
+  }
+}
+
+.badge {
+  background-color: $input;
+  border-radius: $radius;
+  color: $text;
+  display: inline-block;
+  padding: .1em;
+  text-shadow: 0 0 1px $background;
+  vertical-align: middle;
+}
+
+.avatar {
+  border-radius: 50%;
+  height: $base * 2;
+  width: $base * 2;
+}
+
+@mixin mobile {
+  @if $do-not-switch != true {
+    @media all and (min-width: 0) and (max-width: ($switch-mobile - 1) * 1px) {
+      @content;
+    }
+  }
+}
+
+@mixin tablet {
+  @if $do-not-switch != true {
+    @media all and (min-width: $switch-mobile * 1px) and (max-width: ($switch-tablet - 1) * 1px) {
+      @content;
+    }
+  }
+}
+
+@mixin wide {
+  @if $do-not-switch != true {
+    @media all and (min-width: $switch-tablet * 1px) {
+      @content;
+    }
+  }
 }

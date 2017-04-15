@@ -41,6 +41,6 @@ class EpUri
   end
 
   def to_html
-    "<a href='#{self}'>#{@endpoint.to_h[:hostname]}</a>"
+    "<a class='shadowed bold no-underline' href='#{self}'>#{@endpoint.to_h[:hostname]}</a>"
   end
 end

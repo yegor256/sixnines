@@ -1,33 +1,30 @@
-%p
-  SixNines is a 24x7 monitor of your website
-  availability. Just login, add one of your endpoints,
-  and in a few minutes you get a detailed report.
-  We ping all websites a few times per minute.
-
 %form{:method=>'get', :action=>'/'}
   %fieldset
-    %input{placeholder: 'Your keyword for URI', type: 'text', name: 'q', value: query}
+    %input{placeholder: 'Your keyword for URI', type: 'text', size: '45', name: 'q', value: query}
     %button{type: 'submit'} Search
 
 - if query
-  %p
-    Found by
-    ='"' + query + '":'
   - if found.empty?
     %p
       Nothing! Sorry about that.
   - else
-    %ul
+    %p
+      Found by
+      ='"' + query + '":'
+    %ul.list-v
       - found.each do |e|
         %li
           =EpUri.new(e).to_html
           =EpBadge.new(e).to_html
 
 - if !flips.empty?
-  -#%p
-  -#  Recent
-  -#  =flips.size
-  -#  flips:
+  %p
+    Check out
+    =flips.size
+    recent
+    = 'flip'.pluralize(flips.size) + '.'
+    Click on badge for detailed report.
+    Find endpoints and get detailed report. We ping all websites a few times per minute.
   %p
     %ul.menu-vertical
       - flips.each do |e|
@@ -35,4 +32,6 @@
           =EpUri.new(e).favicon('small')
           =EpUri.new(e).to_html
           =EpBadge.new(e).to_html
-          %span.gray= e.to_h[:flipped]
+          %span.light
+            = ago(Time.now, e.to_h[:flipped])
+            ago

@@ -22,8 +22,8 @@
  -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/2000/svg" version="1.0">
   <xsl:output method="xml" omit-xml-declaration="yes"/>
-  <xsl:variable name="W" select="440"/>
-  <xsl:variable name="H" select="120"/>
+  <xsl:variable name="W" select="500"/>
+  <xsl:variable name="H" select="80"/>
   <xsl:variable name="LM" select="0"/>
   <xsl:variable name="RM" select="0"/>
   <xsl:variable name="TM" select="15"/>
@@ -51,19 +51,19 @@
         <xsl:value-of select="$height"/>
       </xsl:comment>
       <rect width="{$W}" height="{$H}" style="fill:#fcfcfc;;stroke-width:0;stroke:rgb(20,20,20)" />
-      <line x1="{$LM}" x2="{$W - $RM}" style="stroke:rgb(74,141,152);stroke-width:1">
-        <xsl:attribute name="y1">
-          <xsl:call-template name="msec-to-y">
-            <xsl:with-param name="msec" select="@avg"/>
-          </xsl:call-template>
-        </xsl:attribute>
-        <xsl:attribute name="y2">
-          <xsl:call-template name="msec-to-y">
-            <xsl:with-param name="msec" select="@avg"/>
-          </xsl:call-template>
-        </xsl:attribute>
-      </line>
-      <text x="{$LM}" font-family="monospace" font-size="15" fill="rgba(0, 155, 221, .7)" dominant-baseline="hanging">
+      <!--<line x1="{$LM}" x2="{$W - $RM}" style="stroke:rgb(74,141,152);stroke-width:1">-->
+        <!--<xsl:attribute name="y1">-->
+          <!--<xsl:call-template name="msec-to-y">-->
+            <!--<xsl:with-param name="msec" select="@avg"/>-->
+          <!--</xsl:call-template>-->
+        <!--</xsl:attribute>-->
+        <!--<xsl:attribute name="y2">-->
+          <!--<xsl:call-template name="msec-to-y">-->
+            <!--<xsl:with-param name="msec" select="@avg"/>-->
+          <!--</xsl:call-template>-->
+        <!--</xsl:attribute>-->
+      <!--</line>-->
+      <text x="{$LM}" font-family="monospace" font-size="12" fill="#cfcfcf" dominant-baseline="hanging">
         <xsl:attribute name="y">
           <xsl:call-template name="msec-to-y">
             <xsl:with-param name="msec" select="@avg"/>
@@ -74,15 +74,15 @@
           <xsl:text>ms</xsl:text>
         </tspan>
       </text>
-      <line x1="{$LM}" y1="{$H - $BM - 10}" x2="{$W - $RM}" y2="{$H - $BM - 10}" style="stroke:rgb(200,200,200);stroke-width:1" />
-      <text x="{$W - $RM}" y="{$H - $BM + 2}" font-family="monospace" font-size="15" fill="rgba(0, 155, 221, .7)" text-anchor="end" dominant-baseline="hanging">
+      <line x1="{$LM}" y1="{$H - $BM - 10}" x2="{$W - $RM}" y2="{$H - $BM - 10}" style="stroke:#cfcfcf;stroke-width:1" />
+      <text x="{$W - $RM}" y="{$H - $BM + 2}" font-family="monospace" font-size="12" fill="#cfcfcf" text-anchor="end" dominant-baseline="hanging">
         <tspan>
           <xsl:value-of select="$miny"/>
           <xsl:text>ms</xsl:text>
         </tspan>
       </text>
-      <line x1="{$LM}" y1="{$TM + 10}" x2="{$W - $RM}" y2="{$TM + 10}" style="stroke:rgb(200,200,200);stroke-width:1" />
-      <text x="{$W - $RM}" y="{$TM - 2}" font-family="monospace" font-size="15" fill="rgba(0, 155, 221, .7)" text-anchor="end">
+      <line x1="{$LM}" y1="{$TM + 10}" x2="{$W - $RM}" y2="{$TM + 10}" style="stroke:#cfcfcf;stroke-width:1" />
+      <text x="{$W - $RM}" y="{$TM - 2}" font-family="monospace" font-size="12" fill="#cfcfcf" text-anchor="end">
         <tspan>
           <xsl:value-of select="$maxy"/>
           <xsl:text>ms</xsl:text>
@@ -98,7 +98,7 @@
             <xsl:text>; code=</xsl:text>
             <xsl:value-of select="@code"/>
           </xsl:comment>
-          <circle r="2" stroke-width="0">
+          <circle r="4" style="stroke-width:6;stroke:rgba(68, 204, 16, .3);">
             <xsl:attribute name="cx">
               <xsl:call-template name="time-to-x">
                 <xsl:with-param name="time" select="@time"/>
@@ -111,7 +111,7 @@
             </xsl:attribute>
             <xsl:attribute name="fill">
               <xsl:if test="@code=200">
-                <xsl:text>rgba(0, 155, 221, .7)</xsl:text>
+                <xsl:text>#44CC11</xsl:text>
               </xsl:if>
               <xsl:if test="@code!=200">
                 <xsl:text>#DD4A68</xsl:text>
