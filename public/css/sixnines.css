@@ -5,7 +5,8 @@ body {
   font-size: 16px;
   line-height: 1.4em;
   overflow-x: scroll;
-  padding: 1.5em 6em; }
+  padding: 1.5em 6em;
+  zoom: 1.5; }
 
 .big {
   font-size: 24px; }
