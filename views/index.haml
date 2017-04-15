@@ -2,7 +2,6 @@
   %fieldset
     %input{placeholder: 'Your keyword for URI', type: 'text', size: '45', name: 'q', value: query}
     %button{type: 'submit'} Search
-
 - if query
   - if found.empty?
     %p
@@ -16,7 +15,6 @@
         %li
           =EpUri.new(e).to_html
           =EpBadge.new(e).to_html
-
 - if !flips.empty?
   %p
     Check out
