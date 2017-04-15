@@ -1,6 +1,6 @@
 body {
   background-color: #fcfcfc;
-  color: #787878;
+  color: #5f5f5f;
   font-family: monospace;
   font-size: 16px;
   line-height: 1.4em;
@@ -17,7 +17,7 @@ body {
   color: #4c1; }
 
 .dark {
-  color: #787878; }
+  color: #5f5f5f; }
 
 .light {
   color: #cfcfcf; }
@@ -43,7 +43,7 @@ a {
   cursor: pointer;
   text-decoration: underline; }
   a:hover {
-    color: #454545;
+    color: #2c2c2c;
     text-decoration: underline; }
 
 .no-underline {
@@ -112,7 +112,7 @@ input[type='text'],
 input[type='url'] {
   background-color: #fff;
   border: 2px solid #efefef;
-  color: #787878;
+  color: #5f5f5f;
   cursor: text; }
   input[type='text']:focus, input[type='text']:active,
   input[type='url']:focus,
@@ -120,7 +120,7 @@ input[type='url'] {
     border: 2px solid #cfcfcf; }
 
 :input-placeholder {
-  color: #787878; }
+  color: #5f5f5f; }
 
 button,
 input[type='submit'] {
@@ -141,7 +141,7 @@ table {
 .badge {
   background-color: #fff;
   border-radius: 3px;
-  color: #787878;
+  color: #5f5f5f;
   display: inline-block;
   padding: .1em;
   text-shadow: 0 0 1px #fcfcfc;
