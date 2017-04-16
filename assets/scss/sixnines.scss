@@ -1,8 +1,14 @@
+@import url('https://fonts.googleapis.com/css?family=Overpass+Mono:300,400,600&subset=latin-ext');
+
+%font {
+  font-family: 'Overpass Mono', monospace;
+  font-weight: 400;
+}
+
 // elements variables
 $radius: 3px;
-$base: 16px;
+$base: 18px;
 $big: $base * 1.5;
-$small: $base * .7;
 $controls-padding: $base / 3;
 
 // switch to different screens
@@ -12,26 +18,24 @@ $controls-padding: $base / 3;
 //$switch-wide: 1600;
 
 // colors
-$background: #fcfcfc;
+$background: #ffffff;
 $text: #5f5f5f;
-$light: #cfcfcf;
-$gray: #787878;
 $green: #4c1;
 $blue: #07a;
-$orange: #e90;
-$bright: #dd4a68;
-$red: #dc5b21;
 $input: #fff;
 
 body {
+  @extend %font;
   background-color: $background;
   color: $text;
-  font-family: monospace;
   font-size: $base;
   line-height: 1.4em;
   overflow-x: scroll;
-  padding: 1.5em 6em;
-  zoom: 1.5;
+  box-sizing: border-box;
+}
+
+section {
+  padding: 4em;
 }
 
 .big {
@@ -50,24 +54,12 @@ body {
   color: $text;
 }
 
-.light {
-  color: $light;
-}
-
-.gray {
-  color: $gray;
-}
-
 .normal {
   font-weight: normal;
 }
 
 .bold {
-  font-weight: bold;
-}
-
-.hint {
-  font-size: $small;
+  font-weight: 600;
 }
 
 fieldset {
@@ -86,14 +78,6 @@ a {
   }
 }
 
-.no-underline {
-  text-decoration: none;
-
-  &:hover {
-    text-decoration: none;
-  }
-}
-
 .favicon-small {
   border-radius: 50%;
   height: 20px;
@@ -105,14 +89,6 @@ a {
   height: 40px;
   margin-right: $base;
   width: 40px;
-}
-
-.shadowed {
-  text-shadow: 1px 1px 0 $input;
-}
-
-header {
-  width: 100%;
 }
 
 .right {
@@ -135,6 +111,10 @@ footer ul,
   }
 }
 
+footer {
+  margin-top: 2em;
+}
+
 ul {
   @extend %list;
 
@@ -151,13 +131,10 @@ ul {
   }
 }
 
-.content {
-  margin: 2em 0;
-}
-
 %control {
+  @extend %font;
+  font-weight: 600;
   border-radius: $radius;
-  font-family: monospace;
   font-size: $base;
   margin: 0 $controls-padding $controls-padding 0;
   outline: none;
@@ -176,7 +153,7 @@ input[type='url'] {
 
   &:focus,
   &:active {
-    border: 2px solid $light;
+    border: 2px solid darken($background, 20);
   }
 }
 
@@ -191,7 +168,6 @@ input[type='submit'] {
   border: 0;
   color: $background;
   cursor: pointer;
-  font-weight: bold;
   padding: $controls-padding * 2;
 }
 
@@ -218,9 +194,9 @@ table {
 }
 
 .avatar {
-  border-radius: 50%;
-  height: $base * 2;
-  width: $base * 2;
+  border-radius: $radius;
+  height: $base * 4;
+  width: $base * 4;
 }
 
 @mixin mobile {

@@ -1,15 +1,23 @@
+@import url("https://fonts.googleapis.com/css?family=Overpass+Mono:300,400,600&subset=latin-ext");
+body, input[type='text'],
+input[type='url'], button,
+input[type='submit'] {
+  font-family: 'Overpass Mono', monospace;
+  font-weight: 400; }
+
 body {
-  background-color: #fcfcfc;
+  background-color: #ffffff;
   color: #5f5f5f;
-  font-family: monospace;
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1.4em;
   overflow-x: scroll;
-  padding: 1.5em 6em;
-  zoom: 1.5; }
+  box-sizing: border-box; }
+
+section {
+  padding: 4em; }
 
 .big {
-  font-size: 24px; }
+  font-size: 27px; }
 
 .blue {
   color: #07a; }
@@ -20,20 +28,11 @@ body {
 .dark {
   color: #5f5f5f; }
 
-.light {
-  color: #cfcfcf; }
-
-.gray {
-  color: #787878; }
-
 .normal {
   font-weight: normal; }
 
 .bold {
-  font-weight: bold; }
-
-.hint {
-  font-size: 11.2px; }
+  font-weight: 600; }
 
 fieldset {
   border: 0 solid;
@@ -47,11 +46,6 @@ a {
     color: #2c2c2c;
     text-decoration: underline; }
 
-.no-underline {
-  text-decoration: none; }
-  .no-underline:hover {
-    text-decoration: none; }
-
 .favicon-small {
   border-radius: 50%;
   height: 20px;
@@ -60,14 +54,8 @@ a {
 .favicon-big {
   border-radius: 50%;
   height: 40px;
-  margin-right: 16px;
+  margin-right: 18px;
   width: 40px; }
-
-.shadowed {
-  text-shadow: 1px 1px 0 #fff; }
-
-header {
-  width: 100%; }
 
 .right {
   float: right; }
@@ -88,37 +76,37 @@ ul,
   .list-v * {
     vertical-align: middle; }
 
+footer {
+  margin-top: 2em; }
+
 ul li {
   display: inline-block; }
 
 .list-v li {
   display: block; }
 
-.content {
-  margin: 2em 0; }
-
 input[type='text'],
 input[type='url'], button,
 input[type='submit'] {
+  font-weight: 600;
   border-radius: 3px;
-  font-family: monospace;
-  font-size: 16px;
-  margin: 0 5.33333px 5.33333px 0;
+  font-size: 18px;
+  margin: 0 6px 6px 0;
   outline: none;
-  padding: 10.66667px 5.33333px;
+  padding: 12px 6px;
   position: relative;
   white-space: nowrap; }
 
 input[type='text'],
 input[type='url'] {
   background-color: #fff;
-  border: 2px solid #efefef;
+  border: 2px solid #f2f2f2;
   color: #5f5f5f;
   cursor: text; }
   input[type='text']:focus, input[type='text']:active,
   input[type='url']:focus,
   input[type='url']:active {
-    border: 2px solid #cfcfcf; }
+    border: 2px solid #cccccc; }
 
 :input-placeholder {
   color: #5f5f5f; }
@@ -127,13 +115,12 @@ button,
 input[type='submit'] {
   background-color: #07a;
   border: 0;
-  color: #fcfcfc;
+  color: #ffffff;
   cursor: pointer;
-  font-weight: bold;
-  padding: 10.66667px; }
+  padding: 12px; }
 
 table {
-  font-size: 16px; }
+  font-size: 18px; }
   table .no-wrap {
     white-space: nowrap; }
   table * {
@@ -145,12 +132,12 @@ table {
   color: #5f5f5f;
   display: inline-block;
   padding: .1em;
-  text-shadow: 0 0 1px #fcfcfc;
+  text-shadow: 0 0 1px #ffffff;
   vertical-align: middle; }
 
 .avatar {
-  border-radius: 50%;
-  height: 32px;
-  width: 32px; }
+  border-radius: 3px;
+  height: 72px;
+  width: 72px; }
 
 /*# sourceMappingURL=sixnines.css.map */
