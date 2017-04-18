@@ -50,8 +50,8 @@
         <xsl:text>; height=</xsl:text>
         <xsl:value-of select="$height"/>
       </xsl:comment>
-      <rect width="{$W}" height="{$H}" style="fill:rgb(255,255,255);stroke-width:0;stroke:rgb(20,20,20)" />
-      <line x1="{$LM}" x2="{$W - $RM}" style="stroke:rgb(74,141,152);stroke-width:1">
+      <rect width="{$W}" height="{$H}" stroke-width="0" fill="rgb(255,255,255)" stroke="rgb(20,20,20)" />
+      <line x1="{$LM}" x2="{$W - $RM}" stroke="rgb(74,141,152)" stroke-width="1">
         <xsl:attribute name="y1">
           <xsl:call-template name="msec-to-y">
             <xsl:with-param name="msec" select="@avg"/>
@@ -74,14 +74,14 @@
           <xsl:text>ms</xsl:text>
         </tspan>
       </text>
-      <line x1="{$LM}" y1="{$H - $BM}" x2="{$W - $RM}" y2="{$H - $BM}" style="stroke:rgb(200,200,200);stroke-width:1" />
+      <line x1="{$LM}" y1="{$H - $BM}" x2="{$W - $RM}" y2="{$H - $BM}" stroke="rgb(200,200,200)" stroke-width="1" />
       <text x="{$W - $RM}" y="{$H - $BM + 2}" font-family="monospace" font-size="12" fill="#c8c8c8" text-anchor="end" dominant-baseline="hanging">
         <tspan>
           <xsl:value-of select="$miny"/>
           <xsl:text>ms</xsl:text>
         </tspan>
       </text>
-      <line x1="{$LM}" y1="{$TM}" x2="{$W - $RM}" y2="{$TM}" style="stroke:rgb(200,200,200);stroke-width:1" />
+      <line x1="{$LM}" y1="{$TM}" x2="{$W - $RM}" y2="{$TM}" stroke="rgb(200,200,200)" stroke-width="1" />
       <text x="{$W - $RM}" y="{$TM - 2}" font-family="monospace" font-size="12" fill="#c8c8c8" text-anchor="end">
         <tspan>
           <xsl:value-of select="$maxy"/>
