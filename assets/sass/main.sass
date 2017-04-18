@@ -18,12 +18,175 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-.logo
-  height: 64px
-  width: 64px
+@import url('https://fonts.googleapis.com/css?family=Overpass+Mono:300,400,600&subset=latin-ext')
 
-.graph
-  width: 640px
-  height: 160px
-  max-width: 100%
+%font
+  font-family: 'Overpass Mono', monospace
+  font-weight: 400
 
+
+// elements variables
+$radius: 3px
+$base: 18px
+$big: $base * 1.5
+$controls-padding: $base / 3
+
+// switch to different screens
+$switch-mobile: 680
+$switch-tablet: 900
+$switch-wide: 1600
+
+// colors
+$background: #ffffff
+$text: #5f5f5f
+$green: #4c1
+$blue: #07a
+$input: #fff
+
+@mixin mobile
+  @media all and (min-width: 0) and (max-width: ($switch-mobile - 1) * 1px)
+    @content
+
+@mixin tablet
+  @media all and (min-width: $switch-mobile * 1px) and (max-width: ($switch-tablet - 1) * 1px)
+    @content
+
+@mixin wide
+  @media all and (min-width: $switch-tablet * 1px)
+    @content
+
+body
+  @extend %font
+  background-color: $background
+  color: $text
+  font-size: $base
+  line-height: 1.4em
+  overflow-x: scroll
+  box-sizing: border-box
+
+section 
+  padding: 4em
+
+  @include mobile() 
+    padding: .2em
+
+  @include tablet() 
+    padding: 1em
+
+.big 
+  font-size: $big
+
+.blue 
+  color: $blue
+
+.green
+  color: $green
+
+.dark 
+  color: $text
+
+.normal 
+  font-weight: normal
+
+.bold 
+  font-weight: 600
+
+fieldset 
+  border: 0 solid
+  padding: 0
+
+a 
+  color: inherit
+  cursor: pointer
+  text-decoration: underline
+
+  &:hover 
+    color: darken($text, 20)
+    text-decoration: underline
+
+.favicon-small
+  border-radius: 50%
+  height: 20px
+  width: 20px
+
+.favicon-big 
+  border-radius: 50%
+  height: 40px
+  margin-right: $base
+  width: 40px
+
+header ul,
+footer ul,
+%list 
+  list-style-type: none
+  margin: 0
+  padding: 0
+
+  * 
+    vertical-align: middle
+
+footer 
+  margin-top: 2em
+
+ul 
+  @extend %list
+
+  li 
+    display: inline-block
+
+.menu
+  @extend %list
+  float: none
+  margin-bottom: $base
+
+  @include wide() 
+    float: right
+
+  li 
+    display: inline-block
+
+    @include wide() 
+      display: block
+
+%control 
+  @extend %font
+  font-weight: 600
+  border-radius: $radius
+  font-size: $base
+  margin: 0 $controls-padding $controls-padding 0
+  outline: none
+  padding: $controls-padding * 2 $controls-padding
+  position: relative
+  white-space: nowrap
+
+input[type='text'],
+input[type='url'] 
+  @extend %control
+  background-color: $input
+  border: 2px solid darken($background, 5)
+  color: $text
+  cursor: text
+
+  @include mobile() 
+    width: 100%
+
+  &:focus,
+  &:active 
+    border: 2px solid darken($background, 20)
+
+  :input-placeholder
+    color: $text
+
+button,
+input[type='submit'] 
+  @extend %control
+  background-color: $blue
+  border: 0
+  color: $background
+  cursor: pointer
+  padding: $controls-padding * 2
+
+.avatar
+  border-radius: $radius
+  height: $base * 4
+  width: $base * 4
