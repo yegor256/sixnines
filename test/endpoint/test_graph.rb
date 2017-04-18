@@ -36,6 +36,7 @@ class GraphTest < Test::Unit::TestCase
         ]
       end
     end.new
+    File.write('/tmp/sixnines.svg', EpGraph.new(endpoint).to_svg)
     assert(EpGraph.new(endpoint).to_svg.include?('<svg'))
   end
 
