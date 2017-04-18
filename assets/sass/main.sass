@@ -114,12 +114,10 @@ a
     text-decoration: underline
 
 .favicon-small
-  border-radius: 50%
   height: 20px
   width: 20px
 
 .favicon-big 
-  border-radius: 50%
   height: 40px
   margin-right: $base
   width: 40px
@@ -199,3 +197,10 @@ input[type='submit']
   border-radius: $radius
   height: $base * 4
   width: $base * 4
+
+img
+  vertical-align: middle
+
+.graph
+  @include mobile()
+    width: 100%
