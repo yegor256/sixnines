@@ -26,8 +26,8 @@
     });
 
 %form#form{:method=>'post', :action=>'/a/add'}
-  %input#endpoint{:type=>'url', :name=>'endpoint', :size=>'70', :placeholder=>'URI of a new endpoint'}
-  %input#coupon{:type=>'text', :name=>'coupon', :size=>'45', :placeholder=>'Coupon (if you have it)'}
+  %input#endpoint{:type=>'url', :name=>'endpoint', :size=>'55', :placeholder=>'URI of a new endpoint'}
+  %input#coupon{:type=>'text', :name=>'coupon', :size=>'25', :placeholder=>'Coupon (if you have it)'}
   %input#stripeToken{type: 'hidden', name: 'stripeToken'}
   %input#stripeEmail{type: 'hidden', name: 'stripeEmail'}
   %input#go{:type=>'submit', :value=>'Add ($4.95)'}

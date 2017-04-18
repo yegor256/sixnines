@@ -33,7 +33,7 @@ $controls-padding: $base / 3
 
 // switch to different screens
 $switch-mobile: 680
-$switch-tablet: 900
+$switch-tablet: 1000
 $switch-wide: 1600
 
 // colors
@@ -64,7 +64,16 @@ body
   overflow-x: scroll
   box-sizing: border-box
 
-section 
+article
+  width: 60%
+
+  @include mobile()
+    width: 100%
+
+  @include tablet()
+    width: 100%
+
+section
   padding: 4em
 
   @include mobile() 

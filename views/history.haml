@@ -1,51 +1,19 @@
 %p
-  =EpUri.new(e).to_html
-
+  = EpUri.new(e).favicon('small')
+  = EpBadge.new(e).to_html
 %p
-  =EpBadge.new(e).to_html
-
+  Avail.
+  %strong= EpAvailability.new(e).full
+  %strong= EpState.new(e).to_html
+  ID
+  %strong= e.to_h[:id]
+  Avg.
+  %strong= EpGraph.new(e).avg_full
+  - if e.to_h[:log]
+    %br
+      %a{onclick: "$('#log').toggle();"} View last failed HTTP log
 %p
-  =EpGraph.new(e).to_html
-
+  = EpGraph.new(e).to_html
 %p
-  ID:
-  %code
-    =e.to_h[:id]
-
-%p
-  URI:
-  %code
-    =EpUri.new(e).to_s
-
-%p
-  State:
-  =EpState.new(e).to_html
-
-%p
-  Availability:
-  =EpAvailability.new(e).full
-
-%p
-  Avg:
-  =EpGraph.new(e).avg_full
-
-%p
-  Created on:
-  =e.to_h[:created]
-
-%p
-  Flipped on:
-  =e.to_h[:flipped]
-
-%p
-  Age:
-  =TimeDifference.between(e.to_h[:created], Time.now).humanize
-
-%p
-  Next ping on:
-  =e.to_h[:expires]
-
-- if e.to_h[:log]
-  %p
-    Most recent failed HTTP request log:
-  %pre=html_escape(e.to_h[:log])
+  - if e.to_h[:log]
+    %pre#log{style: 'display: none;'}=html_escape(e.to_h[:log])
