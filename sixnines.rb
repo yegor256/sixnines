@@ -37,6 +37,7 @@ require_relative 'version'
 require_relative 'objects/exec'
 require_relative 'objects/base'
 require_relative 'objects/cookie'
+require_relative 'objects/favicon'
 require_relative 'objects/dynamo'
 require_relative 'objects/github_auth'
 
@@ -127,6 +128,7 @@ get '/rss' do
   'not implemented yet'
 end
 
+# SVG badge of the endpoint
 get '/b/:id' do
   begin
     response.headers['Cache-Control'] = 'no-cache, private'
@@ -137,6 +139,7 @@ get '/b/:id' do
   end
 end
 
+# History page of the endpoint
 get '/h/:id' do
   begin
     haml :history, layout: :layout, locals: @locals.merge(
@@ -147,11 +150,23 @@ get '/h/:id' do
   end
 end
 
+# SVG graph of the endpoint
 get '/g/:id' do
   begin
     response.headers['Cache-Control'] = 'no-cache, private'
     content_type 'image/svg+xml'
     EpGraph.new(Endpoint::Cached.new(settings.base.take(params[:id]))).to_svg
+  rescue Base::EndpointNotFound
+    404
+  end
+end
+
+# Favicon of the endpoint
+get '/f/:id' do
+  begin
+    response.headers['Cache-Control'] = 'no-cache, private'
+    content_type 'image/png'
+    Favicon.new(settings.base.take(params[:id]).to_h[:hostname]).png
   rescue Base::EndpointNotFound
     404
   end

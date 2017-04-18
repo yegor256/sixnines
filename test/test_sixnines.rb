@@ -62,6 +62,11 @@ class AppTest < Test::Unit::TestCase
     assert(last_response.status == 404)
   end
 
+  def test_favicon_endpoint_not_found
+    get('/f/absent')
+    assert(last_response.status == 404)
+  end
+
   def test_badge_endpoint_not_found
     get('/b/absent')
     assert(last_response.status == 404)
