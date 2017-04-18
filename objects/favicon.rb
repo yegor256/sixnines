@@ -20,27 +20,23 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+require 'rmagick'
+require 'net/http'
+
 #
-# URI of endpoint
+# Favicon of a hostname
 #
-class EpUri
-  def initialize(endpoint)
-    @endpoint = endpoint
+class Favicon
+  def initialize(host)
+    @host = host
   end
 
-  def to_s
-    @endpoint.to_h[:uri].to_s
-  end
-
-  def to_url
-    URI.escape(to_s)
-  end
-
-  def favicon(size = 'small')
-    "<img class='favicon-#{size}' src='/f/#{@endpoint.to_h[:id]}'/>"
-  end
-
-  def to_html
-    "<a href='#{self}'>#{@endpoint.to_h[:hostname]}</a>"
+  def png
+    body = Net::HTTP.get(@host, '/favicon.ico')
+    img = Magick::Image.from_blob(body)[0]
+    img.format = 'PNG'
+    img.to_blob
+  rescue => _
+    File.read(File.join(Dir.pwd, 'assets/images/default-favicon.png'))
   end
 end
