@@ -19,7 +19,7 @@
                 %ul
                   %li
                     %a.bold.dark{:href=>'/a'}
-                      %img.avatar{src: 'http://cf.jare.io/?u=http://www.yegor256.com/images/yegor-bugayenko-192x192.png', width: '50px'}
+                      = "@#{user}"
                   %li
                     %a{:href=>'/'}
                       Home
@@ -37,21 +37,17 @@
         %nav
           %ul
             %li
-              = '---'
+              = '--'
           %ul
             %li
               = ver
-            %li
-              %a.bold{:href => '/terms'} Terms of use
           %ul
             %li
               %a.bold{:href => 'https://twitter.com/sxnns'} @sxnns
             %li
-              %a.bold{:href => '/rss'} Latest news
-          %ul
+              %a.bold{:href => '/terms'} Terms
             %li
-              by
-              %a.bold{:href => 'http://www.yegor256.com'} Yegor Bugayenko
+              %a.bold{:href => '/rss'} RSS
           %p
             %ul
               %li

@@ -1,19 +1,20 @@
 %p
   = EpUri.new(e).favicon('small')
+  = EpUri.new(e).to_html
   = EpBadge.new(e).to_html
 %p
   Avail.
   %strong= EpAvailability.new(e).full
-  %strong= EpState.new(e).to_html
-  ID
-  %strong= e.to_h[:id]
   Avg.
   %strong= EpGraph.new(e).avg_full
-  - if e.to_h[:log]
-    %br
-      %a{onclick: "$('#log').toggle();"} View last failed HTTP log
+%p
+  Last
+  %strong 2 minutes ago
+  Overall
+  %strong 2 years
 %p
   = EpGraph.new(e).to_html
-%p
-  - if e.to_h[:log]
+- if e.to_h[:log]
+  %p
+    %a{onclick: "$('#log').toggle();"} View last failed HTTP log
     %pre#log{style: 'display: none;'}=html_escape(e.to_h[:log])

@@ -41,10 +41,6 @@
       = EpUri.new(e).favicon
       = EpUri.new(e).to_html
       %a.light{:href=>'/a/del?endpoint=' + URI.escape(EpUri.new(e).to_url),
-        :onclick=>'return confirm("Attention! Be aware that you will not be able to restore it and to add a new one you will have to pay another $4.95!");'}
-        %i.fa.fa-remove
+        :onclick=>'return confirm("Attention! Be aware that you will not be able to restore it and to add a new one you will have to pay another $4.95!");'} delete
       =EpBadge.new(e).to_html
       =EpAvailability.new(e).full
-      =EpState.new(e).to_html
-      next in
-      =e.to_h[:expires]
