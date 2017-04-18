@@ -32,6 +32,7 @@ require 'aws-sdk'
 require 'stripe'
 require 'time_difference'
 require 'twitter'
+require 'meta_inspector'
 
 require_relative 'version'
 require_relative 'objects/exec'
@@ -39,6 +40,48 @@ require_relative 'objects/base'
 require_relative 'objects/cookie'
 require_relative 'objects/dynamo'
 require_relative 'objects/github_auth'
+
+helpers do
+  MINUTE = 60
+  HOUR = MINUTE*60
+  DAY = HOUR*24
+  WEEK = DAY*7
+  MONTH = DAY*30
+  YEAR = MONTH*12
+
+  def ago(near_time, far_time)
+    diff =  near_time.to_i - far_time.to_i
+
+    str = ''
+    case diff
+      when 0..MINUTE
+        str = 'now'
+      when MINUTE..HOUR
+        str = "#{diff / MINUTE} mins"
+      when HOUR..DAY
+        str = "#{diff / HOUR} hours"
+      when DAY..WEEK
+        str = "#{diff / DAY} days"
+      when WEEK..MONTH
+        str = "#{diff / WEEK} weeks"
+      when MONTH..YEAR
+        str = "#{diff / MONTH} month"
+      when YEAR..YEAR*20
+        str = "#{diff / YEAR} years"
+      else
+        str = "long"
+    end
+    str
+  end
+
+  def human_date(d)
+    d ? d.to_time.strftime("%b %d, %Y") : 'N/A'
+  end
+
+  def human_date_short(d)
+    d.to_time.strftime("%b %d")
+  end
+end
 
 configure do
   config = if ENV['RACK_ENV'] == 'test'
@@ -237,11 +280,11 @@ get '/a/del' do
   redirect to('/a')
 end
 
-get '/css/*.css' do
-  content_type 'text/css', charset: 'utf-8'
-  file = params[:splat].first
-  sass file.to_sym, views: "#{settings.root}/assets/sass"
-end
+# get '/css/*.css' do
+#   content_type 'text/css', charset: 'utf-8'
+#   file = params[:splat].first
+#   sass file.to_sym, views: "#{settings.root}/assets/sass"
+# end
 
 not_found do
   status 404
@@ -257,3 +300,4 @@ error do
     locals: @locals.merge(error: "#{e.message}\n\t#{e.backtrace.join("\n\t")}")
   )
 end
+

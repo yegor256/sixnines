@@ -33,11 +33,12 @@ class EpState
   end
 
   def to_s
-    to_b ? 'UP' : 'DOWN'
+    to_b ? '&#xf062;' : '&#xf063;'
   end
 
   def to_html
     color = @endpoint.to_h[:up] ? 'green' : 'red'
-    "<span style='color:#{color}'>#{self}</span>"
+    icon = @endpoint.to_h[:up] ? 'fa-arrow-up' : 'fa-arrow-down'
+    "<i class='fa #{icon} #{color}'></i>"
   end
 end

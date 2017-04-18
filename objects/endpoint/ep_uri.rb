@@ -36,7 +36,11 @@ class EpUri
     URI.escape(to_s)
   end
 
+  def favicon(size = 'small')
+    "<img class='favicon-#{size}' src='http://#{@endpoint.to_h[:hostname]}/favicon.ico'/>"
+  end
+
   def to_html
-    "<a href='#{self}'>#{@endpoint.to_h[:hostname]}</a>"
+    "<a class='shadowed bold no-underline' href='#{self}'>#{@endpoint.to_h[:hostname]}</a>"
   end
 end

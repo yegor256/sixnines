@@ -26,8 +26,8 @@
     });
 
 %form#form{:method=>'post', :action=>'/a/add'}
-  %input#endpoint{:type=>'url', :name=>'endpoint', :size=>'70', :placeholder=>'URI of a new endpoint'}
-  %input#coupon{:type=>'text', :name=>'coupon', :size=>'45', :placeholder=>'Coupon (if you have it)'}
+  %input#endpoint{:type=>'url', :name=>'endpoint', :size=>'55', :placeholder=>'URI of a new endpoint'}
+  %input#coupon{:type=>'text', :name=>'coupon', :size=>'30', :placeholder=>'Coupon (if you have it)'}
   %input#stripeToken{type: 'hidden', name: 'stripeToken'}
   %input#stripeEmail{type: 'hidden', name: 'stripeEmail'}
   %input#go{:type=>'submit', :value=>'Add ($4.95)'}
@@ -36,34 +36,15 @@
   %p
     There are no endpoints yet (add the first one above).
 - else
-  %p
-    Your endpoints are:
   - endpoints.each do |e|
     %p
-      =EpUri.new(e).to_html
-      %a{:href=>'/a/del?endpoint=' + URI.escape(EpUri.new(e).to_url),
+      = EpUri.new(e).favicon
+      = EpUri.new(e).to_html
+      %a.light{:href=>'/a/del?endpoint=' + URI.escape(EpUri.new(e).to_url),
         :onclick=>'return confirm("Attention! Be aware that you will not be able to restore it and to add a new one you will have to pay another $4.95!");'}
-        delete
-    %ul
-      %li
-        Badge:
-        =EpBadge.new(e).to_html
-      %li
-        URI:
-        %code
-          =EpUri.new(e).to_s
-      %li
-        Availability:
-        =EpAvailability.new(e).full
-      %li
-        State:
-        =EpState.new(e).to_html
-      %li
-        Created on:
-        =e.to_h[:created]
-      %li
-        Age:
-        =TimeDifference.between(e.to_h[:created], Time.now).humanize
-      %li
-        Next ping on:
-        =e.to_h[:expires]
+        %i.fa.fa-remove
+      =EpBadge.new(e).to_html
+      =EpAvailability.new(e).full
+      =EpState.new(e).to_html
+      next in
+      = ago(Time.now, e.to_h[:expires])

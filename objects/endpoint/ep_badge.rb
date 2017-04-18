@@ -40,7 +40,7 @@ class EpBadge
   end
 
   def to_html
-    "<a href='#{to_href}'><img src='#{to_src}'/></a>"
+    "<a class='no-underline' href='#{to_href}'><img src='#{to_src}'/></a>"
   end
 
   def to_svg
