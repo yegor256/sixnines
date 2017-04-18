@@ -13,12 +13,9 @@
     %section
       %header
         %nav
-          %ul.list-v
-            -#%li
-            -#  %a.no-underline{:href => '/'}
-            -#    %img.avatar{src: url('images/sixnines.svg')}
+          %ul.menu
             - if defined? user
-              %li.right
+              %li
                 %ul
                   %li
                     %a.bold.dark{:href=>'/a'}
@@ -36,6 +33,8 @@
                   Sign-in
       %article
         =yield
+      %p
+        = '---'
       %footer
         %nav
           %ul
@@ -43,20 +42,14 @@
               = ver
             %li
               %a.bold{:href => '/terms'} Terms of use
-            %li
-              Contribute to
-              %a.bold{:href => 'http://www.yegor256.com'}
-                GitHub Repo
           %ul
             %li
-              Follow us
-              %a.bold{:href => 'https://twitter.com/sxnns'} sxnns
+              %a.bold{:href => 'https://twitter.com/sxnns'} @sxnns
             %li
-              Subscribe to
-              %a.bold{:href => '/rss'} latest news
+              %a.bold{:href => '/rss'} Latest news
           %ul
             %li
-              Created by
+              by
               %a.bold{:href => 'http://www.yegor256.com'} Yegor Bugayenko
           %br
           %ul

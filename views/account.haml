@@ -36,22 +36,15 @@
   %p
     There are no endpoints yet (add the first one above).
 - else
-  %table
-    %tbody
-      - endpoints.each do |e|
-        %tr
-          %td.no-wrap{width: '30%'}
-            = EpUri.new(e).favicon
-            = EpUri.new(e).to_html
-            %a.light{:href=>'/a/del?endpoint=' + URI.escape(EpUri.new(e).to_url),
-              :onclick=>'return confirm("Attention! Be aware that you will not be able to restore it and to add a new one you will have to pay another $4.95!");'}
-              %i.fa.fa-remove
-          %td.no-wrap{width: '30%'}
-            =EpBadge.new(e).to_html
-            %span.badge
-              =EpAvailability.new(e).full
-              =EpState.new(e).to_html
-          %td
-            %span.gray
-              next in
-              = ago(Time.now, e.to_h[:expires])
+  - endpoints.each do |e|
+    %p
+      = EpUri.new(e).favicon
+      = EpUri.new(e).to_html
+      %a.light{:href=>'/a/del?endpoint=' + URI.escape(EpUri.new(e).to_url),
+        :onclick=>'return confirm("Attention! Be aware that you will not be able to restore it and to add a new one you will have to pay another $4.95!");'}
+        %i.fa.fa-remove
+      =EpBadge.new(e).to_html
+      =EpAvailability.new(e).full
+      =EpState.new(e).to_html
+      next in
+      = ago(Time.now, e.to_h[:expires])

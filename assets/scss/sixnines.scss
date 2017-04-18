@@ -12,10 +12,9 @@ $big: $base * 1.5;
 $controls-padding: $base / 3;
 
 // switch to different screens
-// these will be used a litte later
-//$switch-mobile: 450;
-//$switch-tablet: 700;
-//$switch-wide: 1600;
+$switch-mobile: 680;
+$switch-tablet: 900;
+$switch-wide: 1600;
 
 // colors
 $background: #ffffff;
@@ -23,6 +22,24 @@ $text: #5f5f5f;
 $green: #4c1;
 $blue: #07a;
 $input: #fff;
+
+@mixin mobile {
+  @media all and (min-width: 0) and (max-width: ($switch-mobile - 1) * 1px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media all and (min-width: $switch-mobile * 1px) and (max-width: ($switch-tablet - 1) * 1px) {
+    @content;
+  }
+}
+
+@mixin wide {
+  @media all and (min-width: $switch-tablet * 1px) {
+    @content;
+  }
+}
 
 body {
   @extend %font;
@@ -36,6 +53,14 @@ body {
 
 section {
   padding: 4em;
+
+  @include mobile() {
+    padding: .2em;
+  }
+
+  @include tablet() {
+    padding: 1em;
+  }
 }
 
 .big {
@@ -91,14 +116,6 @@ a {
   width: 40px;
 }
 
-.right {
-  float: right;
-}
-
-.left {
-  float: left;
-}
-
 header ul,
 footer ul,
 %list {
@@ -123,11 +140,21 @@ ul {
   }
 }
 
-.list-v {
+.menu {
   @extend %list;
+  float: none;
+  margin-bottom: $base;
+
+  @include wide() {
+    float: right;
+  }
 
   li {
-    display: block;
+    display: inline-block;
+
+    @include wide() {
+      display: block;
+    }
   }
 }
 
@@ -151,6 +178,10 @@ input[type='url'] {
   color: $text;
   cursor: text;
 
+  @include mobile() {
+    width: 100%;
+  }
+
   &:focus,
   &:active {
     border: 2px solid darken($background, 20);
@@ -171,54 +202,23 @@ input[type='submit'] {
   padding: $controls-padding * 2;
 }
 
-table {
-  font-size: $base;
-
-  .no-wrap {
-    white-space: nowrap;
-  }
-
-  * {
-    vertical-align: middle;
-  }
-}
-
-.badge {
-  background-color: $input;
-  border-radius: $radius;
-  color: $text;
-  display: inline-block;
-  padding: .1em;
-  text-shadow: 0 0 1px $background;
-  vertical-align: middle;
-}
-
 .avatar {
   border-radius: $radius;
   height: $base * 4;
   width: $base * 4;
 }
 
-@mixin mobile {
-  @if $do-not-switch != true {
-    @media all and (min-width: 0) and (max-width: ($switch-mobile - 1) * 1px) {
-      @content;
-    }
+.wide-only {
+
+  @include mobile() {
+    display: none;
+  }
+
+  @include tablet() {
+    display: none;
   }
 }
 
-@mixin tablet {
-  @if $do-not-switch != true {
-    @media all and (min-width: $switch-mobile * 1px) and (max-width: ($switch-tablet - 1) * 1px) {
-      @content;
-    }
-  }
-}
-
-@mixin wide {
-  @if $do-not-switch != true {
-    @media all and (min-width: $switch-tablet * 1px) {
-      @content;
-    }
-  }
+.middle {
+  vertical-align: middle;
 }

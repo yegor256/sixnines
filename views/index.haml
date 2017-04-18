@@ -1,7 +1,6 @@
 %form{:method=>'get', :action=>'/'}
-  %fieldset
-    %input{placeholder: 'Your keyword for URI', type: 'text', size: '45', name: 'q', value: query}
-    %button{type: 'submit'} Search
+  %input{placeholder: 'Your keyword for URI', type: 'text', size: '55', name: 'q', value: query}
+  %button{type: 'submit'} Search
 - if query
   - if found.empty?
     %p

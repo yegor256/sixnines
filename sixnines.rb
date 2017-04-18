@@ -75,7 +75,7 @@ helpers do
   end
 
   def human_date(d)
-    d.to_time.strftime("%b %d, %Y")
+    d ? d.to_time.strftime("%b %d, %Y") : 'N/A'
   end
 
   def human_date_short(d)
@@ -299,3 +299,4 @@ error do
     locals: @locals.merge(error: "#{e.message}\n\t#{e.backtrace.join("\n\t")}")
   )
 end
+

@@ -50,7 +50,7 @@
         <xsl:text>; height=</xsl:text>
         <xsl:value-of select="$height"/>
       </xsl:comment>
-      <rect width="{$W}" height="{$H}" style="fill:#fcfcfc;;stroke-width:0;stroke:rgb(20,20,20)" />
+      <rect width="{$W}" height="{$H}" style="fill:#fff;;stroke-width:0;stroke:rgb(20,20,20)" />
       <!--<line x1="{$LM}" x2="{$W - $RM}" style="stroke:rgb(74,141,152);stroke-width:1">-->
         <!--<xsl:attribute name="y1">-->
           <!--<xsl:call-template name="msec-to-y">-->
@@ -98,7 +98,7 @@
             <xsl:text>; code=</xsl:text>
             <xsl:value-of select="@code"/>
           </xsl:comment>
-          <circle r="4" style="stroke-width:6;stroke:rgba(68, 204, 16, .3);">
+          <circle r="4" style="stroke-width:0;stroke:rgba(68, 204, 16, .3);">
             <xsl:attribute name="cx">
               <xsl:call-template name="time-to-x">
                 <xsl:with-param name="time" select="@time"/>
