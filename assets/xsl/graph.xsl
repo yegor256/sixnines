@@ -98,7 +98,7 @@
             <xsl:text>; code=</xsl:text>
             <xsl:value-of select="@code"/>
           </xsl:comment>
-          <circle r="6" stroke-width="0">
+          <circle r="3" stroke-width="0">
             <xsl:attribute name="cx">
               <xsl:call-template name="time-to-x">
                 <xsl:with-param name="time" select="@time"/>
