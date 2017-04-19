@@ -57,6 +57,11 @@ class AppTest < Test::Unit::TestCase
     assert(last_response.status == 200)
   end
 
+  def test_sitemap
+    get('/sitemap.xml')
+    assert(last_response.status == 200)
+  end
+
   def test_renders_page_not_found
     get('/the-url-that-is-absent')
     assert(last_response.status == 404)

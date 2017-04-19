@@ -42,3 +42,4 @@ gem 'test-unit', '3.0.8', require: false
 gem 'time_difference', '0.5.0'
 gem 'timeout', '0.0.1'
 gem 'twitter', '6.1.0'
+gem 'xml-sitemap'

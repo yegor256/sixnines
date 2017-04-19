@@ -34,7 +34,6 @@ require 'time_difference'
 require 'twitter'
 require 'action_view'
 require 'action_view/helpers'
-require 'rss'
 
 require_relative 'version'
 require_relative 'objects/exec'
@@ -128,6 +127,7 @@ get '/' do
 end
 
 get '/rss' do
+  require 'rss'
   content_type 'application/rss+xml'
   RSS::Maker.make('atom') do |m|
     m.channel.author = 'SixNines.io'
@@ -142,6 +142,20 @@ get '/rss' do
       end
     end
   end.to_s
+end
+
+get '/sitemap.xml' do
+  require 'xml-sitemap'
+  content_type 'application/xml'
+  XmlSitemap::Map.new('sixnines.io') do |m|
+    settings.base.flips.each do |e|
+      m.add(
+        "/h/#{e.to_h[:id]}",
+        updated: e.to_h[:flipped],
+        period: :never
+      )
+    end
+  end.render
 end
 
 # SVG badge of the endpoint
@@ -229,7 +243,7 @@ get '/ping' do
 end
 
 get '/robots.txt' do
-  ''
+  'sitemap: http://www.sixnines.io/sitemap.xml'
 end
 
 get '/version' do
