@@ -128,6 +128,7 @@ get '/' do
 end
 
 get '/rss' do
+  content_type 'application/rss+xml'
   RSS::Maker.make('atom') do |m|
     m.channel.author = 'SixNines.io'
     m.channel.updated = Time.now.to_s
