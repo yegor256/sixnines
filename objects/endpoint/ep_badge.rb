@@ -41,7 +41,7 @@ class EpBadge
   end
 
   def to_html
-    "<a href='#{to_href}'><img src='#{to_src}'/></a>"
+    "<a href='#{to_href}'><img src='#{to_src}' alt='badge'/></a>"
   end
 
   def to_svg(style = 'round')
