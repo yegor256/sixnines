@@ -34,6 +34,7 @@ require 'time_difference'
 require 'twitter'
 require 'action_view'
 require 'action_view/helpers'
+require 'rss'
 
 require_relative 'version'
 require_relative 'objects/exec'
@@ -127,7 +128,19 @@ get '/' do
 end
 
 get '/rss' do
-  'not implemented yet'
+  RSS::Maker.make('atom') do |m|
+    m.channel.author = 'SixNines.io'
+    m.channel.updated = Time.now.to_s
+    m.channel.about = 'http://sixnines.io/rss'
+    m.channel.title = 'SixNines recent flips'
+    settings.base.flips.each do |e|
+      m.items.new_item do |i|
+        i.link = "http://www.sixnines.io/h/#{e.to_h[:id]}"
+        i.title = "#{e.to_h[:hostname]} flipped"
+        i.updated = Time.now.to_s
+      end
+    end
+  end.to_s
 end
 
 # SVG badge of the endpoint

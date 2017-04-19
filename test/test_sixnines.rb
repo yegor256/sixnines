@@ -52,6 +52,11 @@ class AppTest < Test::Unit::TestCase
     assert(last_response.ok?)
   end
 
+  def test_rss_feed
+    get('/rss')
+    assert(last_response.status == 200)
+  end
+
   def test_renders_page_not_found
     get('/the-url-that-is-absent')
     assert(last_response.status == 404)
