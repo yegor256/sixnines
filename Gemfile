@@ -22,6 +22,7 @@
 
 source 'https://rubygems.org'
 
+gem 'actionview', '5.0.2'
 gem 'aws-sdk', '2.6.35'
 gem 'coveralls', '0.8.17', require: false
 gem 'haml', '4.0.7'
