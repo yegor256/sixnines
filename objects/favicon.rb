@@ -33,13 +33,10 @@ class Favicon
 
   def png
     body = Net::HTTP.get(@host, '/favicon.ico')
-    puts "loaded: #{body.length} bytes from #{@host}"
     img = Magick::Image.from_blob(body)[0]
     img.format = 'PNG'
     img.to_blob
   rescue => e
-    puts e.message
-    puts e.backtrace.join("\n\t")
     File.read(File.join(Dir.pwd, 'assets/images/default-favicon.png'))
   end
 end
