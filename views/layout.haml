@@ -14,15 +14,15 @@
       %header
         %nav
           %ul.menu
+            %li
+              %a.no-underline{:href=>'/'}
+                %img{src: url('images/logo.svg'), width: '30px'}
             - if defined? user
               %li
                 %ul
                   %li
                     %a.bold.dark{:href=>'/a'}
                       = "@#{user}"
-                  %li
-                    %a{:href=>'/'}
-                      Home
                   %li
                     %a{:href=>'/logout'}
                       Logout

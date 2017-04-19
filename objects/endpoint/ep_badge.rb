@@ -32,7 +32,7 @@ class EpBadge
   end
 
   def to_src
-    "/b/#{@endpoint.to_h[:id]}"
+    "/b/#{@endpoint.to_h[:id]}?style=flat"
   end
 
   def to_href

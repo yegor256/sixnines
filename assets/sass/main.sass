@@ -113,6 +113,12 @@ a
     color: darken($text, 20)
     text-decoration: underline
 
+a.no-underline
+  text-decoration: none
+
+  &:hover
+    text-decoration: none
+
 .favicon-small
   height: 20px
   width: 20px
@@ -143,17 +149,11 @@ ul
 
 .menu
   @extend %list
-  float: none
-  margin-bottom: $base
-
-  @include wide() 
-    float: right
+  margin-bottom: $base*2
 
   li 
     display: inline-block
 
-    @include wide() 
-      display: block
 
 %control 
   @extend %font
