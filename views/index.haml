@@ -33,4 +33,4 @@ We ping all websites a few times per minute.
       %li
         =EpUri.new(e).to_html
         =EpBadge.new(e).to_html
-        =ActionView::Helpers::DateHelper.time_ago_in_words(Time.now - e.to_h[:flipped]) + ' ago'
+        #=ActionView::Helpers::DateHelper.time_ago_in_words(Time.now - e.to_h[:flipped]) + ' ago'
