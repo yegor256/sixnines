@@ -166,7 +166,7 @@ end
 # Favicon of the endpoint
 get '/f/:id' do
   begin
-    response.headers['Cache-Control'] = 'no-cache, private'
+    response.headers['Cache-Control'] = 'max-age=' + 5 * 60 * 60
     content_type 'image/png'
     Favicon.new(settings.base.take(params[:id]).to_h[:uri].host).png
   rescue Base::EndpointNotFound
