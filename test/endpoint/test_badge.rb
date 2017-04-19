@@ -31,10 +31,15 @@ class BadgeTest < Test::Unit::TestCase
         {
           id: '1234567',
           pings: 100,
-          failures: 5
+          failures: 5,
+          up: true
         }
       end
     end.new
-    assert(EpBadge.new(endpoint).to_svg.include?('<svg'))
+    target = File.join(Dir.pwd, 'target')
+    FileUtils.mkdir_p(target)
+    svg = EpBadge.new(endpoint).to_svg
+    File.write(File.join(target, 'badge.svg'), svg)
+    assert(svg.include?('<svg'))
   end
 end

@@ -133,7 +133,9 @@ get '/b/:id' do
   begin
     response.headers['Cache-Control'] = 'no-cache, private'
     content_type 'image/svg+xml'
-    EpBadge.new(settings.base.take(params[:id])).to_svg
+    EpBadge.new(settings.base.take(params[:id])).to_svg(
+      params[:style] == 'flat' ? 'flat' : 'round'
+    )
   rescue Base::EndpointNotFound
     404
   end

@@ -40,8 +40,11 @@ class GraphTest < Test::Unit::TestCase
         ]
       end
     end.new
-    File.write('/tmp/sixnines.svg', EpGraph.new(endpoint).to_svg)
-    assert(EpGraph.new(endpoint).to_svg.include?('<svg'))
+    target = File.join(Dir.pwd, 'target')
+    FileUtils.mkdir_p(target)
+    svg = EpGraph.new(endpoint).to_svg
+    File.write(File.join(target, 'graph.svg'), svg)
+    assert(svg.include?('<svg'))
   end
 
   def test_calculates_avg

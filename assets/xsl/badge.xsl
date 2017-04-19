@@ -21,15 +21,24 @@
  * SOFTWARE.
  -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/2000/svg" version="1.0">
+  <xsl:param name="style"/>
   <xsl:output method="xml" omit-xml-declaration="yes"/>
   <xsl:template match="/endpoint">
     <svg width="106" height="20">
-      <linearGradient id="b" x2="0" y2="100%">
-        <stop offset="0" stop-color="#bbb" stop-opacity=".1"/>
-        <stop offset="1" stop-opacity=".1"/>
-      </linearGradient>
+      <xsl:if test="$style = 'round'">
+        <linearGradient id="b" x2="0" y2="100%">
+          <stop offset="0" stop-color="#bbb" stop-opacity=".1"/>
+          <stop offset="1" stop-opacity=".1"/>
+        </linearGradient>
+      </xsl:if>
       <mask id="a">
-        <rect width="106" height="20" rx="3" fill="#fff"/>
+        <rect width="106" height="20" fill="#fff">
+          <xsl:if test="$style = 'round'">
+            <xsl:attribute name="rx">
+              <xsl:text>3</xsl:text>
+            </xsl:attribute>
+          </xsl:if>
+        </rect>
       </mask>
       <g mask="url(#a)">
         <path fill="#555" d="M0 0h37v20H0z"/>
@@ -46,14 +55,16 @@
         <path fill="url(#b)" d="M0 0h106v20H0z"/>
       </g>
       <g fill="#fff" text-anchor="middle" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="11">
-        <text x="19.5" y="15" fill="#010101" fill-opacity=".3">
-          <xsl:if test="state='true'">
-            <xsl:text>up</xsl:text>
-          </xsl:if>
-          <xsl:if test="state='false'">
-            <xsl:text>down</xsl:text>
-          </xsl:if>
-        </text>
+        <xsl:if test="$style = 'round'">
+          <text x="19.5" y="15" fill="#010101" fill-opacity=".3">
+            <xsl:if test="state='true'">
+              <xsl:text>up</xsl:text>
+            </xsl:if>
+            <xsl:if test="state='false'">
+              <xsl:text>down</xsl:text>
+            </xsl:if>
+          </text>
+        </xsl:if>
         <text x="19.5" y="14">
           <xsl:if test="state='true'">
             <xsl:text>up</xsl:text>
@@ -62,11 +73,13 @@
             <xsl:text>down</xsl:text>
           </xsl:if>
         </text>
-        <text x="102.5" y="15" fill="#010101" fill-opacity=".3" text-anchor="end">
-            <xsl:value-of select="availability"/>
-        </text>
+        <xsl:if test="$style = 'round'">
+          <text x="102.5" y="15" fill="#010101" fill-opacity=".3" text-anchor="end">
+              <xsl:value-of select="availability"/>
+          </text>
+        </xsl:if>
         <text x="102.5" y="14" text-anchor="end">
-            <xsl:value-of select="availability"/>
+          <xsl:value-of select="availability"/>
         </text>
       </g>
     </svg>
