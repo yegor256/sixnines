@@ -36,7 +36,9 @@ class Favicon
     img = Magick::Image.from_blob(body)[0]
     img.format = 'PNG'
     img.to_blob
-  rescue => _
+  rescue => e
+    puts e.message
+    puts e.backtrace.join("\n\t")
     File.read(File.join(Dir.pwd, 'assets/images/default-favicon.png'))
   end
 end
