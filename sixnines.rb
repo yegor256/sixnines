@@ -168,7 +168,7 @@ get '/f/:id' do
   begin
     response.headers['Cache-Control'] = 'no-cache, private'
     content_type 'image/png'
-    Favicon.new(settings.base.take(params[:id]).to_h[:hostname]).png
+    Favicon.new(settings.base.take(params[:id]).to_h[:uri].host).png
   rescue Base::EndpointNotFound
     404
   end
