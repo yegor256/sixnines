@@ -26,9 +26,6 @@ require 'base64'
 
 #
 # Secure cookie
-# @todo #1:30min We are not encrypting cooking anyhow at the moment and
-#  this is not secure at all. Let's introduce some encryption mechanism
-#  with a secret key.
 #
 class Cookie
   # Closed

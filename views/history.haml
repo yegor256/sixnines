@@ -10,10 +10,10 @@
 %p
   Flipped
   %strong
-    =ActionView::Base.new.distance_of_time_in_words(e.to_h[:flipped], Time.now)
+    =ActionView::Base.new.distance_of_time_in_words(e.to_h[:flipped], Time.now) + ' ago'
   Created
   %strong
-    =ActionView::Base.new.distance_of_time_in_words(e.to_h[:created], Time.now)
+    =ActionView::Base.new.distance_of_time_in_words(e.to_h[:created], Time.now) + ' ago'
 %p
   = EpGraph.new(e).to_html
 - if e.to_h[:log]
