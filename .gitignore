@@ -7,3 +7,4 @@ target/
 rdoc/
 .sass-cache/
 Gemfile.lock
+/public/images/94da.svg
