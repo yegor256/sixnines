@@ -22,6 +22,7 @@
 
 require 'nokogiri'
 require_relative 'ep_availability'
+require_relative 'ep_state'
 
 #
 # Badge of endpoint
@@ -43,14 +44,15 @@ class EpBadge
     "<a href='#{to_href}'><img src='#{to_src}'/></a>"
   end
 
-  def to_svg
+  def to_svg(style = 'round')
     Nokogiri::XSLT(File.read('assets/xsl/badge.xsl')).transform(
       Nokogiri::XML(
         "<endpoint>\
           <availability>#{EpAvailability.new(@endpoint).short}</availability>\
           <state>#{EpState.new(@endpoint).to_b}</state>\
         </endpoint>"
-      )
+      ),
+      ['style', "'#{style}'"]
     ).to_s
   end
 end
