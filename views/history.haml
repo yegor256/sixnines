@@ -8,10 +8,12 @@
   Avg.
   %strong= EpGraph.new(e).avg_full
 %p
-  Last
-  %strong 2 minutes ago
-  Overall
-  %strong 2 years
+  Flipped
+  %strong
+    =ActionView::Base.new.distance_of_time_in_words(e.to_h[:flipped], Time.now)
+  Created
+  %strong
+    =ActionView::Base.new.distance_of_time_in_words(e.to_h[:created], Time.now)
 %p
   = EpGraph.new(e).to_html
 - if e.to_h[:log]
