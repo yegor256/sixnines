@@ -22,6 +22,7 @@
 
 require 'test/unit'
 require 'rack/test'
+require 'nokogiri'
 require_relative '../sixnines'
 
 class AppTest < Test::Unit::TestCase
@@ -45,6 +46,8 @@ class AppTest < Test::Unit::TestCase
     get('/')
     assert(last_response.ok?)
     assert(last_response.body.include?('SixNines'))
+    xml = Nokogiri::XML(last_response.body)
+    assert_equal(1, xml.xpath('/html/head/title').length)
   end
 
   def test_it_renders_logo
@@ -54,36 +57,36 @@ class AppTest < Test::Unit::TestCase
 
   def test_rss_feed
     get('/rss')
-    assert(last_response.status == 200)
+    assert_equal(200, last_response.status)
   end
 
   def test_sitemap
     get('/sitemap.xml')
-    assert(last_response.status == 200)
+    assert_equal(200, last_response.status)
   end
 
   def test_renders_page_not_found
     get('/the-url-that-is-absent')
-    assert(last_response.status == 404)
+    assert_equal(404, last_response.status)
   end
 
   def test_history_endpoint_not_found
     get('/h/absent')
-    assert(last_response.status == 404)
+    assert_equal(404, last_response.status)
   end
 
   def test_favicon_endpoint_not_found
     get('/f/absent')
-    assert(last_response.status == 404)
+    assert_equal(404, last_response.status)
   end
 
   def test_badge_endpoint_not_found
     get('/b/absent')
-    assert(last_response.status == 404)
+    assert_equal(404, last_response.status)
   end
 
   def test_graph_endpoint_not_found
     get('/g/absent')
-    assert(last_response.status == 404)
+    assert_equal(404, last_response.status)
   end
 end
