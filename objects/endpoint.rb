@@ -215,5 +215,7 @@ HTTP/#{res.http_version} #{res.code} #{res.message}\n\
       uri = URI.parse(links[0])
       URI.parse("http://#{to_s[:uri].host}#{uri}") unless uri.absolute?
     end
+  rescue => e
+    e.message
   end
 end
