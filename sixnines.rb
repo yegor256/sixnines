@@ -45,7 +45,8 @@ require_relative 'objects/dynamo'
 require_relative 'objects/github_auth'
 
 configure do
-  Haml::Template.options[:autoclose] = %w(meta img link br hr input script)
+  Haml::Options.defaults[:format] = :html5
+  Haml::Options.defaults[:autoclose] = %w(meta img link br hr input script)
   config = if ENV['RACK_ENV'] == 'test'
     {
       'cookie_secret' => 'test',
