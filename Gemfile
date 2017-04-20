@@ -23,6 +23,7 @@
 source 'https://rubygems.org'
 
 gem 'aws-sdk', '2.6.35'
+gem 'rack', '1.6.5'
 gem 'coveralls', '0.8.17', require: false
 gem 'haml', '4.0.7'
 gem 'mail', '2.6.4'
