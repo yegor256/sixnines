@@ -22,27 +22,28 @@
 
 require 'test/unit'
 require 'rack/test'
+require_relative '../objects/base'
 require_relative '../objects/endpoint'
+require_relative '../objects/endpoints'
+require_relative '../objects/dynamo'
 
 class EndpointTest < Test::Unit::TestCase
   def test_pings_valid_uri
-    ep = Endpoint.new(
-      nil,
-      'uri' => 'http://www.yegor256.com',
-      'created' => 1_490_177_388
+    dynamo = Dynamo.new.aws
+    id = Endpoints.new(dynamo, 'yegor256').add(
+      'http://www.yegor256.com'
     )
-    res, log = ep.fetch
-    assert_equal('200', res.code)
-    assert(log.include?('HTTP/1.1'))
+    ep = Base.new(dynamo).take(id)
+    assert(ep.ping.end_with?('200'))
   end
 
   def test_pings_broken_uri
-    ep = Endpoint.new(
-      nil,
-      'uri' => 'http://www.sixnines-broken-uri.io',
-      'created' => 1_490_177_365
+    dynamo = Dynamo.new.aws
+    id = Endpoints.new(dynamo, 'yegor256').add(
+      'http://www.sixnines-broken-uri.io'
     )
-    res, = ep.fetch
-    assert_equal('500', res.code)
+    ep = Base.new(dynamo).take(id)
+    ep.ping
+    assert(ep.ping.end_with?('500'))
   end
 end

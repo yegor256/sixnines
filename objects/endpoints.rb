@@ -33,12 +33,13 @@ class Endpoints
   end
 
   def add(uri)
+    id = unique_id(uri)
     @aws.put_item(
       table_name: 'sn-endpoints',
       item: {
         'login' => @user,
         'uri' => uri,
-        'id' => unique_id(uri),
+        'id' => id,
         'active' => 'yes',
         'created' => Time.now.to_i,
         'hostname' => URI.parse(uri).host.gsub(/^www\./, ''),
@@ -47,6 +48,7 @@ class Endpoints
         'expires' => 0
       }
     )
+    id
   end
 
   def del(uri)
