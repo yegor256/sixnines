@@ -8,9 +8,13 @@
   Avg.
   %strong= EpGraph.new(e).avg_full
 %p
-  Flipped
-  %strong
-    =ActionView::Base.new.distance_of_time_in_words(e.to_h[:flipped], Time.now) + ' ago'
+  More in
+  %a{href: "/d/#{e.to_h[:id]}"} JSON
+%p
+  - if e.to_h[:flipped]
+    Flipped
+    %strong
+      =ActionView::Base.new.distance_of_time_in_words(e.to_h[:flipped], Time.now) + ' ago'
   Created
   %strong
     =ActionView::Base.new.distance_of_time_in_words(e.to_h[:created], Time.now) + ' ago'

@@ -72,9 +72,35 @@ class AppTest < Test::Unit::TestCase
     assert_equal(404, last_response.status)
   end
 
+  def test_history_endpoint
+    dynamo = Dynamo.new.aws
+    id = Endpoints.new(dynamo, 'main').add('http://www.ibm.com')
+    get("/h/#{id}")
+    assert_equal(200, last_response.status)
+  end
+
   def test_history_endpoint_not_found
     get('/h/absent')
     assert_equal(404, last_response.status)
+  end
+
+  def test_data_endpoint
+    dynamo = Dynamo.new.aws
+    id = Endpoints.new(dynamo, 'main').add('http://www.stackoverflow.com')
+    get("/d/#{id}")
+    assert_equal(200, last_response.status)
+  end
+
+  def test_data_endpoint_not_found
+    get('/d/absent')
+    assert_equal(404, last_response.status)
+  end
+
+  def test_favicon_endpoint
+    dynamo = Dynamo.new.aws
+    id = Endpoints.new(dynamo, 'main').add('http://www.yahoo.com')
+    get("/f/#{id}")
+    assert_equal(200, last_response.status)
   end
 
   def test_favicon_endpoint_not_found
@@ -82,9 +108,23 @@ class AppTest < Test::Unit::TestCase
     assert_equal(404, last_response.status)
   end
 
+  def test_badge_endpoint
+    dynamo = Dynamo.new.aws
+    id = Endpoints.new(dynamo, 'main').add('http://www.twitter.com')
+    get("/b/#{id}")
+    assert_equal(200, last_response.status)
+  end
+
   def test_badge_endpoint_not_found
     get('/b/absent')
     assert_equal(404, last_response.status)
+  end
+
+  def test_graph_endpoint
+    dynamo = Dynamo.new.aws
+    id = Endpoints.new(dynamo, 'main').add('http://www.instagram.com')
+    get("/g/#{id}")
+    assert_equal(200, last_response.status)
   end
 
   def test_graph_endpoint_not_found

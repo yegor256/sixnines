@@ -43,6 +43,7 @@ require_relative 'objects/cookie'
 require_relative 'objects/dynamo'
 require_relative 'objects/github_auth'
 require_relative 'objects/endpoint/ep_favicon'
+require_relative 'objects/endpoint/ep_data'
 
 configure do
   Haml::Options.defaults[:format] = :xhtml
@@ -201,6 +202,16 @@ get '/f/:id' do
     response.headers['Cache-Control'] = 'max-age=' + (5 * 60 * 60).to_s
     content_type 'image/png'
     EpFavicon.new(settings.base.take(params[:id])).png
+  rescue Base::EndpointNotFound
+    404
+  end
+end
+
+# Data of the endpoint
+get '/d/:id' do
+  begin
+    content_type 'application/json'
+    EpData.new(settings.base.take(params[:id])).to_json
   rescue Base::EndpointNotFound
     404
   end
