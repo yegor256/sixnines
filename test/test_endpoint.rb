@@ -30,7 +30,7 @@ require_relative '../objects/dynamo'
 class EndpointTest < Test::Unit::TestCase
   def test_pings_valid_uri
     dynamo = Dynamo.new.aws
-    id = Endpoints.new(dynamo, 'yegor256').add(
+    id = Endpoints.new(dynamo, 'yegor256-endpoint').add(
       'http://www.yegor256.com'
     )
     ep = Base.new(dynamo).take(id)
@@ -39,7 +39,7 @@ class EndpointTest < Test::Unit::TestCase
 
   def test_pings_broken_uri
     dynamo = Dynamo.new.aws
-    id = Endpoints.new(dynamo, 'yegor256').add(
+    id = Endpoints.new(dynamo, 'yegor256-endpoint').add(
       'http://www.sixnines-broken-uri.io'
     )
     ep = Base.new(dynamo).take(id)

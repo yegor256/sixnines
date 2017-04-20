@@ -26,7 +26,7 @@ require_relative '../objects/endpoints'
 
 class EndpointsTest < Test::Unit::TestCase
   def test_creates_endpoint
-    eps = Endpoints.new(Dynamo.new.aws, 'yegor256')
+    eps = Endpoints.new(Dynamo.new.aws, 'yegor256-endpoints')
     uri = 'http://www.sixnines.io'
     eps.add(uri)
     assert_equal(1, eps.list.size)
