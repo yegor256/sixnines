@@ -219,7 +219,8 @@ HTTP/#{res.http_version} #{res.code} #{res.message}\n\
       URI.parse("http://#{to_h[:uri].host}/favicon.ico")
     else
       uri = URI.parse(links[0])
-      URI.parse("http://#{to_h[:uri].host}#{uri}") unless uri.absolute?
+      uri = URI.parse("http://#{to_h[:uri].host}#{uri}") unless uri.absolute?
+      uri
     end
   rescue => _
     URI.parse('localhost')
