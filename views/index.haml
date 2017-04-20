@@ -6,7 +6,7 @@ We ping all websites a few times per minute.
 %p
   %form{:method=>'get', :action=>'/'}
     %fieldset
-      %input{:type=>'text', :name=>'q', :size => '35', :placeholder => 'Your keyword for URI', :value=>query}
+      %input{:type=>'text', :name=>'q', :size => '35', :placeholder => 'Your keyword for URI', :value=>query}/
       %button{:type=>'submit'}>Search
 
 - if query
