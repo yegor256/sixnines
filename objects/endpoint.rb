@@ -22,6 +22,7 @@
 
 require 'uri'
 require 'timeout'
+require 'net/http'
 require_relative 'endpoint/ep_uri'
 require_relative 'endpoint/ep_state'
 require_relative 'endpoint/ep_availability'
@@ -64,6 +65,7 @@ class Endpoint
   def to_h
     h = {
       uri: URI.parse(@item['uri']),
+      favicon: @item['favicon'] ? URI.parse(@item['favicon']) : nil,
       login: @item['login'],
       id: @item['id'],
       hostname: @item['hostname'],
@@ -123,6 +125,7 @@ class Endpoint
     update = [
       'updated = :t',
       'expires = :e',
+      'favicon = :f',
       'pings = pings + :o',
       '#state = :s'
     ]
@@ -133,7 +136,8 @@ class Endpoint
       ':s' => up ? 'up' : 'down',
       ':o' => 1,
       ':t' => Time.now.to_i,
-      ':e' => (Time.now + 60).to_i # ping again in 60 seconds
+      ':e' => (Time.now + 60).to_i, # ping again in 60 seconds
+      ':f' => favicon(res.body).to_s
     }
     update << 'failures = failures + :o' unless up
     update << 'flipped = :t' unless up == h[:up]
@@ -155,6 +159,8 @@ class Endpoint
     yield(up, self) if block_given? && up != h[:up]
     "#{h[:uri]}: #{res.code}"
   end
+
+  private
 
   def fetch
     h = to_h
@@ -181,13 +187,15 @@ class Endpoint
           def code
             '500'
           end
+
+          def body
+            ''
+          end
         end.new,
         "#{e.class}: #{e.message}\n\t#{e.backtrace.join("\n\t")}"
       ]
     end
   end
-
-  private
 
   def to_text(req, res)
     "#{req.method} #{req.path} HTTP/1.1\n\
@@ -202,5 +210,19 @@ HTTP/#{res.http_version} #{res.code} #{res.message}\n\
 
   def body(body)
     body.nil? ? '' : body.strip.gsub(/^(.{200,}?).*$/m, '\1...')
+  end
+
+  def favicon(body)
+    xml = Nokogiri::HTML(body)
+    links = xml.xpath('/html/head/link[@rel="shortcut icon"]/@href')
+    if links.empty?
+      URI.parse("http://#{to_h[:uri].host}/favicon.ico")
+    else
+      uri = URI.parse(links[0])
+      uri = URI.parse("http://#{to_h[:uri].host}#{uri}") unless uri.absolute?
+      uri
+    end
+  rescue => _
+    URI.parse('localhost')
   end
 end

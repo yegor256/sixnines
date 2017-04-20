@@ -37,7 +37,7 @@ class EpUri
   end
 
   def favicon(size = 'small')
-    "<img class='favicon-#{size}' src='/f/#{@endpoint.to_h[:id]}'/>"
+    "<img class='favicon-#{size}' src='/f/#{@endpoint.to_h[:id]}' alt='icon'/>"
   end
 
   def to_html

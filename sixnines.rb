@@ -21,6 +21,7 @@
 # SOFTWARE.
 
 require 'haml'
+require 'haml/template/options'
 require 'sinatra'
 require 'sinatra/cookies'
 require 'sass'
@@ -32,16 +33,20 @@ require 'aws-sdk'
 require 'stripe'
 require 'time_difference'
 require 'twitter'
+require 'action_view'
+require 'action_view/helpers'
 
 require_relative 'version'
 require_relative 'objects/exec'
 require_relative 'objects/base'
 require_relative 'objects/cookie'
-require_relative 'objects/favicon'
 require_relative 'objects/dynamo'
 require_relative 'objects/github_auth'
+require_relative 'objects/endpoint/ep_favicon'
+require_relative 'objects/endpoint/ep_data'
 
 configure do
+  Haml::Options.defaults[:format] = :xhtml
   config = if ENV['RACK_ENV'] == 'test'
     {
       'cookie_secret' => 'test',
@@ -125,7 +130,35 @@ get '/' do
 end
 
 get '/rss' do
-  'not implemented yet'
+  require 'rss'
+  content_type 'application/rss+xml'
+  RSS::Maker.make('atom') do |m|
+    m.channel.author = 'SixNines.io'
+    m.channel.updated = Time.now.to_s
+    m.channel.about = 'http://sixnines.io/rss'
+    m.channel.title = 'SixNines recent flips'
+    settings.base.flips.each do |e|
+      m.items.new_item do |i|
+        i.link = "http://www.sixnines.io/h/#{e.to_h[:id]}"
+        i.title = "#{e.to_h[:hostname]} flipped"
+        i.updated = Time.now.to_s
+      end
+    end
+  end.to_s
+end
+
+get '/sitemap.xml' do
+  require 'xml-sitemap'
+  content_type 'application/xml'
+  XmlSitemap::Map.new('sixnines.io') do |m|
+    settings.base.flips.each do |e|
+      m.add(
+        "/h/#{e.to_h[:id]}",
+        updated: e.to_h[:flipped],
+        period: :never
+      )
+    end
+  end.render
 end
 
 # SVG badge of the endpoint
@@ -166,9 +199,19 @@ end
 # Favicon of the endpoint
 get '/f/:id' do
   begin
-    response.headers['Cache-Control'] = 'no-cache, private'
+    response.headers['Cache-Control'] = 'max-age=' + (5 * 60 * 60).to_s
     content_type 'image/png'
-    Favicon.new(settings.base.take(params[:id]).to_h[:uri].host).png
+    EpFavicon.new(settings.base.take(params[:id])).png
+  rescue Base::EndpointNotFound
+    404
+  end
+end
+
+# Data of the endpoint
+get '/d/:id' do
+  begin
+    content_type 'application/json'
+    EpData.new(settings.base.take(params[:id])).to_json
   rescue Base::EndpointNotFound
     404
   end
@@ -213,7 +256,7 @@ get '/ping' do
 end
 
 get '/robots.txt' do
-  ''
+  'sitemap: http://www.sixnines.io/sitemap.xml'
 end
 
 get '/version' do
@@ -267,6 +310,7 @@ end
 
 error do
   status 503
+  content_type 'text/html'
   e = env['sinatra.error']
   haml(
     :error,

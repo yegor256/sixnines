@@ -14,29 +14,42 @@
 #
 # THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFINGEMENT. IN NO EVENT SHALL THE
 # AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-require 'rmagick'
-require 'net/http'
+require 'test/unit'
+require 'rack/test'
+require_relative '../../objects/endpoint/ep_favicon'
 
-#
-# Favicon of a hostname
-#
-class Favicon
-  def initialize(host)
-    @host = host
+class EpFaviconTest < Test::Unit::TestCase
+  def test_builds_default_favicon
+    img = Magick::Image.from_blob(EpFavicon.new(endpoint('broken')).png)[0]
+    assert_equal(32, img.columns)
+    assert_equal(32, img.rows)
   end
 
-  def png
-    body = Net::HTTP.get(@host, '/favicon.ico')
-    img = Magick::Image.from_blob(body)[0]
-    img.format = 'PNG'
-    img.to_blob
-  rescue => _
-    File.read(File.join(Dir.pwd, 'assets/images/default-favicon.png'))
+  def test_fetches_correct_favicon
+    img = Magick::Image.from_blob(
+      EpFavicon.new(endpoint('http://www.yegor256.com/favicon.ico')).png
+    )[0]
+    assert_equal(64, img.columns)
+    assert_equal(64, img.rows)
+  end
+
+  private
+
+  def endpoint(uri)
+    Class.new do
+      def initialize(u)
+        @u = u
+      end
+
+      def to_h
+        { favicon: URI.parse(@u) }
+      end
+    end.new(uri)
   end
 end

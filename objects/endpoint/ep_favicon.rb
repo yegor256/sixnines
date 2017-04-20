@@ -14,22 +14,31 @@
 #
 # THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFINGEMENT. IN NO EVENT SHALL THE
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 # AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-require 'test/unit'
-require 'rack/test'
-require_relative '../objects/endpoints'
+require 'nokogiri'
+require 'rmagick'
+require 'net/http'
 
-class EndpointsTest < Test::Unit::TestCase
-  def test_creates_endpoint
-    eps = Endpoints.new(Dynamo.new.aws, 'yegor256-endpoints')
-    uri = 'http://www.sixnines.io'
-    eps.add(uri)
-    assert_equal(1, eps.list.size)
-    eps.del(uri)
+#
+# Favicon of a endpoint
+#
+class EpFavicon
+  def initialize(endpoint)
+    @endpoint = endpoint
+  end
+
+  def png
+    icon = Net::HTTP.get(@endpoint.to_h[:favicon])
+    img = Magick::Image.from_blob(icon)[0]
+    img.format = 'PNG'
+    img.to_blob
+  rescue => e
+    puts e.message
+    File.read(File.join(Dir.pwd, 'assets/images/default-favicon.png'))
   end
 end

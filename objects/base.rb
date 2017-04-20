@@ -55,17 +55,21 @@ class Base
   end
 
   def find(query)
-    @aws.query(
-      table_name: 'sn-endpoints',
-      index_name: 'hostnames',
-      select: 'ALL_ATTRIBUTES',
-      limit: 10,
-      expression_attribute_values: {
-        ':h' => 'yes',
-        ':r' => query
-      },
-      key_condition_expression: 'active=:h and begins_with(hostname,:r)'
-    ).items.map { |i| Endpoint.new(@aws, i) }
+    if query.empty?
+      []
+    else
+      @aws.query(
+        table_name: 'sn-endpoints',
+        index_name: 'hostnames',
+        select: 'ALL_ATTRIBUTES',
+        limit: 10,
+        expression_attribute_values: {
+          ':h' => 'yes',
+          ':r' => query
+        },
+        key_condition_expression: 'active=:h and begins_with(hostname,:r)'
+      ).items.map { |i| Endpoint.new(@aws, i) }
+    end
   end
 
   def take(id)

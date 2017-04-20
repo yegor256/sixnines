@@ -6,7 +6,7 @@ We ping all websites a few times per minute.
 %p
   %form{:method=>'get', :action=>'/'}
     %fieldset
-      %input{:type=>'text', :name=>'q', :size => '35', :placeholder => 'Your keyword for URI', :value=>query}
+      %input{:type=>'text', :name=>'q', :size => '35', :placeholder => 'Your keyword for URI', :value=>query}/
       %button{:type=>'submit'}>Search
 
 - if query
@@ -33,4 +33,4 @@ We ping all websites a few times per minute.
       %li
         =EpUri.new(e).to_html
         =EpBadge.new(e).to_html
-        =e.to_h[:flipped]
+        =ActionView::Base.new.distance_of_time_in_words(e.to_h[:flipped], Time.now) + ' ago'

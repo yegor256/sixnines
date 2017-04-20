@@ -14,26 +14,23 @@
 #
 # THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFINGEMENT. IN NO EVENT SHALL THE
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 # AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-require 'test/unit'
-require 'rack/test'
-require_relative '../objects/favicon'
+require 'json'
 
-class FaviconTest < Test::Unit::TestCase
-  def test_builds_default_favicon
-    img = Magick::Image.from_blob(Favicon.new('yegor256-broken.com').png)[0]
-    assert_equal(32, img.columns)
-    assert_equal(32, img.rows)
+#
+# Data of endpoint
+#
+class EpData
+  def initialize(endpoint)
+    @endpoint = endpoint
   end
 
-  def test_fetches_correct_favicon
-    img = Magick::Image.from_blob(Favicon.new('www.yegor256.com').png)[0]
-    assert_equal(64, img.columns)
-    assert_equal(64, img.rows)
+  def to_json
+    JSON.generate(@endpoint.to_h)
   end
 end

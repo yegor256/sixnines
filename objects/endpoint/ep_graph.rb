@@ -40,7 +40,7 @@ class EpGraph
   end
 
   def to_html
-    "<img src='/g/#{@endpoint.to_h[:id]}' class='graph'/>"
+    "<img src='/g/#{@endpoint.to_h[:id]}' alt='graph' class='graph'/>"
   end
 
   def to_svg
