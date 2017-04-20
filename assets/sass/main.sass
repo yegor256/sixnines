@@ -39,7 +39,7 @@ $switch-wide: 1600
 // colors
 $background: #ffffff
 $text: #5f5f5f
-$green: #4c1
+$green: #44cc11
 $blue: #07a
 $input: #fff
 
@@ -54,6 +54,10 @@ $input: #fff
 @mixin wide
   @media all and (min-width: $switch-tablet * 1px)
     @content
+
+*
+  box-sizing: border-box
+  -moz-box-sizing: border-box
 
 body
   @extend %font
@@ -101,8 +105,9 @@ section
   font-weight: normal
 
 fieldset 
-  border: 0 solid
+  border: 0
   padding: 0
+  margin: 0
 
 a 
   color: inherit

@@ -10,13 +10,13 @@ We ping all websites a few times per minute.
       %button{:type=>'submit'}>Search
 
 - if query
-  %p
-    Found by
-    ='"' + query + '":'
   - if found.empty?
     %p
       Nothing! Sorry about that.
   - else
+    %p
+      Found by
+      ='"' + query + '":'
     %ul
       - found.each do |e|
         %li
@@ -28,9 +28,8 @@ We ping all websites a few times per minute.
     Recent
     =flips.size
     flips:
-  %ul
-    - flips.each do |e|
-      %li
-        =EpUri.new(e).to_html
-        =EpBadge.new(e).to_html
-        =ActionView::Base.new.distance_of_time_in_words(e.to_h[:flipped], Time.now) + ' ago'
+  - flips.each do |e|
+    %p
+      =EpUri.new(e).to_html
+      =EpBadge.new(e).to_html
+      =ActionView::Base.new.distance_of_time_in_words(e.to_h[:flipped], Time.now) + ' ago'
