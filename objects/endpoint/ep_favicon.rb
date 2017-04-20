@@ -33,11 +33,12 @@ class EpFavicon
   end
 
   def png
-    icon = Net::HTTP.get(@endpoint.to_h[:favicon])
+    icon = Net::HTTP.get(@endpoint.favicon)
     img = Magick::Image.from_blob(icon)[0]
     img.format = 'PNG'
     img.to_blob
-  rescue => _
+  rescue => e
+    puts e.message
     File.read(File.join(Dir.pwd, 'assets/images/default-favicon.png'))
   end
 end

@@ -47,10 +47,8 @@ class EpFaviconTest < Test::Unit::TestCase
         @u = u
       end
 
-      def to_h
-        {
-          favicon: URI.parse(@u)
-        }
+      def favicon
+        URI.parse(@u)
       end
     end.new(uri)
   end
