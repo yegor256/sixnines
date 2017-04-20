@@ -40,13 +40,12 @@ require_relative 'version'
 require_relative 'objects/exec'
 require_relative 'objects/base'
 require_relative 'objects/cookie'
-require_relative 'objects/favicon'
 require_relative 'objects/dynamo'
 require_relative 'objects/github_auth'
+require_relative 'objects/endpoint/ep_favicon'
 
 configure do
   Haml::Options.defaults[:format] = :xhtml
-  # Haml::Options.defaults[:autoclose] = %w(meta img link br hr input script)
   config = if ENV['RACK_ENV'] == 'test'
     {
       'cookie_secret' => 'test',
@@ -201,7 +200,7 @@ get '/f/:id' do
   begin
     response.headers['Cache-Control'] = 'max-age=' + (5 * 60 * 60).to_s
     content_type 'image/png'
-    Favicon.new(settings.base.take(params[:id]).to_h[:uri].host).png
+    EpFavicon.new(settings.base.take(params[:id])).png
   rescue Base::EndpointNotFound
     404
   end

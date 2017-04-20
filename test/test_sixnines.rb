@@ -46,7 +46,9 @@ class AppTest < Test::Unit::TestCase
     get('/')
     assert(last_response.ok?)
     assert(last_response.body.include?('SixNines'))
-    xml = Nokogiri::XML(last_response.body)
+    xml = Nokogiri::XML(last_response.body) do |c|
+      c.options = Nokogiri::XML::ParseOptions::STRICT
+    end
     assert_equal(1, xml.xpath('/html/head/title').length)
   end
 

@@ -20,20 +20,21 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+require 'nokogiri'
 require 'rmagick'
 require 'net/http'
 
 #
-# Favicon of a hostname
+# Favicon of a endpoint
 #
-class Favicon
-  def initialize(host)
-    @host = host
+class EpFavicon
+  def initialize(endpoint)
+    @endpoint = endpoint
   end
 
   def png
-    body = Net::HTTP.get(@host, '/favicon.ico')
-    img = Magick::Image.from_blob(body)[0]
+    icon = Net::HTTP.get(@endpoint.to_h[:favicon])
+    img = Magick::Image.from_blob(icon)[0]
     img.format = 'PNG'
     img.to_blob
   rescue => _

@@ -22,18 +22,36 @@
 
 require 'test/unit'
 require 'rack/test'
-require_relative '../objects/favicon'
+require_relative '../../objects/endpoint/ep_favicon'
 
-class FaviconTest < Test::Unit::TestCase
+class EpFaviconTest < Test::Unit::TestCase
   def test_builds_default_favicon
-    img = Magick::Image.from_blob(Favicon.new('yegor256-broken.com').png)[0]
+    img = Magick::Image.from_blob(EpFavicon.new(endpoint('broken')).png)[0]
     assert_equal(32, img.columns)
     assert_equal(32, img.rows)
   end
 
   def test_fetches_correct_favicon
-    img = Magick::Image.from_blob(Favicon.new('www.yegor256.com').png)[0]
+    img = Magick::Image.from_blob(
+      EpFavicon.new(endpoint('http://www.yegor256.com/favicon.ico')).png
+    )[0]
     assert_equal(64, img.columns)
     assert_equal(64, img.rows)
+  end
+
+  private
+
+  def endpoint(uri)
+    Class.new do
+      def initialize(u)
+        @u = u
+      end
+
+      def to_h
+        {
+          favicon: URI.parse(@u)
+        }
+      end
+    end.new(uri)
   end
 end

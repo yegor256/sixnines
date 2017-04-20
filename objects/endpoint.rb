@@ -64,6 +64,7 @@ class Endpoint
   def to_h
     h = {
       uri: URI.parse(@item['uri']),
+      favicon: URI.parse(@item['favicon']),
       login: @item['login'],
       id: @item['id'],
       hostname: @item['hostname'],
@@ -116,7 +117,8 @@ class Endpoint
         msec: ((Time.now - start) * 1000).to_i,
         local: 'unknown',
         remote: 'unknown',
-        delete_on: (Time.now + (24 * 60 * 60)).to_i
+        delete_on: (Time.now + (24 * 60 * 60)).to_i,
+        favicon: favicon(res)
       }
     )
     up = res.code == '200'
@@ -202,5 +204,16 @@ HTTP/#{res.http_version} #{res.code} #{res.message}\n\
 
   def body(body)
     body.nil? ? '' : body.strip.gsub(/^(.{200,}?).*$/m, '\1...')
+  end
+
+  def favicon(body)
+    xml = Nokogiri::HTML(body)
+    links = xml.xpath('/html/head/link[@rel="shortcut icon"]/@href')
+    if links.empty?
+      URI.parse("http://#{to_s[:uri].host}/favicon.ico")
+    else
+      uri = URI.parse(links[0])
+      URI.parse("http://#{to_s[:uri].host}#{uri}") unless uri.absolute?
+    end
   end
 end
