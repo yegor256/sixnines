@@ -21,6 +21,7 @@
 # SOFTWARE.
 
 require 'haml'
+require 'haml/template/options'
 require 'sinatra'
 require 'sinatra/cookies'
 require 'sass'
@@ -44,6 +45,7 @@ require_relative 'objects/dynamo'
 require_relative 'objects/github_auth'
 
 configure do
+  Haml::Template.options[:autoclose] = %w(meta img link br hr input script)
   config = if ENV['RACK_ENV'] == 'test'
     {
       'cookie_secret' => 'test',
