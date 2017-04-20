@@ -64,7 +64,7 @@ class Endpoint
   def to_h
     h = {
       uri: URI.parse(@item['uri']),
-      favicon: URI.parse(@item['favicon']),
+      favicon: URI.parse(@item['favicon']) ? @item['favicon'] : nil,
       login: @item['login'],
       id: @item['id'],
       hostname: @item['hostname'],
