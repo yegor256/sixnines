@@ -299,6 +299,7 @@ end
 
 error do
   status 503
+  content_type 'text/html'
   e = env['sinatra.error']
   haml(
     :error,
