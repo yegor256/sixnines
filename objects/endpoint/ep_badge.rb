@@ -42,7 +42,8 @@ class EpBadge
 
   def to_html(amp = false)
     "<a href='#{to_href}'><#{amp ? 'amp-' : ''}img src='#{to_src}' \
-alt='@endpoint.to_h[:hostname] availability badge'/></a>"
+alt='@endpoint.to_h[:hostname] availability badge' \
+width='106' height='20'/></a>"
   end
 
   def to_svg(style = 'round')
