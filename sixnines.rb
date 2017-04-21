@@ -231,7 +231,7 @@ get '/ping' do
         settings.twitter.update(
           "#{ep.to_h[:hostname]} #{event}! \
 Availability: #{EpAvailability.new(ep).short} \
-(#{EpAvailability.new(ep).short}). #{href}"
+(#{EpAvailability.new(ep).full}). #{href}"
         )
       end
     else
