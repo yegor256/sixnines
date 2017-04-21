@@ -31,7 +31,7 @@ class EpGraph
   end
 
   def avg
-    h = @endpoint.history.map { |p| p[:msec] }
+    h = points.map { |p| p[:msec] }
     (h.inject(&:+) || 1) / (h.empty? ? 1 : h.size)
   end
 
@@ -44,7 +44,7 @@ class EpGraph
   end
 
   def to_svg
-    h = @endpoint.history
+    h = points
     xml = if h.empty?
       '<history minx="0" maxx="0" miny="0" maxy="0" avg="0"/>'
     else
@@ -61,5 +61,11 @@ class EpGraph
     Nokogiri::XSLT(File.read('assets/xsl/graph.xsl')).transform(
       Nokogiri::XML(xml)
     ).to_s
+  end
+
+  private
+
+  def points
+    @endpoint.history
   end
 end
