@@ -51,11 +51,8 @@
           body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}
     %style{'amp-custom': ''}
       :plain
-        body { padding: .5em; font-size: 1.2em; }
-        article { width: 600px; max-width: 100%; margin-left: auto; margin-right: auto; }
-        .intro { color: red; font-size: .75em; }
-        .photo { border-radius: 50%; }
-        pre { overflow-x:scroll; }
+        @import url('https://fonts.googleapis.com/css?family=Overpass+Mono:400,700')
+        body { font-family: 'Overpass Mono', monospace; font-weight: 400; padding: 1em; }
     %script{async: '', src: 'https://cdn.ampproject.org/v0.js'}
   %body
     %header
