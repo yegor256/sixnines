@@ -178,6 +178,7 @@ end
 get '/h/:id' do
   begin
     haml :history, layout: :layout, locals: @locals.merge(
+      amphtml: "/h-amp/#{params[:id]}",
       e: Endpoint::Cached.new(settings.base.take(params[:id]))
     )
   rescue Base::EndpointNotFound

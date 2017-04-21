@@ -40,8 +40,9 @@ class EpBadge
     "/h/#{@endpoint.to_h[:id]}"
   end
 
-  def to_html
-    "<a href='#{to_href}'><img src='#{to_src}' alt='badge'/></a>"
+  def to_html(amp = fasle)
+    "<a href='#{to_href}'><#{amp ? 'amp-': ''}img src='#{to_src}' \
+alt='@endpoint.to_h[:hostname] availability badge'/></a>"
   end
 
   def to_svg(style = 'round')

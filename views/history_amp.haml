@@ -1,7 +1,7 @@
 %p
   = EpUri.new(e).to_html
 %p
-  = EpBadge.new(e).to_html
+  = EpBadge.new(e).to_html(true)
 %p
   Availability:
   %strong= EpAvailability.new(e).full

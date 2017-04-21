@@ -11,36 +11,36 @@
       :plain
         {
           "@context": "http://schema.org",
-          "@type": "BlogPosting",
+          "@type": "WebPage",
           "mainEntityOfPage":{
             "@type": "WebPage",
-            "@id": "{{ doc.url | prepend: site.baseurl | prepend: site.url }}"
+            "@id": ""
           },
-          "headline": "{{ page.title }}",
+          "headline": "",
           "image": {
             "@type": "ImageObject",
-            "url": "{{ image_src }}",
-            "height": {{ image_height }},
-            "width": {{ image_width }}
+            "url": "",
+            "height": 500,
+            "width": 500
           },
-          "datePublished": "{{ page.date }}",
-          "dateModified": "{{ page.date }}",
+          "datePublished": "",
+          "dateModified": "",
           "author": {
             "@type": "Person",
             "name": "Yegor Bugayenko"
           },
           "publisher": {
             "@type": "Organization",
-            "name": "yegor256.com",
+            "name": "sixnines.io",
             "logo": {
               "@type": "ImageObject",
-              "url": "http://www.yegor256.com/images/face-512x512.jpg",
+              "url": "http://www.sixnines.io/images/logo.png",
               "width": 512,
               "height": 512
             }
           },
-          "description": "{{ page.description }}",
-          "keywords": ["{{ page.keywords | join:'", "' }}"]
+          "description": "",
+          "keywords": ["availability", "monitor"]
         }
     %style{'amp-boilerplate': ''}
       :plain
