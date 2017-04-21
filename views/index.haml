@@ -32,4 +32,4 @@ We ping all websites a few times per minute.
     %p
       =EpUri.new(e).to_html
       =EpBadge.new(e).to_html
-      =ActionView::Base.new.distance_of_time_in_words(e.to_h[:flipped], Time.now) + ' ago'
+      =ActionView::Base.new.time_ago_in_words(e.to_h[:flipped]) + ' ago'
