@@ -41,9 +41,11 @@ class EpFaviconTest < Test::Unit::TestCase
 
   def test_parses_different_types
     files = [
+      # rubocop:disable LineLength
       ['https://cdn.sstatic.net/Sites/stackoverflow/img/favicon.ico', 16],
       ['http://www.yegor256.com/favicon.ico', 64],
       ['http://www.instagram.com/static/images/ico/favicon.ico/dfa85bb1fd63.ico', 16]
+      # rubocop:enable LineLength
     ]
     files.each do |f, w|
       img = Magick::Image.from_blob(
