@@ -1,11 +1,12 @@
 !!! 5
 %html
   %head
-    %title SixNines
+    %title
+      = title
     %meta{:charset => 'UTF-8'}
     %meta{:name => 'viewport', :content => 'width=device-width, initial-scale=1.0'}
     %meta{:name => 'keywords', :content => 'availability, six nines, web site'}
-    %meta{:name => 'description', :content => 'Hosted web site availability checker'}
+    %meta{:name => 'description', :content => description}
     - if defined? amphtml
       %link{rel: 'amphtml', href: amphtml}
     %link{:type => 'text/css', :href => url('css/main.css'), :rel => 'stylesheet'}

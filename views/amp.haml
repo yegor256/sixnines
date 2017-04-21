@@ -13,17 +13,17 @@
           "@type": "WebPage",
           "mainEntityOfPage":{
             "@type": "WebPage",
-            "@id": ""
+            "@id": "#{title}"
           },
-          "headline": "",
+          "headline": "#{title}",
           "image": {
             "@type": "ImageObject",
-            "url": "",
-            "height": 500,
-            "width": 500
+            "url": "http://www.sixnines.io/images/logo.png",
+            "width": 512,
+            "height": 512
           },
-          "datePublished": "",
-          "dateModified": "",
+          "datePublished": "#{Time.now}",
+          "dateModified": "#{Time.now}",
           "author": {
             "@type": "Person",
             "name": "Yegor Bugayenko"
@@ -38,7 +38,7 @@
               "height": 512
             }
           },
-          "description": "",
+          "description": "#{description}",
           "keywords": ["availability", "monitor"]
         }
     %style{'amp-boilerplate': ''}
@@ -50,7 +50,6 @@
           body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}
     %style{'amp-custom': ''}
       :plain
-        @import url('https://fonts.googleapis.com/css?family=Overpass+Mono:400,700')
         body { font-family: monospace; padding: 1em; }
     %script{async: '', src: 'https://cdn.ampproject.org/v0.js'}
   %body
