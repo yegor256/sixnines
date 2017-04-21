@@ -1,0 +1,19 @@
+%p
+  = EpUri.new(e).to_html
+%p
+  = EpBadge.new(e).to_html
+%p
+  Availability:
+  %strong= EpAvailability.new(e).full
+%p
+  Average:
+  %strong= EpGraph.new(e).avg_full
+%p
+  - if e.to_h[:flipped]
+    Flipped:
+    %strong
+      =ActionView::Base.new.time_ago_in_words(e.to_h[:flipped]) + ' ago'
+%p
+  Created:
+  %strong
+    =ActionView::Base.new.time_ago_in_words(e.to_h[:created]) + ' ago'

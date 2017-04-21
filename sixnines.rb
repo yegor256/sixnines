@@ -185,6 +185,18 @@ get '/h/:id' do
   end
 end
 
+# History page of the endpoint (AMP)
+get '/h-amp/:id' do
+  begin
+    haml :history_amp, layout: :amp, locals: @locals.merge(
+      canonical: "/h/#{params[:id]}",
+      e: Endpoint::Cached.new(settings.base.take(params[:id]))
+    )
+  rescue Base::EndpointNotFound
+    404
+  end
+end
+
 # SVG graph of the endpoint
 get '/g/:id' do
   begin
