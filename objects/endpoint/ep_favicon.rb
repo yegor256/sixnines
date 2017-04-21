@@ -48,7 +48,7 @@ class EpFavicon
       f = File.join(
         dir,
         'image.' + case res['Content-Type']
-        when 'image/x-icon'
+        when 'image/x-icon', 'image/vnd.microsoft.icon'
           'ico'
         when 'image/png'
           'png'
