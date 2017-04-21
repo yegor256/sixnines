@@ -31,7 +31,7 @@ class BadgeTest < Test::Unit::TestCase
         {
           id: '1234567',
           pings: 100,
-          failures: 5,
+          failures: 10,
           up: true
         }
       end

@@ -44,12 +44,17 @@
         <path fill="#555" d="M0 0h37v20H0z"/>
         <path d="M37 0h77v20H37z">
           <xsl:attribute name="fill">
-            <xsl:if test="state='true'">
-              <xsl:text>#4c1</xsl:text>
-            </xsl:if>
-            <xsl:if test="state='false'">
-              <xsl:text>#d9644d</xsl:text>
-            </xsl:if>
+            <xsl:choose>
+              <xsl:when test="number(availability) &gt; 99.9">
+                <xsl:text>#44cc11</xsl:text>
+              </xsl:when>
+              <xsl:when test="number(availability) &gt; 99">
+                <xsl:text>#dfb317</xsl:text>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:text>#d9644d</xsl:text>
+              </xsl:otherwise>
+            </xsl:choose>
           </xsl:attribute>
         </path>
         <path fill="url(#b)" d="M0 0h106v20H0z"/>
@@ -61,11 +66,11 @@
         <path fill="ffffff" d="m 21.102809,3.0223871 c -2.483021,1.311e-4 -5.133154,0.3831153 -7.111621,1.5312198 -3.891615,2.258079 -3.668122,5.9360821 -3.534133,7.2969571 5.026459,-5.9542083 12.544864,-5.6655116 12.544864,-5.6655116 0,0 -10.657502,3.6556352 -13.7877356,10.9866016 -0.24721,0.578724 1.1599786,1.331692 1.4811056,0.647488 0.958496,-2.038767 2.294044,-3.567942 2.294044,-3.567942 1.97055,0.73328 5.379204,1.592345 7.7953,-0.107782 3.209246,-2.258487 2.881089,-7.2646827 7.462411,-9.7023658 0.668803,-0.3557201 -3.005865,-1.4188839 -7.144235,-1.4186651 z"/>
         <xsl:if test="$style = 'round'">
           <text x="102.5" y="15" fill="#010101" fill-opacity=".3" text-anchor="end">
-            <xsl:value-of select="availability"/>
+            <xsl:value-of select="text"/>
           </text>
         </xsl:if>
         <text x="102.5" y="14" text-anchor="end">
-          <xsl:value-of select="availability"/>
+          <xsl:value-of select="text"/>
         </text>
       </g>
     </svg>

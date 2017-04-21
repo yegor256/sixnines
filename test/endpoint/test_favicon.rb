@@ -27,8 +27,8 @@ require_relative '../../objects/endpoint/ep_favicon'
 class EpFaviconTest < Test::Unit::TestCase
   def test_builds_default_favicon
     img = Magick::Image.from_blob(EpFavicon.new(endpoint('broken')).png)[0]
-    assert_equal(32, img.columns)
-    assert_equal(32, img.rows)
+    assert_equal(31, img.columns)
+    assert_equal(31, img.rows)
   end
 
   def test_fetches_correct_favicon
@@ -45,7 +45,8 @@ class EpFaviconTest < Test::Unit::TestCase
       ['https://cdn.sstatic.net/Sites/stackoverflow/img/favicon.ico', 16],
       ['http://www.yegor256.com/favicon.ico', 64],
       ['http://www.instagram.com/static/images/ico/favicon.ico/dfa85bb1fd63.ico', 16],
-      ['https://www.pinterest.com/favicon.ico', 16]
+      ['https://www.pinterest.com/favicon.ico', 16],
+      # ['http://www.apple.com/favicon.ico', 32] -- doesn't work
       # rubocop:enable LineLength
     ]
     files.each do |f, w|
