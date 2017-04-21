@@ -227,7 +227,7 @@ get '/ping' do
       settings.base.ping do |up, ep|
         next if ENV['RACK_ENV'] == 'test'
         href = 'http://www.sixnines.io' + EpBadge.new(ep).to_href
-        event = up ? 'went back up' ? 'is down'
+        event = up ? 'went back up' : 'is down'
         settings.twitter.update(
           "#{ep.to_h[:hostname]} #{event}! \
 Availability: #{EpAvailability.new(ep).short} \

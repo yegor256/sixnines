@@ -45,6 +45,7 @@ class EpFaviconTest < Test::Unit::TestCase
       ['https://cdn.sstatic.net/Sites/stackoverflow/img/favicon.ico', 16],
       ['http://www.yegor256.com/favicon.ico', 64],
       ['http://www.instagram.com/static/images/ico/favicon.ico/dfa85bb1fd63.ico', 16]
+      ['https://www.pinterest.com/favicon.ico', 16]
       # rubocop:enable LineLength
     ]
     files.each do |f, w|

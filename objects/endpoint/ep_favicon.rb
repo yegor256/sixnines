@@ -55,7 +55,7 @@ class EpFavicon
         when 'image/gif'
           'gif'
         else
-          'img'
+          'ico'
         end
       )
       File.write(f, res.body)
