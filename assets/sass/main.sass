@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-@import url('https://fonts.googleapis.com/css?family=Overpass+Mono:300,400,600&subset=latin-ext')
+@import url('https://fonts.googleapis.com/css?family=Overpass+Mono:400,700')
 
 %font
   font-family: 'Overpass Mono', monospace
@@ -39,7 +39,7 @@ $switch-wide: 1600
 // colors
 $background: #ffffff
 $text: #5f5f5f
-$green: #4c1
+$green: #44cc11
 $blue: #07a
 $input: #fff
 
@@ -54,6 +54,10 @@ $input: #fff
 @mixin wide
   @media all and (min-width: $switch-tablet * 1px)
     @content
+
+*
+  box-sizing: border-box
+  -moz-box-sizing: border-box
 
 body
   @extend %font
@@ -82,6 +86,9 @@ section
   @include tablet() 
     padding: 1em
 
+.bold
+  font-weight: 700
+
 .big 
   font-size: $big
 
@@ -97,12 +104,10 @@ section
 .normal 
   font-weight: normal
 
-.bold 
-  font-weight: 600
-
 fieldset 
-  border: 0 solid
+  border: 0
   padding: 0
+  margin: 0
 
 a 
   color: inherit

@@ -8,9 +8,6 @@
   Avg.
   %strong= EpGraph.new(e).avg_full
 %p
-  More in
-  %a{href: "/d/#{e.to_h[:id]}"} JSON
-%p
   - if e.to_h[:flipped]
     Flipped
     %strong
@@ -20,6 +17,9 @@
     =ActionView::Base.new.distance_of_time_in_words(e.to_h[:created], Time.now) + ' ago'
 %p
   = EpGraph.new(e).to_html
+%p
+  More in
+  %a{href: "/d/#{e.to_h[:id]}"} JSON
 - if e.to_h[:log]
   %p
     %a{onclick: "$('#log').toggle();"} View last failed HTTP log
