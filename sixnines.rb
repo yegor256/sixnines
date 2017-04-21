@@ -184,8 +184,8 @@ get '/h/:id' do
   begin
     ep = settings.base.take(params[:id])
     haml :history, layout: :layout, locals: @locals.merge(
-      title: ep.to_h[:hostname],
-      description: ep.to_h[:hostname],
+      title: "sn:#{ep.to_h[:hostname]}",
+      description: "#{ep.to_h[:hostname]}: availability report",
       amphtml: "/h-amp/#{params[:id]}",
       e: Endpoint::Cached.new(ep)
     )
@@ -294,8 +294,8 @@ end
 
 get '/a' do
   haml :account, layout: :layout, locals: @locals.merge(
-    title: @locals[:user],
-    description: "Account of #{@locals[:user]}",
+    title: "@#{@locals[:user]}",
+    description: "Account of @#{@locals[:user]}",
     endpoints: settings.base.endpoints(@locals[:user]).list,
     stripe_key: settings.config['stripe']['live']['public_key']
   )
