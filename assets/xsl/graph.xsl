@@ -119,6 +119,9 @@
                     <xsl:with-param name="msec" select="$maxy"/>
                   </xsl:call-template>
                 </xsl:attribute>
+                <title>
+                  <xsl:value-of select="@msec"/>
+                </title>
               </circle>
             </xsl:when>
             <xsl:otherwise>
