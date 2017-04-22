@@ -106,26 +106,44 @@
             <xsl:text>; code=</xsl:text>
             <xsl:value-of select="@code"/>
           </xsl:comment>
-          <circle r="3" stroke-width="0">
-            <xsl:attribute name="cx">
-              <xsl:call-template name="time-to-x">
-                <xsl:with-param name="time" select="@time"/>
-              </xsl:call-template>
-            </xsl:attribute>
-            <xsl:attribute name="cy">
-              <xsl:call-template name="msec-to-y">
-                <xsl:with-param name="msec" select="@msec"/>
-              </xsl:call-template>
-            </xsl:attribute>
-            <xsl:attribute name="fill">
-              <xsl:if test="@code=200">
-                <xsl:text>#4c1</xsl:text>
-              </xsl:if>
-              <xsl:if test="@code!=200">
-                <xsl:text>#d9644d</xsl:text>
-              </xsl:if>
-            </xsl:attribute>
-          </xsl:if>
+          <xsl:choose>
+            <xsl:when test="@msec &gt; $maxy">
+              <circle r="3" stroke-width="0" fill="#ccc">
+                <xsl:attribute name="cx">
+                  <xsl:call-template name="time-to-x">
+                    <xsl:with-param name="time" select="@time"/>
+                  </xsl:call-template>
+                </xsl:attribute>
+                <xsl:attribute name="cy">
+                  <xsl:call-template name="msec-to-y">
+                    <xsl:with-param name="msec" select="$maxy"/>
+                  </xsl:call-template>
+                </xsl:attribute>
+              </circle>
+            </xsl:when>
+            <xsl:otherwise>
+              <circle r="3" stroke-width="0">
+                <xsl:attribute name="cx">
+                  <xsl:call-template name="time-to-x">
+                    <xsl:with-param name="time" select="@time"/>
+                  </xsl:call-template>
+                </xsl:attribute>
+                <xsl:attribute name="cy">
+                  <xsl:call-template name="msec-to-y">
+                    <xsl:with-param name="msec" select="@msec"/>
+                  </xsl:call-template>
+                </xsl:attribute>
+                <xsl:attribute name="fill">
+                  <xsl:if test="@code=200">
+                    <xsl:text>#4c1</xsl:text>
+                  </xsl:if>
+                  <xsl:if test="@code!=200">
+                    <xsl:text>#d9644d</xsl:text>
+                  </xsl:if>
+                </xsl:attribute>
+              </circle>
+            </xsl:otherwise>
+          </xsl:choose>
         </xsl:if>
       </xsl:for-each>
     </svg>

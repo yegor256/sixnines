@@ -45,17 +45,18 @@ class EpGraph
 
   def to_svg
     mean = avg
-    h = points.select { |p| p[:msec] < mean * 5 && p[:msec] > mean / 5 }
+    h = points
+    clean = h.select { |p| p[:msec] < mean * 5 && p[:msec] > mean / 5 }
     xml = if h.empty?
       '<history minx="0" maxx="0" miny="0" maxy="0" avg="#{mean}"/>'
     else
-      xorder = h.sort { |a, b| a[:time] <=> b[:time] }
-      yorder = h.sort { |a, b| a[:msec] <=> b[:msec] }
+      xorder = clean.sort { |a, b| a[:time] <=> b[:time] }
+      yorder = clean.sort { |a, b| a[:msec] <=> b[:msec] }
       "<history now='#{Time.now.to_i}' \
         avg='#{mean}' \
         minx='#{xorder.first[:time].to_i}' maxx='#{xorder.last[:time].to_i}' \
         miny='#{yorder.first[:msec]}' maxy='#{yorder.last[:msec]}'>" +
-        @endpoint.history.map do |p|
+        h.map do |p|
           "<p time='#{p[:time].to_i}' msec='#{p[:msec]}' code='#{p[:code]}'/>"
         end.join('') + '</history>'
     end
