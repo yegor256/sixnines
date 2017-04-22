@@ -77,7 +77,7 @@ To run it locally:
 $ rake run
 ```
 
-Then, point your browser to `http://localhost:4567` and enjoy.
+Then, point your browser to `http://localhost:9292` and enjoy.
 
 ## License
 
