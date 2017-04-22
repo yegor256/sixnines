@@ -35,6 +35,7 @@ fields:
   flipped: Epoch time of recent state change
   expires: Epoch time when it has to be pinged again
   log: Detailed log of the most recent failure
+  favicon: URI of the favicon
 sn-endpoints/unique: (index)
   id/H
 sn-endpoints/hostnames: (index)
