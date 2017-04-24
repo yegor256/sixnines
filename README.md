@@ -35,6 +35,7 @@ fields:
   flipped: Epoch time of recent state change
   expires: Epoch time when it has to be pinged again
   log: Detailed log of the most recent failure
+  favicon: URI of the favicon
 sn-endpoints/unique: (index)
   id/H
 sn-endpoints/hostnames: (index)
@@ -77,7 +78,7 @@ To run it locally:
 $ rake run
 ```
 
-Then, point your browser to `http://localhost:4567` and enjoy.
+Then, point your browser to `http://localhost:9292` and enjoy.
 
 ## License
 

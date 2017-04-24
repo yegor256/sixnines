@@ -79,6 +79,13 @@ class AppTest < Test::Unit::TestCase
     assert_equal(200, last_response.status)
   end
 
+  def test_history_amp_endpoint
+    dynamo = Dynamo.new.aws
+    id = Endpoints.new(dynamo, 'main').add('http://www.ibm.com')
+    get("/h-amp/#{id}")
+    assert_equal(200, last_response.status)
+  end
+
   def test_history_endpoint_not_found
     get('/h/absent')
     assert_equal(404, last_response.status)

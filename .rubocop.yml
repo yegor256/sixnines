@@ -4,6 +4,8 @@ AllCops:
     - 'assets/**/*'
   DisplayCopNames: true
 
+Style/CaseIndentation:
+  Enabled: false
 Metrics/CyclomaticComplexity:
   Max: 10
 Lint/RescueException:

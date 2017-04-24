@@ -23,6 +23,7 @@
 require 'uri'
 require 'timeout'
 require 'net/http'
+require 'openssl'
 require_relative 'endpoint/ep_uri'
 require_relative 'endpoint/ep_state'
 require_relative 'endpoint/ep_availability'

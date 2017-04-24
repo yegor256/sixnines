@@ -21,6 +21,7 @@
 # SOFTWARE.
 
 source 'https://rubygems.org'
+ruby '2.3.3'
 
 gem 'actionview', '5.0.2'
 gem 'aws-sdk', '2.6.35'
@@ -28,7 +29,7 @@ gem 'coveralls', '0.8.17', require: false
 gem 'haml', '4.0.7'
 gem 'mail', '2.6.4'
 gem 'nokogiri', '1.6.8.1'
-gem 'rack-test', '0.6.3'
+gem 'rack-test', '0.6.3', require: false
 gem 'rake', '12.0.0', require: false
 gem 'rerun', require: false
 gem 'rmagick', '2.16.0'
@@ -42,4 +43,4 @@ gem 'test-unit', '3.0.8', require: false
 gem 'time_difference', '0.5.0'
 gem 'timeout', '0.0.1'
 gem 'twitter', '6.1.0'
-gem 'xml-sitemap'
+gem 'xml-sitemap', '1.3.3'

@@ -34,6 +34,6 @@
   - flips.each do |e|
     %p
       =EpUri.new(e).to_html
-      %span.right-if-mobile=EpBadge.new(e).to_html
+      %span.right-if-mobile= EpBadge.new(e).to_html
       %br.mobile-only
       =ActionView::Base.new.distance_of_time_in_words(e.to_h[:flipped], Time.now) + ' ago'

@@ -29,10 +29,11 @@ class GraphTest < Test::Unit::TestCase
     endpoint = Class.new do
       def history
         [
-          { time: Time.now - 180, msec: 120, code: 200 },
-          { time: Time.now - 120, msec: 210, code: 200 },
-          { time: Time.now - 160, msec: 110, code: 200 },
-          { time: Time.now - 180, msec: 210, code: 503 },
+          { time: Time.now - 16_000, msec: 120, code: 200 },
+          { time: Time.now - 12_000, msec: 4000, code: 200 },
+          { time: Time.now - 4800, msec: 210, code: 200 },
+          { time: Time.now - 2400, msec: 110, code: 200 },
+          { time: Time.now - 1800, msec: 210, code: 503 },
           { time: Time.now - 320, msec: 107, code: 200 },
           { time: Time.now - 220, msec: 210, code: 200 },
           { time: Time.now - 60, msec: 450, code: 503 },

@@ -118,11 +118,16 @@ get '/logout' do
 end
 
 get '/terms' do
-  haml :terms, layout: :layout, locals: @locals
+  haml :terms, layout: :layout, locals: @locals.merge(
+    title: 'Terms of use',
+    description: 'Terms of use'
+  )
 end
 
 get '/' do
   haml :index, layout: :layout, locals: @locals.merge(
+    title: 'SixNines',
+    description: 'Website Availability Monitor',
     query: params[:q] ? params[:q] : nil,
     found: params[:q] ? settings.base.find(params[:q]) : [],
     flips: settings.base.flips
@@ -177,8 +182,27 @@ end
 # History page of the endpoint
 get '/h/:id' do
   begin
+    ep = settings.base.take(params[:id])
     haml :history, layout: :layout, locals: @locals.merge(
-      e: Endpoint::Cached.new(settings.base.take(params[:id]))
+      title: "sn:#{ep.to_h[:hostname]}",
+      description: "#{ep.to_h[:hostname]}: availability report",
+      amphtml: "/h-amp/#{params[:id]}",
+      e: Endpoint::Cached.new(ep)
+    )
+  rescue Base::EndpointNotFound
+    404
+  end
+end
+
+# History page of the endpoint (AMP)
+get '/h-amp/:id' do
+  begin
+    ep = settings.base.take(params[:id])
+    haml :history_amp, layout: :amp, locals: @locals.merge(
+      title: ep.to_h[:hostname],
+      description: ep.to_h[:hostname],
+      canonical: "/h/#{params[:id]}",
+      e: Endpoint::Cached.new(ep)
     )
   rescue Base::EndpointNotFound
     404
@@ -227,12 +251,17 @@ get '/ping' do
       settings.base.ping do |up, ep|
         next if ENV['RACK_ENV'] == 'test'
         href = 'http://www.sixnines.io' + EpBadge.new(ep).to_href
+        event = if up
+          "went back up after \
+#{ActionView::Base.new.time_ago_in_words(ep.to_h[:flipped])} \
+of downtime"
+        else
+          'is down'
+        end
         settings.twitter.update(
-          if up
-            "#{ep.to_h[:hostname]} went back up! #{href}"
-          else
-            "#{ep.to_h[:hostname]} is down! #{href}"
-          end
+          "#{ep.to_h[:hostname]} #{event}! \
+Availability: #{EpAvailability.new(ep).short} \
+(#{EpAvailability.new(ep).full}). #{href}"
         )
       end
     else
@@ -265,6 +294,8 @@ end
 
 get '/a' do
   haml :account, layout: :layout, locals: @locals.merge(
+    title: "@#{@locals[:user]}",
+    description: "Account of @#{@locals[:user]}",
     endpoints: settings.base.endpoints(@locals[:user]).list,
     stripe_key: settings.config['stripe']['live']['public_key']
   )
@@ -305,7 +336,10 @@ end
 
 not_found do
   status 404
-  haml :not_found, layout: :layout, locals: @locals
+  haml :not_found, layout: :layout, locals: @locals.merge(
+    title: 'Page not found',
+    description: 'Page not found'
+  )
 end
 
 error do
@@ -315,6 +349,10 @@ error do
   haml(
     :error,
     layout: :layout,
-    locals: @locals.merge(error: "#{e.message}\n\t#{e.backtrace.join("\n\t")}")
+    locals: @locals.merge(
+      title: 'Error',
+      description: 'Internal server error',
+      error: "#{e.message}\n\t#{e.backtrace.join("\n\t")}"
+    )
   )
 end

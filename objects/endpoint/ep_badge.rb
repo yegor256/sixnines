@@ -40,15 +40,18 @@ class EpBadge
     "/h/#{@endpoint.to_h[:id]}"
   end
 
-  def to_html
-    "<a href='#{to_href}'><img src='#{to_src}' alt='badge'/></a>"
+  def to_html(amp = false)
+    "<a href='#{to_href}'><#{amp ? 'amp-' : ''}img src='#{to_src}' \
+alt='#{@endpoint.to_h[:hostname]} availability badge' \
+width='106' height='20'/></a>"
   end
 
   def to_svg(style = 'round')
     Nokogiri::XSLT(File.read('assets/xsl/badge.xsl')).transform(
       Nokogiri::XML(
         "<endpoint>\
-          <availability>#{EpAvailability.new(@endpoint).short}</availability>\
+          <availability>#{EpAvailability.new(@endpoint)}</availability>\
+          <text>#{EpAvailability.new(@endpoint).short}</text>\
           <state>#{EpState.new(@endpoint).to_b}</state>\
         </endpoint>"
       ),

@@ -23,6 +23,8 @@
 require 'nokogiri'
 require 'rmagick'
 require 'net/http'
+require 'tmpdir'
+require 'openssl'
 
 #
 # Favicon of a endpoint
@@ -33,10 +35,34 @@ class EpFavicon
   end
 
   def png
-    icon = Net::HTTP.get(@endpoint.to_h[:favicon])
-    img = Magick::Image.from_blob(icon)[0]
-    img.format = 'PNG'
-    img.to_blob
+    Dir.mktmpdir do |dir|
+      uri = @endpoint.to_h[:favicon]
+      http = Net::HTTP.new(uri.host, uri.port)
+      if uri.scheme == 'https'
+        http.use_ssl = true
+        http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+      end
+      req = Net::HTTP::Get.new(uri.request_uri)
+      req['User-Agent'] = 'SixNines.io (not Firefox, Chrome, or Safari)'
+      res = http.request(req)
+      f = File.join(
+        dir,
+        'image.' + case res['Content-Type']
+        when 'image/x-icon', 'image/vnd.microsoft.icon'
+          'ico'
+        when 'image/png'
+          'png'
+        when 'image/gif'
+          'gif'
+        else
+          'ico'
+        end
+      )
+      File.write(f, res.body)
+      img = Magick::Image.read(f)[0]
+      img.format = 'PNG'
+      img.to_blob
+    end
   rescue => e
     puts e.message
     File.read(File.join(Dir.pwd, 'assets/images/default-favicon.png'))
