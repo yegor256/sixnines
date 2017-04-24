@@ -21,6 +21,7 @@
 # SOFTWARE.
 
 source 'https://rubygems.org'
+ruby '2.3.3'
 
 gem 'actionview', '5.0.2'
 gem 'aws-sdk', '2.6.35'

@@ -4,6 +4,11 @@ assets:
   id_rsa.pub: zerocracy/home#assets/heroku-key.pub
 install: |-
   sudo apt-get install -y libmagickwand-dev imagemagick
+  sudo apt-get remove -y ruby2.2 ruby2.2-dev || echo 'no need to remove'
+  sudo apt-add-repository -y ppa:rael-gc/rvm
+  sudo apt-get update
+  sudo apt-get install -y rvm
+  sudo rvm install 2.3.3
 release:
   script: |-
     sudo bundle install
