@@ -52,7 +52,6 @@
             </xsl:if>
           </xsl:attribute>
         </path>
-        <path fill="url(#b)" d="M0 0h106v20H0z"/>
       </g>
       <g fill="#fff" text-anchor="middle" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="11">
         <xsl:if test="$style = 'round'">
