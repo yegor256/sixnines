@@ -8,7 +8,8 @@ install: |-
   sudo apt-add-repository -y ppa:rael-gc/rvm
   sudo apt-get update
   sudo apt-get install -y rvm
-  sudo rvm install 2.3.3
+  source /etc/profile.d/rvm.sh
+  rvm install 2.3.3
 release:
   script: |-
     sudo bundle install
