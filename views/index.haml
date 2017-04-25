@@ -1,27 +1,30 @@
-SixNines is a 24x7 monitor of your website
-availability. Just login, add one of your endpoints,
-and in a few minutes you get a detailed report.
-We ping all websites a few times per minute.
-
 %p
-  %form{:method=>'get', :action=>'/'}
-    %fieldset
-      %input{:type=>'text', :name=>'q', :size => '35', :placeholder => 'Your keyword for URI', :value=>query}/
-      %button{:type=>'submit'}>Search
+  SixNines is a 24x7 monitor of your website
+  availability. Just login, add one of your endpoints,
+  and in a few minutes you get a detailed report.
+  We ping all websites a few times per minute.
+
+%form#search-form{:method=>'get', :action=>'/'}
+  %fieldset
+    %input{:type=>'text', :name=>'q', :size => '35', :placeholder => 'Your keyword for URI', :value=>query}
+    %button{:type=>'submit'} Search
+    %b= '&#128270;'
 
 - if query
   - if found.empty?
     %p
-      Nothing! Sorry about that.
+      %b Nothing!
+      Sorry about that.
   - else
     %p
       Found by
       ='"' + query + '":'
-    %ul
-      - found.each do |e|
-        %li
-          =EpUri.new(e).to_html
-          =EpBadge.new(e).to_html
+    - found.each do |e|
+      %p
+        =EpUri.new(e).to_html
+        %span.right-if-mobile=EpBadge.new(e).to_html
+        %br.mobile-only
+        =ActionView::Base.new.distance_of_time_in_words(e.to_h[:flipped], Time.now) + ' ago'
 
 - if !flips.empty?
   %p
@@ -31,5 +34,6 @@ We ping all websites a few times per minute.
   - flips.each do |e|
     %p
       =EpUri.new(e).to_html
-      =EpBadge.new(e).to_html
-      =ActionView::Base.new.time_ago_in_words(e.to_h[:flipped]) + ' ago'
+      %span.right-if-mobile= EpBadge.new(e).to_html
+      %br.mobile-only
+      =ActionView::Base.new.distance_of_time_in_words(e.to_h[:flipped], Time.now) + ' ago'

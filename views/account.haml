@@ -39,7 +39,8 @@
   - endpoints.each do |e|
     %p
       = EpUri.new(e).to_html
-      =EpBadge.new(e).to_html
+      %span.right-if-mobile=EpBadge.new(e).to_html
+      %br.mobile-only
       =EpAvailability.new(e).full
       %a.light{:href=>'/a/del?endpoint=' + URI.escape(EpUri.new(e).to_url),
         :onclick=>'return confirm("Attention! Be aware that you will not be able to restore it and to add a new one you will have to pay another $4.95!");'} delete

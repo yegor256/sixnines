@@ -32,9 +32,9 @@ $big: $base * 1.5
 $controls-padding: $base / 3
 
 // switch to different screens
-$switch-mobile: 680
-$switch-tablet: 1000
-$switch-wide: 1600
+$switch-mobile: 480
+$switch-tablet: 800
+$switch-wide: 1300
 
 // colors
 $background: #ffffff
@@ -154,7 +154,7 @@ ul
 
 .menu
   @extend %list
-  margin-bottom: $base*2
+  margin-bottom: $base * 2
 
   li 
     display: inline-block
@@ -170,6 +170,9 @@ ul
   padding: $controls-padding * 2 $controls-padding
   position: relative
   white-space: nowrap
+  -moz-appearance: none
+  -webkit-appearance: none
+  appearance: none
 
 input[type='text'],
 input[type='url'] 
@@ -209,3 +212,40 @@ img
 .graph
   @include mobile()
     width: 100%
+
+.mobile-only
+  display: none
+
+  @include mobile()
+    display: block
+
+.hide-if-mobile
+
+  @include mobile()
+    display: none
+
+.right-if-mobile
+
+  @include mobile()
+    float: right
+
+#search-form
+
+  b
+    display: none
+
+  @include mobile()
+
+    input
+      padding-right: $base * 4
+
+    button
+      display: none
+
+    b
+      display: inline-block
+      position: relative
+      float: right
+      right: $base
+      top: -$base * 2.5
+      color: $text
