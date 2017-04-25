@@ -3,10 +3,10 @@ assets:
   id_rsa: zerocracy/home#assets/heroku-key
   id_rsa.pub: zerocracy/home#assets/heroku-key.pub
 install: |-
-  sudo apt-get install -y libmagickwand-dev imagemagick
+  apt-get install -y libmagickwand-dev imagemagick
 release:
   script: |-
-    sudo bundle install
+    bundle install
     rake
     cp ../config.yml config.yml
     git remote add heroku git@heroku.com:sixnines.git
@@ -34,6 +34,6 @@ architect:
 merge:
   commanders: []
   script: |-
-    sudo bundle install
+    bundle install
     rake
 deploy: {}
