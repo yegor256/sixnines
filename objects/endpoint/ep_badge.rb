@@ -21,6 +21,7 @@
 # SOFTWARE.
 
 require 'nokogiri'
+require 'shellwords'
 require_relative '../exec'
 require_relative 'ep_availability'
 require_relative 'ep_state'
@@ -64,7 +65,13 @@ width='106' height='20'/></a>"
     Tempfile.open(['img', '.svg']) do |svg|
       Tempfile.open(['img', '.png']) do |png|
         svg.write(to_svg(style))
-        Exec.new("convert #{svg.path} -size 106x20 #{png.path}").run
+        Exec.new(
+          [
+            'convert -size 106x20',
+            Shellwords.escape(svg.path),
+            Shellwords.escape(png.path)
+          ].join(' ')
+        ).run
         png.read
       end
     end
