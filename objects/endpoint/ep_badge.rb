@@ -68,7 +68,10 @@ width='106' height='20'/></a>"
         svg.flush
         Exec.new(
           [
-            'convert -size 424x80 -resize 424x80',
+            'convert',
+            '-density 424',
+            '-resize 424x',
+            '-background none',
             Shellwords.escape(svg.path),
             Shellwords.escape(png.path)
           ].join(' ')
