@@ -22,7 +22,8 @@ The badge is available as:
 http://www.sixnines.io/b/3b05e836?style=flat&format=png
 ```
 
-Here, `style` can be either `round` or `flat`. Format can be either `svg` or `png`.
+Here, the `style` parameter can be either `round` or `flat`.
+The `format` parameter can be either `svg` or `png`.
 
 ## DynamoDB Schema
 
