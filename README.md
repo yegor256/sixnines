@@ -16,6 +16,14 @@
 [sixnines.io](http://www.sixnines.io) is a hosted service to validate
 and prove availability of your web service and sites.
 
+The badge is available as:
+
+```
+http://www.sixnines.io/b/3b05e836?style=flat&format=png
+```
+
+Here, `style` can be either `round` or `flat`. Format can be either `svg` or `png`.
+
 ## DynamoDB Schema
 
 The `sn-endpoints` table contains all registered end-points:
