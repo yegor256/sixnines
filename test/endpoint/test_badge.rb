@@ -60,6 +60,6 @@ class BadgeTest < Test::Unit::TestCase
     png = EpBadge.new(endpoint).to_png
     File.write(File.join(target, 'badge.png'), png)
     img = Magick::Image.from_blob(png)[0]
-    assert_equal(106, img.columns)
+    assert_equal(424, img.columns)
   end
 end
