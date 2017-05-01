@@ -25,7 +25,7 @@ http://www.sixnines.io/b/3b05e836?style=flat&format=png
 ```
 
 Here, the `style` parameter can be either `round` or `flat`.
-The `format` parameter can be either `svg` or `png`.
+The `format` parameter can be either `svg` (106x20) or `png` (424x80).
 
 ## DynamoDB Schema
 
