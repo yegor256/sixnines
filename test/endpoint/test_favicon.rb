@@ -22,6 +22,7 @@
 
 require 'test/unit'
 require 'rack/test'
+require 'rmagick'
 require_relative '../../objects/endpoint/ep_favicon'
 
 class EpFaviconTest < Test::Unit::TestCase

@@ -166,14 +166,19 @@ get '/sitemap.xml' do
   end.render
 end
 
-# SVG badge of the endpoint
+# Badge of the endpoint
 get '/b/:id' do
   begin
     response.headers['Cache-Control'] = 'no-cache, private'
-    content_type 'image/svg+xml'
-    EpBadge.new(settings.base.take(params[:id])).to_svg(
-      params[:style] == 'flat' ? 'flat' : 'round'
-    )
+    badge = EpBadge.new(settings.base.take(params[:id]))
+    style = params[:style] == 'flat' ? 'flat' : 'round'
+    if params[:format] && params[:format] == 'png'
+      content_type 'image/png'
+      badge.to_png(style)
+    else
+      content_type 'image/svg+xml'
+      badge.to_svg(style)
+    end
   rescue Base::EndpointNotFound
     404
   end

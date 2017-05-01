@@ -22,6 +22,7 @@
 
 require 'test/unit'
 require 'rack/test'
+require_relative '../objects/dynamo'
 require_relative '../objects/base'
 
 class BaseTest < Test::Unit::TestCase
