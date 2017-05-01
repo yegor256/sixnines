@@ -65,6 +65,7 @@ width='106' height='20'/></a>"
     Tempfile.open(['img', '.svg']) do |svg|
       Tempfile.open(['img', '.png']) do |png|
         svg.write(to_svg(style))
+        svg.flush
         Exec.new(
           [
             'convert -size 106x20',
