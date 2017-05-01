@@ -14,7 +14,9 @@
 ## What does it do?
 
 [sixnines.io](http://www.sixnines.io) is a hosted service to validate
-and prove availability of your web service and sites.
+and prove availability of your web service and sites. Read this blog
+post for more details:
+[SixNines.io, Your Website Availability Monitor](http://www.yegor256.com/2017/04/25/sixnines.html).
 
 The badge is available as:
 
