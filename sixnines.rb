@@ -246,6 +246,18 @@ get '/d/:id' do
   end
 end
 
+# Flush the endpoint
+get '/flush/:id' do
+  raise 'You are not allowed to do this' unless @locals[:user] == 'yegor256'
+  begin
+    ep = settings.base.take(params[:id])
+    ep.flush
+    redirect(to("/h/#{params[:id]}"))
+  rescue Base::EndpointNotFound
+    404
+  end
+end
+
 get '/ping' do
   content_type 'text/plain'
   txt = ''

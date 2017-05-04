@@ -53,8 +53,8 @@ class Endpoint
       @ep.ping
     end
 
-    def fetch
-      @ep.fetch
+    def flush
+      @ep.flush
     end
   end
 
@@ -159,6 +159,25 @@ class Endpoint
     )
     yield(up, self) if block_given? && up != h[:up]
     "#{h[:uri]}: #{res.code}"
+  end
+
+  def flush
+    h = to_h
+    @aws.update_item(
+      table_name: 'sn-endpoints',
+      key: {
+        'login' => h[:login],
+        'uri' => h[:uri].to_s
+      },
+      expression_attribute_names: {
+        '#log' => 'log',
+        '#failures' => 'failures'
+      },
+      expression_attribute_values: {
+        ':f' => 0
+      },
+      update_expression: 'REMOVE #log SET #failures=:f'
+    )
   end
 
   private

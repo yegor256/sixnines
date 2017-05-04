@@ -52,4 +52,16 @@ class EndpointTest < Test::Unit::TestCase
     ping = ep.ping
     assert(ping.end_with?('500'), ping)
   end
+
+  def test_flushes
+    dynamo = Dynamo.new.aws
+    id = Endpoints.new(dynamo, 'yegor256-endpoint').add(
+      'http://broken-url'
+    )
+    ep = Base.new(dynamo).take(id)
+    ep.ping
+    assert_not_equal(nil, Base.new(dynamo).take(id).to_h[:log])
+    ep.flush
+    assert_equal(nil, Base.new(dynamo).take(id).to_h[:log])
+  end
 end

@@ -2,6 +2,10 @@
   = EpUri.new(e).favicon('small')
   = EpUri.new(e).to_html
   = EpBadge.new(e).to_html
+- if user == 'yegor256'
+  %p
+    %a{href: "/flush/#{e.to_h[:id]}"}
+      Flush it
 %p
   Avail.
   %strong= EpAvailability.new(e).full
