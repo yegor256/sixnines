@@ -79,6 +79,14 @@ class AppTest < Test::Unit::TestCase
     assert_equal(200, last_response.status)
   end
 
+  def test_history_endpoint_with_user
+    dynamo = Dynamo.new.aws
+    id = Endpoints.new(dynamo, 'main').add('http://www.vk.com')
+    header('Cookie', 'sixnines=jeffrey')
+    get("/h/#{id}")
+    assert_equal(200, last_response.status)
+  end
+
   def test_history_amp_endpoint
     dynamo = Dynamo.new.aws
     id = Endpoints.new(dynamo, 'main').add('http://www.ibm.com')
@@ -137,5 +145,11 @@ class AppTest < Test::Unit::TestCase
   def test_graph_endpoint_not_found
     get('/g/absent')
     assert_equal(404, last_response.status)
+  end
+
+  def test_user_account
+    header('Cookie', 'sixnines=jeff')
+    get('/a')
+    assert_equal(200, last_response.status)
   end
 end

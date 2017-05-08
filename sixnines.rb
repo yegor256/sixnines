@@ -49,7 +49,7 @@ configure do
   Haml::Options.defaults[:format] = :xhtml
   config = if ENV['RACK_ENV'] == 'test'
     {
-      'cookie_secret' => 'test',
+      'cookie_secret' => '',
       'github' => {
         'client_id' => 'test',
         'client_secret' => 'test'
@@ -89,7 +89,7 @@ before '/*' do
     ver: VERSION,
     login_link: settings.oauth.login_uri
   }
-  if cookies[:sixnines] || ENV['RACK_ENV'] == 'test'
+  if cookies[:sixnines]
     begin
       @locals[:user] = Cookie::Closed.new(
         cookies[:sixnines], settings.config['cookie_secret']

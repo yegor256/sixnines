@@ -36,8 +36,8 @@ class Cookie
     end
 
     def to_s
-      if @secret == 'test'
-        'tester'
+      if @secret.empty?
+        @text
       else
         cpr = Cookie.cipher
         cpr.decrypt
