@@ -24,49 +24,24 @@ require 'uri'
 require 'timeout'
 require 'net/http'
 require 'openssl'
+require_relative 'resource'
 
 #
-# Single web resource.
+# Proxied single web resource.
 #
-class Resource
-  def initialize(uri)
-    @uri = uri
+class ProxiedResource
+  def initialize(resource, proxies = [''])
+    @resource = resource
+    @proxies = proxies
   end
 
-  def take(host = nil, port = nil)
-    http = Net::HTTP.new(@uri.host, @uri.port, host, port)
-    if @uri.scheme == 'https'
-      http.use_ssl = true
-      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+  def take
+    a = [500, '', 'There are no proxies']
+    @proxies.each do |p|
+      host, port = p.split(':')
+      a = @resource.take(host, port)
+      break if a[0] != 500 || !a[1].empty?
     end
-    req = Net::HTTP::Get.new(@uri.request_uri)
-    req['User-Agent'] = 'SixNines.io (not Firefox, Chrome, or Safari)'
-    tries = 3
-    begin
-      res = Timeout.timeout(5) do
-        http.request(req)
-      end
-      [res.code.to_i, res.body, to_text(req, res)]
-    rescue SocketError => e
-      retry unless (tries -= 1).zero?
-      [500, '', "#{e.class}: #{e.message}\n\t#{e.backtrace.join("\n\t")}"]
-    end
-  end
-
-  private
-
-  def to_text(req, res)
-    "#{req.method} #{req.path} HTTP/1.1\n\
-#{headers(req)}\n#{body(req.body)}\n\n\
-HTTP/#{res.http_version} #{res.code} #{res.message}\n\
-#{headers(res)}\n#{body(res.body)}"
-  end
-
-  def headers(headers)
-    headers.to_hash.map { |k, v| v.map { |h| k + ': ' + h } }.join("\n")
-  end
-
-  def body(body)
-    body.nil? ? '' : body.strip.gsub(/^(.{200,}?).*$/m, '\1...')
+    a
   end
 end
