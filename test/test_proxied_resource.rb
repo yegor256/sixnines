@@ -33,9 +33,7 @@ class ProxiedResourceTest < Test::Unit::TestCase
         Resource.new(URI.parse('http://www.yegor256.com')),
         [
           '',
-          '68.128.212.240:8080',
-          '52.34.132.230:3128',
-          '54.187.32.200:3128'
+          '216.230.229.34:60099'
         ]
       ).take[0]
     )

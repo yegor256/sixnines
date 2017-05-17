@@ -25,6 +25,7 @@ require 'timeout'
 require 'net/http'
 require 'openssl'
 require_relative 'resource'
+require_relative 'proxied_resource'
 require_relative 'endpoint/ep_uri'
 require_relative 'endpoint/ep_state'
 require_relative 'endpoint/ep_availability'
@@ -107,10 +108,10 @@ class Endpoint
     end
   end
 
-  def ping
+  def ping(proxies = [''])
     start = Time.now
     h = to_h
-    code, body, log = Resource.new(h[:uri]).take
+    code, body, log = ProxiedResource.new(Resource.new(h[:uri]), proxies).take
     @aws.put_item(
       table_name: 'sn-pings',
       item: {

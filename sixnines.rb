@@ -65,6 +65,7 @@ configure do
           'public_key' => 'test'
         }
       },
+      'proxies' => [''],
       'coupons' => ['test']
     }
   else
@@ -265,7 +266,7 @@ get '/ping' do
   open('/tmp/sixnines.lock', 'w') do |f|
     txt << if f.flock(File::LOCK_NB | File::LOCK_EX)
       again = true
-      settings.base.ping do |up, ep|
+      settings.base.ping(settings.proxies) do |up, ep|
         next if ENV['RACK_ENV'] == 'test'
         href = 'http://www.sixnines.io' + EpBadge.new(ep).to_href
         event = if up
