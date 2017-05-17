@@ -73,23 +73,20 @@ class AppTest < Test::Unit::TestCase
   end
 
   def test_history_endpoint
-    dynamo = Dynamo.new.aws
-    id = Endpoints.new(dynamo, 'main').add('http://www.ibm.com')
+    id = ep('http://www.ibm.com')
     get("/h/#{id}")
     assert_equal(200, last_response.status)
   end
 
   def test_history_endpoint_with_user
-    dynamo = Dynamo.new.aws
-    id = Endpoints.new(dynamo, 'main').add('http://www.vk.com')
+    id = ep('http://www.vk.com')
     header('Cookie', 'sixnines=jeffrey')
     get("/h/#{id}")
     assert_equal(200, last_response.status)
   end
 
   def test_history_amp_endpoint
-    dynamo = Dynamo.new.aws
-    id = Endpoints.new(dynamo, 'main').add('http://www.ibm.com')
+    id = ep('http://www.ibm.com')
     get("/h-amp/#{id}")
     assert_equal(200, last_response.status)
   end
@@ -100,8 +97,7 @@ class AppTest < Test::Unit::TestCase
   end
 
   def test_data_endpoint
-    dynamo = Dynamo.new.aws
-    id = Endpoints.new(dynamo, 'main').add('http://www.stackoverflow.com')
+    id = ep('http://www.stackoverflow.com')
     get("/d/#{id}")
     assert_equal(200, last_response.status)
   end
@@ -112,8 +108,7 @@ class AppTest < Test::Unit::TestCase
   end
 
   def test_favicon_endpoint
-    dynamo = Dynamo.new.aws
-    id = Endpoints.new(dynamo, 'main').add('http://www.yahoo.com')
+    id = ep('http://www.yahoo.com')
     get("/f/#{id}")
     assert_equal(200, last_response.status)
   end
@@ -124,8 +119,7 @@ class AppTest < Test::Unit::TestCase
   end
 
   def test_badge_endpoint
-    dynamo = Dynamo.new.aws
-    id = Endpoints.new(dynamo, 'main').add('http://www.twitter.com')
+    id = ep('http://www.twitter.com')
     get("/b/#{id}")
     assert_equal(200, last_response.status)
   end
@@ -136,8 +130,7 @@ class AppTest < Test::Unit::TestCase
   end
 
   def test_graph_endpoint
-    dynamo = Dynamo.new.aws
-    id = Endpoints.new(dynamo, 'main').add('http://www.instagram.com')
+    id = ep('http://www.instagram.com')
     get("/g/#{id}")
     assert_equal(200, last_response.status)
   end
@@ -151,5 +144,12 @@ class AppTest < Test::Unit::TestCase
     header('Cookie', 'sixnines=jeff')
     get('/a')
     assert_equal(200, last_response.status)
+  end
+
+  private
+
+  def ep(url)
+    dynamo = Dynamo.new.aws
+    Endpoints.new(dynamo, 'main').add(url)
   end
 end
