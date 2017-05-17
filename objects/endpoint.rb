@@ -24,6 +24,7 @@ require 'uri'
 require 'timeout'
 require 'net/http'
 require 'openssl'
+require_relative 'resource'
 require_relative 'endpoint/ep_uri'
 require_relative 'endpoint/ep_state'
 require_relative 'endpoint/ep_availability'
@@ -108,13 +109,13 @@ class Endpoint
 
   def ping
     start = Time.now
-    res, log = fetch
     h = to_h
+    code, body, log = Resource.new(h[:uri]).take
     @aws.put_item(
       table_name: 'sn-pings',
       item: {
         uri: h[:uri].to_s,
-        code: res.code.to_i,
+        code: code,
         time: Time.now.to_i,
         msec: ((Time.now - start) * 1000).to_i,
         local: 'unknown',
@@ -122,7 +123,7 @@ class Endpoint
         delete_on: (Time.now + (24 * 60 * 60)).to_i
       }
     )
-    up = res.code == '200'
+    up = code == 200
     update = [
       'updated = :t',
       'expires = :e',
@@ -138,7 +139,7 @@ class Endpoint
       ':o' => 1,
       ':t' => Time.now.to_i,
       ':e' => (Time.now + 60).to_i, # ping again in 60 seconds
-      ':f' => favicon(res.body).to_s
+      ':f' => favicon(body).to_s
     }
     update << 'failures = failures + :o' unless up
     update << 'flipped = :t' unless up == h[:up]
@@ -158,7 +159,7 @@ class Endpoint
       update_expression: 'set ' + update.join(', ')
     )
     yield(up, self) if block_given? && up != h[:up]
-    "#{h[:uri]}: #{res.code}"
+    "#{h[:uri]}: #{code}"
   end
 
   def flush
@@ -181,56 +182,6 @@ class Endpoint
   end
 
   private
-
-  def fetch
-    h = to_h
-    http = Net::HTTP.new(h[:uri].host, h[:uri].port)
-    if h[:uri].scheme == 'https'
-      http.use_ssl = true
-      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-    end
-    req = Net::HTTP::Get.new(h[:uri].request_uri)
-    req['User-Agent'] = 'SixNines.io (not Firefox, Chrome, or Safari)'
-    tries = 3
-    begin
-      res = Timeout.timeout(5) do
-        http.request(req)
-      end
-      [
-        res,
-        to_text(req, res)
-      ]
-    rescue SocketError => e
-      retry unless (tries -= 1).zero?
-      [
-        Class.new do
-          def code
-            '500'
-          end
-
-          def body
-            ''
-          end
-        end.new,
-        "#{e.class}: #{e.message}\n\t#{e.backtrace.join("\n\t")}"
-      ]
-    end
-  end
-
-  def to_text(req, res)
-    "#{req.method} #{req.path} HTTP/1.1\n\
-#{headers(req)}\n#{body(req.body)}\n\n\
-HTTP/#{res.http_version} #{res.code} #{res.message}\n\
-#{headers(res)}\n#{body(res.body)}"
-  end
-
-  def headers(headers)
-    headers.to_hash.map { |k, v| v.map { |h| k + ': ' + h } }.join("\n")
-  end
-
-  def body(body)
-    body.nil? ? '' : body.strip.gsub(/^(.{200,}?).*$/m, '\1...')
-  end
 
   def favicon(body)
     xml = Nokogiri::HTML(body)
