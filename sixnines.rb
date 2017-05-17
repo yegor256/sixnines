@@ -77,6 +77,7 @@ configure do
     config['github']['client_secret']
   )
   set :base, Base.new(Dynamo.new(config).aws)
+  set :proxies, config['proxies']
   set :twitter, (Twitter::REST::Client.new do |c|
     c.consumer_key = config['twitter']['consumer_key']
     c.consumer_secret = config['twitter']['consumer_secret']
