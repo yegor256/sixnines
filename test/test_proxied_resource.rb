@@ -49,8 +49,8 @@ class ProxiedResourceTest < Test::Unit::TestCase
   end
 
   def test_pings_invalid_uri
-    assert_equal(
-      500,
+    assert_not_equal(
+      200,
       ProxiedResource.new(
         Resource.new(URI.parse('http://www.definitely-invalid-url-yegor.com')),
         ['216.230.229.34:60099']

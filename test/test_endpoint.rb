@@ -50,7 +50,7 @@ class EndpointTest < Test::Unit::TestCase
     )
     ep = Base.new(dynamo).take(id)
     ping = ep.ping
-    assert(ping.end_with?('500'), ping)
+    assert_false(ping.end_with?('200'), ping)
   end
 
   def test_flushes
