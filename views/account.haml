@@ -25,12 +25,12 @@
       });
     });
 
-%form#form{:method=>'post', :action=>'/a/add'}
-  %input#endpoint{:type=>'url', :name=>'endpoint', :size=>'55', :placeholder=>'URI of a new endpoint'}
-  %input#coupon{:type=>'text', :name=>'coupon', :size=>'25', :placeholder=>'Coupon (if you have it)'}
+%form#form{method: 'post', action: '/a/add'}
+  %input#endpoint{type: 'url', name: 'endpoint', size: '55', placeholder: 'URI of a new endpoint'}
+  %input#coupon{type: 'text', name: 'coupon', size: '25', placeholder: 'Coupon (if you have it)'}
   %input#stripeToken{type: 'hidden', name: 'stripeToken'}
   %input#stripeEmail{type: 'hidden', name: 'stripeEmail'}
-  %input#go{:type=>'submit', :value=>'Add ($4.95)'}
+  %input#go{type: 'submit', value: 'Add ($4.95)'}
 
 - if endpoints.empty?
   %p
@@ -42,5 +42,5 @@
       %span.right-if-mobile=EpBadge.new(e).to_html
       %br.mobile-only
       =EpAvailability.new(e).full
-      %a.light{:href=>'/a/del?endpoint=' + URI.escape(EpUri.new(e).to_url),
-        :onclick=>'return confirm("Attention! Be aware that you will not be able to restore it and to add a new one you will have to pay another $4.95!");'} delete
+      %a.light{href: '/a/del?endpoint=' + URI.escape(EpUri.new(e).to_url),
+        onclick: 'return confirm("Attention! Be aware that you will not be able to restore it and to add a new one you will have to pay another $4.95!");'} delete

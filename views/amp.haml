@@ -3,9 +3,9 @@
   %head
     %title SixNines
     %link{rel: 'canonical', href: canonical }
-    %meta{:charset => 'UTF-8'}
-    %meta{:name => 'viewport', :content => 'width=device-width,minimum-scale=1,initial-scale=1'}
-    %link{:rel => 'shortcut icon', :href => '/favicon.ico'}
+    %meta{charset: 'UTF-8'}
+    %meta{name: 'viewport', content: 'width=device-width,minimum-scale=1,initial-scale=1'}
+    %link{rel: 'shortcut icon', href: '/favicon.ico'}
     %script{type: 'application/ld+json'}
       :plain
         {
@@ -55,7 +55,7 @@
   %body
     %header
       %p
-        %a{:href=>'/'}
+        %a{href: '/'}
           %amp-img{src: url('images/logo.svg'), alt: 'logo', width: '64', height: '64'}
     %section
       =yield
@@ -63,4 +63,4 @@
       %p
         = '--'
         %br
-        %a{:href => 'https://twitter.com/sxnns'} @sxnns
+        %a{href: 'https://twitter.com/sxnns'} @sxnns

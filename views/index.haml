@@ -4,10 +4,10 @@
   and in a few minutes you get a detailed report.
   We ping all websites a few times per minute.
 
-%form#search-form{:method=>'get', :action=>'/'}
+%form#search-form{method: 'get', action: '/'}
   %fieldset
-    %input{:type=>'text', :name=>'q', :size => '35', :placeholder => 'Search...', :value=>query}
-    %button{:type=>'submit'} Search
+    %input{type: 'text', name: 'q', size: '35', placeholder: 'Search...', value: query}
+    %button{type: 'submit'} Search
     %b= '&#128270;'
 
 - if query
