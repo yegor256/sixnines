@@ -26,4 +26,5 @@ Lint/EndAlignment:
   Enabled: false
 Style/IndentationWidth:
   Enabled: false
-
+Metrics/PerceivedComplexity:
+  Max: 10

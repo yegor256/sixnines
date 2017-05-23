@@ -137,12 +137,17 @@
                   </xsl:call-template>
                 </xsl:attribute>
                 <xsl:attribute name="fill">
-                  <xsl:if test="@code=200">
-                    <xsl:text>#4c1</xsl:text>
-                  </xsl:if>
-                  <xsl:if test="@code!=200">
-                    <xsl:text>#d9644d</xsl:text>
-                  </xsl:if>
+                  <xsl:choose>
+                    <xsl:when test="@code = 200">
+                      <xsl:text>#44cc11</xsl:text>
+                    </xsl:when>
+                    <xsl:when test="@code &lt; 300">
+                      <xsl:text>#ffd479</xsl:text>
+                    </xsl:when>
+                    <xsl:otherwise>
+                      <xsl:text>#d9644d</xsl:text>
+                    </xsl:otherwise>
+                  </xsl:choose>
                 </xsl:attribute>
               </circle>
             </xsl:otherwise>

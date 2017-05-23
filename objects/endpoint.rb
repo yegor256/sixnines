@@ -124,7 +124,7 @@ class Endpoint
         delete_on: (Time.now + (24 * 60 * 60)).to_i
       }
     )
-    up = code == 200
+    up = code >= 200 && code < 300
     update = [
       'updated = :t',
       'expires = :e',

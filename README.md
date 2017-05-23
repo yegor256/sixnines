@@ -69,7 +69,7 @@ fields:
   local: IP address where we were pinging from
   remote: IP address of the endpoint we reached
   msec: How many milliseconds it took
-  code: HTTP response code (200 means success)
+  code: HTTP response code (2xx means success)
   delete_on: TTL attribute for DynamoDB (when to delete this item)
 ```
 
