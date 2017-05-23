@@ -4,7 +4,7 @@
   = EpBadge.new(e).to_html
 - if defined?(user) && user == 'yegor256'
   %p
-    %a{href: "/flush/#{e.to_h[:id]}"}
+    %a{href: "/flush/#{e.to_h[:id]}", onclick: 'return confirm("Are you sure? The entire history will be destoyed!");'}
       Flush it
 %p
   Avail.
