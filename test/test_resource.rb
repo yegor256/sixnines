@@ -37,8 +37,8 @@ class ResourceTest < Test::Unit::TestCase
   end
 
   def test_pings_broken_uri
-    assert_equal(
-      500,
+    assert_not_equal(
+      200,
       Resource.new(
         URI.parse('http://broken-uri-for-sure.io')
       ).take[0]
