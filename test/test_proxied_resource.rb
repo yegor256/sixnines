@@ -53,7 +53,7 @@ class ProxiedResourceTest < Test::Unit::TestCase
       500,
       ProxiedResource.new(
         Resource.new(URI.parse('http://www.definitely-invalid-url-yegor.com')),
-        ['68.128.212.240:8080']
+        ['216.230.229.34:60099']
       ).take[0]
     )
   end
