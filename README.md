@@ -9,7 +9,7 @@
 [![PDD status](http://www.0pdd.com/svg?name=yegor256/sixnines)](http://www.0pdd.com/p?name=yegor256/sixnines)
 [![Dependency Status](https://gemnasium.com/yegor256/sixnines.svg)](https://gemnasium.com/yegor256/sixnines)
 [![Code Climate](http://img.shields.io/codeclimate/github/yegor256/sixnines.svg)](https://codeclimate.com/github/yegor256/sixnines)
-[![Coverage Status](https://img.shields.io/coveralls/yegor256/sixnines.svg)](https://coveralls.io/r/yegor256/sixnines)
+[![Test Coverage](https://img.shields.io/codecov/c/github/yegor256/sixnines.svg)](https://codecov.io/github/yegor256/sixnines?branch=master)
 
 ## What does it do?
 

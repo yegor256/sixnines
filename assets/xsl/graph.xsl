@@ -108,7 +108,7 @@
           </xsl:comment>
           <xsl:choose>
             <xsl:when test="@msec &gt; $maxy">
-              <circle r="3" stroke-width="0" fill="#ccc">
+              <circle r="3" stroke-width="0" fill="#cccccc">
                 <xsl:attribute name="cx">
                   <xsl:call-template name="time-to-x">
                     <xsl:with-param name="time" select="@time"/>

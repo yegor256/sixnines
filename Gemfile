@@ -25,7 +25,7 @@ ruby '2.3.3'
 
 gem 'actionview', '5.0.2'
 gem 'aws-sdk', '2.6.35'
-gem 'coveralls', '0.8.17', require: false
+gem 'codecov', '0.1.10'
 gem 'haml', '4.0.7'
 gem 'mail', '2.6.4'
 gem 'nokogiri', '1.6.8.1'
