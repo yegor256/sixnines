@@ -20,6 +20,10 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+require 'timeout'
+class X < Timeout::Error
+end
+
 require 'haml'
 require 'haml/template/options'
 require 'sinatra'
@@ -31,7 +35,6 @@ require 'json'
 require 'aws-sdk'
 require 'stripe'
 require 'time_difference'
-require 'timeout'
 require 'twitter'
 require 'action_view'
 require 'action_view/helpers'
@@ -62,7 +65,7 @@ configure do
         'access_token' => 'test',
         'access_token_secret' => 'test'
       },
-      'sentry' => 'test',
+      'sentry' => '',
       'stripe' => {
         'live' => {
           'public_key' => 'test'
