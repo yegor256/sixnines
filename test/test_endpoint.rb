@@ -32,7 +32,7 @@ class EndpointTest < Test::Unit::TestCase
     sites = [
       'http://www.yegor256.com',
       'https://twitter.com/yegor256',
-      'http://www.sixnines.io'
+      'http://ru.yegor256.com/2017-06-29-activists.html'
     ]
     dynamo = Dynamo.new.aws
     sites.each do |s|
