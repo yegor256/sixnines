@@ -29,7 +29,7 @@ class ResourceTest < Test::Unit::TestCase
     sites = [
       'http://www.yegor256.com',
       'https://twitter.com/yegor256',
-      'http://www.google.com'
+      'http://ru.yegor256.com/2017-06-29-activists.html'
     ]
     sites.each do |s|
       assert_equal(200, Resource.new(URI.parse(s)).take[0])
