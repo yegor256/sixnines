@@ -25,17 +25,17 @@ ruby '2.3.3'
 
 gem 'actionview', '5.0.2'
 gem 'aws-sdk', '2.6.35'
-gem 'codecov', '0.1.10'
+gem 'codecov', '0.1.10', require: false
 gem 'haml', '4.0.7'
 gem 'mail', '2.6.4'
 gem 'nokogiri', '1.6.8.1'
-gem 'rack-test', '0.7.0', require: false
+gem 'rack-test', '0.6.3', require: false
 gem 'rake', '12.0.0', require: false
 gem 'rerun', require: false
 gem 'rmagick', '2.16.0'
 gem 'rubocop', '0.46.0', require: false
 gem 'rubocop-rspec', '1.8.0', require: false
-gem 'sass', '3.5.1'
+gem 'sass', '3.4.22'
 gem 'sinatra', '1.4.7'
 gem 'sinatra-contrib', '1.4.7'
 gem 'stripe', '2.1.0'
