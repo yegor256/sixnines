@@ -36,7 +36,6 @@ gem 'rmagick', '2.16.0'
 gem 'rubocop', '0.46.0', require: false
 gem 'rubocop-rspec', '1.8.0', require: false
 gem 'sass', '3.5.1'
-gem 'sentry-raven', '2.5.3'
 gem 'sinatra', '1.4.7'
 gem 'sinatra-contrib', '1.4.7'
 gem 'stripe', '2.1.0'
