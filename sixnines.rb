@@ -35,6 +35,7 @@ require 'time_difference'
 require 'twitter'
 require 'action_view'
 require 'action_view/helpers'
+require 'raven'
 
 require_relative 'version'
 require_relative 'objects/exec'
@@ -60,6 +61,7 @@ configure do
         'access_token' => 'test',
         'access_token_secret' => 'test'
       },
+      'sentry' => 'test',
       'stripe' => {
         'live' => {
           'public_key' => 'test'
@@ -70,6 +72,9 @@ configure do
     }
   else
     YAML.load(File.open(File.join(Dir.pwd, 'config.yml')))
+  end
+  Raven.configure do |c|
+    c.dsn = config['sentry']
   end
   set :config, config
   set :oauth, GithubAuth.new(
@@ -365,6 +370,7 @@ error do
   status 503
   content_type 'text/html'
   e = env['sinatra.error']
+  Raven.capture_exception(e)
   haml(
     :error,
     layout: :layout,
