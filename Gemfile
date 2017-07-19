@@ -23,23 +23,23 @@
 source 'https://rubygems.org'
 ruby '2.3.3'
 
-gem 'actionview', '5.1.1'
-gem 'aws-sdk', '2.10.3'
+gem 'actionview', '5.1.2'
+gem 'aws-sdk', '2.10.13'
 gem 'codecov', '0.1.10'
 gem 'haml', '5.0.1'
 gem 'mail', '2.6.6'
 gem 'nokogiri', '1.8.0'
-gem 'rack-test', '0.6.3', require: false
+gem 'rack-test', '0.7.0', require: false
 gem 'rake', '12.0.0', require: false
 gem 'rerun', require: false
 gem 'rmagick', '2.16.0'
 gem 'rubocop', '0.46.0', require: false
 gem 'rubocop-rspec', '1.8.0', require: false
-gem 'sass', '3.4.22'
+gem 'sass', '3.5.1'
 gem 'sentry-raven', '2.5.3'
 gem 'sinatra', '2.0.0'
 gem 'sinatra-contrib', '2.0.0'
-gem 'stripe', '2.12.0'
+gem 'stripe', '3.0.1'
 gem 'test-unit', '3.2.5', require: false
 gem 'time_difference', '0.5.0'
 gem 'timeout', '0.0.1'
