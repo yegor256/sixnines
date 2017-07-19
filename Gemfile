@@ -34,7 +34,7 @@ gem 'sinatra', '1.4.7'
 gem 'sinatra-contrib', '1.4.7'
 gem 'stripe', '2.1.0'
 gem 'time_difference', '0.5.0'
-gem 'timeout', '0.0.1'
+gem 'timeout-extensions', '0.1.1'
 gem 'twitter', '6.1.0'
 gem 'xml-sitemap', '1.3.3'
 
