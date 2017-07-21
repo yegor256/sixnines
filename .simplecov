@@ -20,7 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-require 'coveralls'
+require 'simplecov'
 
 if Gem.win_platform? then
   SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
