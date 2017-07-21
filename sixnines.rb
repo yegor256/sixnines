@@ -20,10 +20,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-require 'timeout'
-class X < Timeout::Error
-end
-
 require 'haml'
 require 'haml/template/options'
 require 'sinatra'
