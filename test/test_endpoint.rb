@@ -64,4 +64,13 @@ class EndpointTest < Test::Unit::TestCase
     ep.flush
     assert_equal(nil, Base.new(dynamo).take(id).to_h[:log])
   end
+
+  def test_epoch_if_no_recent_state_change
+    dynamo = Dynamo.new.aws
+    id = Endpoints.new(dynamo, 'yegor256-endpoint').add(
+      'http://www.amazon.com'
+    )
+    ep = Base.new(dynamo).take(id)
+    assert_equal(Time.new(0), ep.to_h[:flipped])
+  end
 end

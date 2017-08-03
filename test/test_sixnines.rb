@@ -52,6 +52,12 @@ class AppTest < Test::Unit::TestCase
     assert_equal(1, xml.xpath('/html/head/title').length)
   end
 
+  def test_search_when_no_recent_state_change
+    ep('http://www.amazon.com')
+    get('/?q=amazon')
+    assert(last_response.ok?)
+  end
+
   def test_it_renders_logo
     get('/images/logo.svg')
     assert(last_response.ok?)
