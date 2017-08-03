@@ -79,7 +79,7 @@ class Endpoint
       log: @item['log']
     }
     h[:updated] = Time.at(@item['updated']) if @item['updated']
-    h[:flipped] = Time.at(@item['flipped']) if @item['flipped']
+    h[:flipped] = @item['flipped'] ? Time.at(@item['flipped']) : Time.new(0)
     h[:expires] = Time.at(@item['expires']) if @item['expires']
     h
   end
