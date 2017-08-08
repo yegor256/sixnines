@@ -47,6 +47,8 @@ class Resource
         http.request(req)
       end
       [res.code.to_i, res.body, to_text(req, res)]
+    rescue Timeout::Error
+      [500, '', 'The request timed out after 5 seconds.']
     rescue SocketError => e
       retry unless (tries -= 1).zero?
       [500, '', "#{e.class}: #{e.message}\n\t#{e.backtrace.join("\n\t")}"]

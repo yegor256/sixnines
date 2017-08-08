@@ -46,7 +46,7 @@ class ResourceTest < Test::Unit::TestCase
   end
 
   def test_timeout
-    stub_request(:any, 'www.bbc.com').to_return do
+    stub = stub_request(:any, 'www.bbc.com').to_return do
       sleep(10)
       'Welcome to BBC.com'
     end
@@ -54,5 +54,6 @@ class ResourceTest < Test::Unit::TestCase
       [500, '', 'The request timed out after 5 seconds.'],
       Resource.new(URI.parse('http://www.bbc.com')).take
     )
+    remove_request_stub(stub)
   end
 end
