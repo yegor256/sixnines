@@ -47,4 +47,5 @@ group :test, :development do
   gem 'rubocop', '0.46.0', require: false
   gem 'rubocop-rspec', '1.8.0', require: false
   gem 'test-unit', '3.0.8', require: false
+  gem 'webmock', '3.0.1', require: false
 end

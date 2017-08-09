@@ -30,3 +30,6 @@ if ENV['CI'] == 'true'
   require 'codecov'
   SimpleCov.formatter = SimpleCov::Formatter::Codecov
 end
+
+require 'webmock/test_unit'
+WebMock.allow_net_connect!

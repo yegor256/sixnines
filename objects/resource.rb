@@ -29,6 +29,8 @@ require 'openssl'
 # Single web resource.
 #
 class Resource
+  PERIOD = 5
+
   def initialize(uri)
     @uri = uri
   end
@@ -43,10 +45,12 @@ class Resource
     req['User-Agent'] = 'SixNines.io (not Firefox, Chrome, or Safari)'
     tries = 3
     begin
-      res = Timeout.timeout(5) do
+      res = Timeout.timeout(PERIOD) do
         http.request(req)
       end
       [res.code.to_i, res.body, to_text(req, res)]
+    rescue Timeout::Error
+      [500, '', "The request timed out after #{PERIOD} seconds."]
     rescue SocketError => e
       retry unless (tries -= 1).zero?
       [500, '', "#{e.class}: #{e.message}\n\t#{e.backtrace.join("\n\t")}"]
