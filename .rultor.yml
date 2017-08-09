@@ -3,6 +3,7 @@ assets:
   id_rsa: zerocracy/home#assets/heroku-key
   id_rsa.pub: zerocracy/home#assets/heroku-key.pub
 install: |-
+  sudo apt-get update -y
   sudo apt-get install -y libmagickwand-dev imagemagick
 release:
   script: |-
