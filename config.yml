@@ -1,0 +1,38 @@
+cookie_secret: 87Ytr=_092@546LurnfsPlsjf6h5$%=_0-Hjkfds
+sentry: https://a9fcdfddb8f944f880af6c3dd8612f2f:9092ac43f37345b3a0814d5015cf93b8@sentry.io/193303
+stripe:
+  test:
+    secret_key: sk_test_Cousowu0HHsRsk7t5bWRfcWk
+    public_key: pk_test_XSWDZtDYNmlFfav5SnLtOhPl
+  live:
+    secret_key: sk_live_iAxsqpmPKM4jFJpN8C8Oh54d
+    public_key: pk_live_UaaZoQlsFOSZ51pOFWeGwq7e
+dynamodb:
+  region: us-east-1
+  key: AKIAJQRGN4FBYOJNBCBA
+  secret: 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
+github:
+  client_id: 289de90368d465439683
+  client_secret: 2518024fbee85de74a3a531523acf2cd5589e811
+twitter:
+  consumer_key: I3Rk8MUsz94Zs7iE5d1kVEbi0
+  consumer_secret: NOSui1xHmM2UXYHPUSytzqvjzAikmGRqYoE83xo8oaCwEcK04j
+  access_token: 847402588869844992-0gKsfsvnzdSxDhwuUhcPNnuC2ymV37y
+  access_token_secret: crzU5pJ9cE8JgcL1oAajLTn86ExQBWH4BEy4KvEwsYlXD
+proxies:
+  - ""
+  - 216.230.229.34:60099
+  - 167.160.36.208:60099
+  - 216.230.229.30:60099
+  - 216.230.229.36:60099
+  - 216.230.229.37:60099
+  - 216.230.229.62:60099
+coupons:
+  - batata
+  - Hyri9JK
+  - UUyrn7K
+  - 7Yhhf8K
+  - tRe3Fge
+  - 8UUksj7
+  - Egdr8kM
+
