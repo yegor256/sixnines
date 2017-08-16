@@ -22,6 +22,7 @@
 
 require 'test/unit'
 require 'rack/test'
+require 'zlib'
 require_relative '../objects/resource'
 
 class ResourceTest < Test::Unit::TestCase
@@ -53,6 +54,17 @@ class ResourceTest < Test::Unit::TestCase
     assert_equal(
       [500, '', 'The request timed out after 5 seconds.'],
       Resource.new(URI.parse('http://www.bbc.com')).take
+    )
+    remove_request_stub(stub)
+  end
+
+  def test_bad_compression
+    stub = stub_request(:any, 'www.wikipedia.org').to_return do
+      raise Zlib::BufError, 'buffer error', caller
+    end
+    assert_equal(
+      500,
+      Resource.new(URI.parse('http://www.wikipedia.org')).take[0]
     )
     remove_request_stub(stub)
   end
