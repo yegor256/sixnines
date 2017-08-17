@@ -31,6 +31,34 @@ require 'openssl'
 class Resource
   PERIOD = 5
 
+  #
+  # Internal error
+  #
+  class InternalError
+    def initialize(message)
+      @message = message
+    end
+
+    def value
+      [500, '', @message]
+    end
+  end
+
+  #
+  # Internal error caused by an exception
+  #
+  class InternalErrorFromException
+    def initialize(exception)
+      @e = exception
+    end
+
+    def value
+      InternalError.new(
+        "#{@e.class}: #{@e.message}\n\t#{@e.backtrace.join("\n\t")}"
+      ).value
+    end
+  end
+
   def initialize(uri)
     @uri = uri
   end
@@ -50,10 +78,12 @@ class Resource
       end
       [res.code.to_i, res.body, to_text(req, res)]
     rescue Timeout::Error
-      [500, '', "The request timed out after #{PERIOD} seconds."]
+      InternalError.new("The request timed out after #{PERIOD} seconds.").value
+    rescue Zlib::BufError => e
+      InternalErrorFromException.new(e).value
     rescue SocketError => e
       retry unless (tries -= 1).zero?
-      [500, '', "#{e.class}: #{e.message}\n\t#{e.backtrace.join("\n\t")}"]
+      InternalErrorFromException.new(e).value
     end
   end
 
