@@ -52,7 +52,8 @@ class Resource
         SocketErrorResponse.new(
           TimedoutResponse.new(
             NetworkUnreachableResponse.new(HTTPResponse.new(http, req)),
-            5),
+            5
+          ),
           3
         )
       )

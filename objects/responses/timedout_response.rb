@@ -36,12 +36,10 @@ class TimedoutResponse
   end
 
   def receive
-    begin
-      Timeout.timeout(@period) do @response.receive end
-    rescue Timeout::Error
-      InternalErrorResponse.new(
-        "The request timed out after #{@period} seconds."
-      ).receive
-    end
+    Timeout.timeout(@period) { @response.receive }
+  rescue Timeout::Error
+    InternalErrorResponse.new(
+      "The request timed out after #{@period} seconds."
+    ).receive
   end
 end

@@ -31,12 +31,10 @@ class ProxyAuthenticationRequiredResponse
   end
 
   def receive
-    begin
-      @response.receive
-    rescue Net::HTTPServerException => e
-      code = e.message.split(' ')[0].to_i
-      raise e unless code == 407
-      Response.new(code, '', 'Proxy authentication required.').receive
-    end
+    @response.receive
+  rescue Net::HTTPServerException => e
+    code = e.message.split(' ')[0].to_i
+    raise e unless code == 407
+    Response.new(code, '', 'Proxy authentication required.').receive
   end
 end

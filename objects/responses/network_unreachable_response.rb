@@ -35,10 +35,8 @@ class NetworkUnreachableResponse
   end
 
   def receive
-    begin
-      @response.receive
-    rescue Errno::ENETUNREACH => e
-      InternalErrorResponse.new('Network unreachable.').receive
-    end
+    @response.receive
+  rescue Errno::ENETUNREACH
+    InternalErrorResponse.new('Network unreachable.').receive
   end
 end

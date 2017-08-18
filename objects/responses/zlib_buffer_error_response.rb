@@ -35,10 +35,8 @@ class ZlibBufferErrorResponse
   end
 
   def receive
-    begin
-      @response.receive
-    rescue Zlib::BufError => e
-      InternalErrorFromExceptionResponse.new(e).receive
-    end
+    @response.receive
+  rescue Zlib::BufError => e
+    InternalErrorFromExceptionResponse.new(e).receive
   end
 end

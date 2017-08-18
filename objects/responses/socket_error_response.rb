@@ -36,11 +36,9 @@ class SocketErrorResponse
   end
 
   def receive
-    begin
-      @response.receive
-    rescue SocketError => e
-      retry unless (@tries -= 1).zero?
-      InternalErrorFromExceptionResponse.new(e).receive
-    end
+    @response.receive
+  rescue SocketError => e
+    retry unless (@tries -= 1).zero?
+    InternalErrorFromExceptionResponse.new(e).receive
   end
 end
