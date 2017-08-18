@@ -73,6 +73,15 @@ fields:
   delete_on: TTL attribute for DynamoDB (when to delete this item)
 ```
 
+The `sn-counts` table contains the total pings atomic counter:
+
+```
+fields:
+  id/S: identifier for the counter. it's 'ping-count' for the ping counter
+  count/N: updated value of the counter
+  description/S: spoken language description of the counter
+```
+
 ## How to contribute?
 
 Just submit a pull request. Make sure `rake` passes.
