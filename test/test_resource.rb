@@ -68,4 +68,15 @@ class ResourceTest < Test::Unit::TestCase
     )
     remove_request_stub(stub)
   end
+
+  def test_network_unreachable
+    stub = stub_request(:any, 'www.microsoft.com').to_return do
+      raise Errno::ENETUNREACH, 'network unreachable', caller
+    end
+    assert_equal(
+      [500, '', 'Network unreachable.'],
+      Resource.new(URI.parse('http://www.microsoft.com')).take
+    )
+    remove_request_stub(stub)
+  end
 end

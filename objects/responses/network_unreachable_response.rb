@@ -24,35 +24,21 @@ require 'uri'
 require 'timeout'
 require 'net/http'
 require 'openssl'
-require_relative 'responses/zlib_buffer_error_response'
-require_relative 'responses/socket_error_response'
-require_relative 'responses/timedout_response'
-require_relative 'responses/http_response'
-require_relative 'responses/network_unreachable_response'
+require_relative 'internal_error_from_exception_response'
 
 #
-# Single web resource.
+# Response checked for network unreachable error
 #
-class Resource
-  def initialize(uri)
-    @uri = uri
+class NetworkUnreachableResponse
+  def initialize(response)
+    @response = response
   end
 
-  def take(host = nil, port = nil)
-    http = Net::HTTP.new(@uri.host, @uri.port, host, port)
-    if @uri.scheme == 'https'
-      http.use_ssl = true
-      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+  def receive
+    begin
+      @response.receive
+    rescue Errno::ENETUNREACH => e
+      InternalErrorResponse.new('Network unreachable.').receive
     end
-    req = Net::HTTP::Get.new(@uri.request_uri)
-    req['User-Agent'] = 'SixNines.io (not Firefox, Chrome, or Safari)'
-    ZlibBufferErrorResponse.new(
-      SocketErrorResponse.new(
-        TimedoutResponse.new(
-          NetworkUnreachableResponse.new(HTTPResponse.new(http, req)),
-          5),
-        3
-      )
-    ).receive
   end
 end
