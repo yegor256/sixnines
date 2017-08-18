@@ -24,32 +24,40 @@ require 'uri'
 require 'timeout'
 require 'net/http'
 require 'openssl'
-require_relative 'responses/zlib_buffer_error_response'
-require_relative 'responses/socket_error_response'
-require_relative 'responses/timedout_response'
-require_relative 'responses/http_response'
+require_relative 'response'
 
 #
-# Single web resource.
+# HTTP response
 #
-class Resource
-  def initialize(uri)
-    @uri = uri
+class HTTPResponse
+  def initialize(http, request)
+    @http = http
+    @request = request
   end
 
-  def take(host = nil, port = nil)
-    http = Net::HTTP.new(@uri.host, @uri.port, host, port)
-    if @uri.scheme == 'https'
-      http.use_ssl = true
-      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-    end
-    req = Net::HTTP::Get.new(@uri.request_uri)
-    req['User-Agent'] = 'SixNines.io (not Firefox, Chrome, or Safari)'
-    ZlibBufferErrorResponse.new(
-      SocketErrorResponse.new(
-        TimedoutResponse.new(HTTPResponse.new(http, req), 5),
-        3
-      )
+  def receive
+    response = @http.request(@request)
+    Response.new(
+      response.code.to_i,
+      response.body,
+      to_text(@request, response)
     ).receive
+  end
+
+  private
+
+  def to_text(req, res)
+    "#{req.method} #{req.path} HTTP/1.1\n\
+#{headers(req)}\n#{body(req.body)}\n\n\
+HTTP/#{res.http_version} #{res.code} #{res.message}\n\
+#{headers(res)}\n#{body(res.body)}"
+  end
+
+  def headers(headers)
+    headers.to_hash.map { |k, v| v.map { |h| k + ': ' + h } }.join("\n")
+  end
+
+  def body(body)
+    body.nil? ? '' : body.strip.gsub(/^(.{200,}?).*$/m, '\1...')
   end
 end
