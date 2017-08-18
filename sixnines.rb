@@ -89,6 +89,7 @@ configure do
     c.access_token = config['twitter']['access_token']
     c.access_token_secret = config['twitter']['access_token_secret']
   end)
+  settings.base.start_ping_count
 end
 
 before '/*' do
@@ -137,7 +138,8 @@ get '/' do
     description: 'Website Availability Monitor',
     query: params[:q] ? params[:q] : nil,
     found: params[:q] ? settings.base.find(params[:q]) : [],
-    flips: settings.base.flips
+    flips: settings.base.flips,
+    ping_count: settings.base.ping_count
   )
 end
 
@@ -351,6 +353,13 @@ get '/a/del' do
   settings.base.endpoints(@locals[:user]).del(params[:endpoint])
   redirect to('/a')
 end
+
+get '/ping_count' do
+  content_type 'application/json'
+  { ping_count: settings.base.ping_count }.to_json
+end
+
+
 
 get '/css/*.css' do
   content_type 'text/css', charset: 'utf-8'

@@ -38,3 +38,15 @@
       %span.right-if-mobile= EpBadge.new(e).to_html
       %br.mobile-only
       =ActionView::Base.new.distance_of_time_in_words(e.to_h[:flipped], Time.now) + ' ago'
+%p
+  %span#ping-count
+    =ping_count.to_s
+  requests done so far
+
+:javascript
+  $( document ).ready(function poll_ping () {
+    $.get('/ping_count', function(data) {
+      $('#ping-count').text(data.ping_count);
+      setTimeout(poll_ping, 1000);
+    });
+  });
