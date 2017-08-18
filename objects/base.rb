@@ -104,4 +104,12 @@ class Base
   def endpoints(user)
     Endpoints.new(@aws, user)
   end
+
+  def start_ping_count
+    PingCount.new(@aws).start_from(0)
+  end
+
+  def ping_count
+    PingCount.new(@aws).count
+  end
 end

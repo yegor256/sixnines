@@ -64,4 +64,19 @@ class EndpointTest < Test::Unit::TestCase
     ep.flush
     assert_equal(nil, Base.new(dynamo).take(id).to_h[:log])
   end
+
+  def test_increments_ping_count
+    first_proxy = 'my-proxy.com'
+    second_proxy = 'my-other-proxy.com'
+    first_stub = stub_request(:any, first_proxy)
+    second_stub = stub_request(:any, second_proxy)
+    dynamo = Dynamo.new.aws
+    id = Endpoints.new(dynamo, 'pdacostaporto-endpoint').add(
+      'http://www.siniestromuppet.org.uy'
+    )
+    ep = Base.new(dynamo).take(id)
+    ep.ping(["#{first_stub}:8080", "#{second_stub}:3000"])
+    remove_request_stub(first_stub)
+    remove_request_stub(second_stub)
+  end
 end
