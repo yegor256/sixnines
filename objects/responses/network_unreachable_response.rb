@@ -20,11 +20,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-require 'uri'
-require 'timeout'
 require 'net/http'
-require 'openssl'
-require_relative 'internal_error_from_exception_response'
+require_relative 'internal_error_response'
 
 #
 # Response checked for network unreachable error
