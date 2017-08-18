@@ -359,8 +359,6 @@ get '/ping_count' do
   { ping_count: settings.base.ping_count }.to_json
 end
 
-
-
 get '/css/*.css' do
   content_type 'text/css', charset: 'utf-8'
   file = params[:splat].first
