@@ -53,6 +53,6 @@ class PingCount
     @aws.get_item(
       table_name: 'sn-counts',
       key: { 'id' => 'ping-count' }
-    )[:item]['count']
+    )[:item]['count'].to_i
   end
 end

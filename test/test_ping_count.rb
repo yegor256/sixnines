@@ -62,6 +62,7 @@ class CountTest < PingCountTest
   def setup
     @aws = Dynamo.new.aws
     PingCount.new(@aws).start_from(NUMBER)
+    @count = PingCount.new(@aws).count
   end
 
   def teardown
@@ -71,8 +72,12 @@ class CountTest < PingCountTest
     )
   end
 
-  def test_count
-    assert_equal(NUMBER, PingCount.new(@aws).count)
+  def test_number
+    assert_equal(NUMBER, @count)
+  end
+
+  def test_integer
+    assert_equal(NUMBER.to_s, @count.to_s)
   end
 end
 
