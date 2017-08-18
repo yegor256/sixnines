@@ -36,6 +36,6 @@ class Response
   end
 
   def receive
-    [@code, @body, @log]
+    [@code.to_i, @body, @log]
   end
 end

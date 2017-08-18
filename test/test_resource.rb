@@ -79,4 +79,19 @@ class ResourceTest < Test::Unit::TestCase
     )
     remove_request_stub(stub)
   end
+
+  def test_proxy_authentication_required
+    code = 407
+    stub = stub_request(:any, 'www.intel.com').to_return do
+      raise Net::HTTPServerException.new(
+        "#{code} Proxy auth required.",
+        nil
+      )
+    end
+    assert_equal(
+      [code, '', 'Proxy authentication required.'],
+      Resource.new(URI.parse('http://www.intel.com')).take
+    )
+    remove_request_stub(stub)
+  end
 end

@@ -29,6 +29,7 @@ require_relative 'responses/socket_error_response'
 require_relative 'responses/timedout_response'
 require_relative 'responses/http_response'
 require_relative 'responses/network_unreachable_response'
+require_relative 'responses/proxy_authentication_required_response'
 
 #
 # Single web resource.
@@ -47,11 +48,13 @@ class Resource
     req = Net::HTTP::Get.new(@uri.request_uri)
     req['User-Agent'] = 'SixNines.io (not Firefox, Chrome, or Safari)'
     ZlibBufferErrorResponse.new(
-      SocketErrorResponse.new(
-        TimedoutResponse.new(
-          NetworkUnreachableResponse.new(HTTPResponse.new(http, req)),
-          5),
-        3
+      ProxyAuthenticationRequiredResponse.new(
+        SocketErrorResponse.new(
+          TimedoutResponse.new(
+            NetworkUnreachableResponse.new(HTTPResponse.new(http, req)),
+            5),
+          3
+        )
       )
     ).receive
   end
