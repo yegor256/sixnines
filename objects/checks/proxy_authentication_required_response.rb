@@ -21,19 +21,17 @@
 # SOFTWARE.
 
 require 'net/http'
-require_relative 'internal_error_from_exception_response'
+require_relative '../response'
 
 #
-# Response checked for Zlib compression buffer error
+# Proxy authentication required response
 #
-class ZlibBufferErrorResponse
-  def initialize(response)
-    @response = response
-  end
-
-  def receive
-    @response.receive
-  rescue Zlib::BufError => e
-    InternalErrorFromExceptionResponse.new(e).receive
+class ProxyAuthenticationRequiredResponse
+  def check(response)
+    response.receive
+  rescue Net::HTTPServerException => e
+    code = e.message.split(' ')[0].to_i
+    raise e unless code == 407
+    Response.new(code, '', 'Proxy authentication required.').receive
   end
 end

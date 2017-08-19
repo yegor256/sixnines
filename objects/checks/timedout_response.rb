@@ -21,19 +21,18 @@
 # SOFTWARE.
 
 require 'timeout'
-require_relative 'internal_error_response'
+require_relative '../internal_error_response'
 
 #
 # Response that times out
 #
 class TimedoutResponse
-  def initialize(response, period)
-    @response = response
+  def initialize(period)
     @period = period
   end
 
-  def receive
-    Timeout.timeout(@period) { @response.receive }
+  def check(response)
+    Timeout.timeout(@period) { response.receive }
   rescue Timeout::Error
     InternalErrorResponse.new(
       "The request timed out after #{@period} seconds."

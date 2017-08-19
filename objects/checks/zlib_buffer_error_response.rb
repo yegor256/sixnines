@@ -21,19 +21,15 @@
 # SOFTWARE.
 
 require 'net/http'
-require_relative 'internal_error_response'
+require_relative '../internal_error_from_exception_response'
 
 #
-# Response checked for network unreachable error
+# Response checked for Zlib compression buffer error
 #
-class NetworkUnreachableResponse
-  def initialize(response)
-    @response = response
-  end
-
-  def receive
-    @response.receive
-  rescue Errno::ENETUNREACH
-    InternalErrorResponse.new('Network unreachable.').receive
+class ZlibBufferErrorResponse
+  def check(response)
+    response.receive
+  rescue Zlib::BufError => e
+    InternalErrorFromExceptionResponse.new(e).receive
   end
 end

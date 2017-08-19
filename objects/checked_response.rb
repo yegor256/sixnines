@@ -23,18 +23,24 @@
 require 'net/http'
 
 #
-# Proxy authentication required response
+# Response checked for errors
 #
-class ProxyAuthenticationRequiredResponse
-  def initialize(response)
+class CheckedResponse
+  def initialize(response, checks)
     @response = response
+    @checks = checks
   end
 
   def receive
-    @response.receive
-  rescue Net::HTTPServerException => e
-    code = e.message.split(' ')[0].to_i
-    raise e unless code == 407
-    Response.new(code, '', 'Proxy authentication required.').receive
+    if @checks.length == 0
+      @response.receive
+    else
+      @checks[0].check(
+        CheckedResponse.new(
+          @response,
+          @checks[1..@checks.length]
+        )
+      )
+    end
   end
 end

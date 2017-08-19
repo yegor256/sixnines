@@ -21,19 +21,18 @@
 # SOFTWARE.
 
 require 'net/http'
-require_relative 'internal_error_from_exception_response'
+require_relative '../internal_error_from_exception_response'
 
 #
 # Response checked for socket error
 #
 class SocketErrorResponse
-  def initialize(response, tries)
-    @response = response
+  def initialize(tries)
     @tries = tries
   end
 
-  def receive
-    @response.receive
+  def check(response)
+    response.receive
   rescue SocketError => e
     retry unless (@tries -= 1).zero?
     InternalErrorFromExceptionResponse.new(e).receive
