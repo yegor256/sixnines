@@ -32,7 +32,7 @@ class CheckedResponse
   end
 
   def receive
-    if @checks.length == 0
+    if @checks.empty?
       @response.receive
     else
       @checks[0].check(
