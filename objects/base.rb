@@ -104,4 +104,13 @@ class Base
   def endpoints(user)
     Endpoints.new(@aws, user)
   end
+
+  def start_ping_count
+    # @todo: #36:30min Get the actual total value of pings from the database
+    PingCount.new(@aws).start_from(0)
+  end
+
+  def ping_count
+    PingCount.new(@aws).count
+  end
 end

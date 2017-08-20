@@ -121,6 +121,7 @@
                             <tables>
                                 <table>${basedir}/tables/sn-endpoints.json</table>
                                 <table>${basedir}/tables/sn-pings.json</table>
+                                <table>${basedir}/tables/sn-counts.json</table>
                             </tables>
                         </configuration>
                     </execution>

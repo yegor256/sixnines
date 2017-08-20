@@ -14,38 +14,30 @@
 #
 # THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFINGEMENT. IN NO EVENT SHALL THE
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 # AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-require 'test/unit'
-require 'rack/test'
-require_relative '../objects/dynamo'
-require_relative '../objects/base'
+require 'uri'
+require 'timeout'
+require 'net/http'
+require 'openssl'
+require_relative '../objects/resource'
 
-class BaseTest < Test::Unit::TestCase
-  def test_lists_flips
-    assert(!Base.new(Dynamo.new.aws).flips.nil?)
+#
+# Resource whose pings are counted
+#
+class CountedResource
+  def initialize(resource, count)
+    @resource = resource
+    @count = count
   end
 
-  def test_tries_to_take_absent_endpoint
-    assert_raise Base::EndpointNotFound do
-      Base.new(Dynamo.new.aws).take('absent')
-    end
-  end
-
-  def test_ping_count
-    aws = Dynamo.new.aws
-    pings = 19
-    PingCount.new(aws).start_from(pings)
-    assert_equal(pings, Base.new(Dynamo.new.aws).ping_count)
-  end
-
-  def test_start_ping_count
-    aws = Dynamo.new.aws
-    Base.new(Dynamo.new.aws).start_ping_count
-    assert_equal(0, PingCount.new(aws).count)
+  def take(host = nil, port = nil)
+    take = @resource.take(host, port)
+    @count.increment(1)
+    take
   end
 end

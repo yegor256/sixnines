@@ -26,6 +26,8 @@ require 'net/http'
 require 'openssl'
 require_relative 'resource'
 require_relative 'proxied_resource'
+require_relative 'counted_resource'
+require_relative 'ping_count'
 require_relative 'endpoint/ep_uri'
 require_relative 'endpoint/ep_state'
 require_relative 'endpoint/ep_availability'
@@ -111,7 +113,13 @@ class Endpoint
   def ping(proxies = [''])
     start = Time.now
     h = to_h
-    code, body, log = ProxiedResource.new(Resource.new(h[:uri]), proxies).take
+    code, body, log = ProxiedResource.new(
+      CountedResource.new(
+        Resource.new(h[:uri]),
+        PingCount.new(@aws)
+      ),
+      proxies
+    ).take
     @aws.put_item(
       table_name: 'sn-pings',
       item: {

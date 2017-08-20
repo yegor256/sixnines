@@ -14,38 +14,45 @@
 #
 # THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFINGEMENT. IN NO EVENT SHALL THE
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 # AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-require 'test/unit'
-require 'rack/test'
-require_relative '../objects/dynamo'
-require_relative '../objects/base'
-
-class BaseTest < Test::Unit::TestCase
-  def test_lists_flips
-    assert(!Base.new(Dynamo.new.aws).flips.nil?)
+#
+# Ping count
+#
+class PingCount
+  def initialize(aws)
+    @aws = aws
   end
 
-  def test_tries_to_take_absent_endpoint
-    assert_raise Base::EndpointNotFound do
-      Base.new(Dynamo.new.aws).take('absent')
-    end
+  def start_from(count)
+    @aws.put_item(
+      table_name: 'sn-counts',
+      item: {
+        id: 'ping-count',
+        count: count,
+        description: 'Number of pings done so far.'
+      }
+    )
   end
 
-  def test_ping_count
-    aws = Dynamo.new.aws
-    pings = 19
-    PingCount.new(aws).start_from(pings)
-    assert_equal(pings, Base.new(Dynamo.new.aws).ping_count)
+  def increment(times)
+    @aws.update_item(
+      table_name: 'sn-counts',
+      key: { 'id' => 'ping-count' },
+      update_expression: 'set #count = #count + :increment',
+      expression_attribute_names: { '#count' => 'count' },
+      expression_attribute_values: { ':increment' => times }
+    )
   end
 
-  def test_start_ping_count
-    aws = Dynamo.new.aws
-    Base.new(Dynamo.new.aws).start_ping_count
-    assert_equal(0, PingCount.new(aws).count)
+  def count
+    @aws.get_item(
+      table_name: 'sn-counts',
+      key: { 'id' => 'ping-count' }
+    )[:item]['count'].to_i
   end
 end

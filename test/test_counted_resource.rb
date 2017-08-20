@@ -22,30 +22,27 @@
 
 require 'test/unit'
 require 'rack/test'
+require_relative '../objects/counted_resource'
+require_relative '../objects/resource'
 require_relative '../objects/dynamo'
-require_relative '../objects/base'
+require_relative '../objects/ping_count'
 
-class BaseTest < Test::Unit::TestCase
-  def test_lists_flips
-    assert(!Base.new(Dynamo.new.aws).flips.nil?)
-  end
+class CountedResourceTest < Test::Unit::TestCase
+  START = 5
+  PINGS = 3
 
-  def test_tries_to_take_absent_endpoint
-    assert_raise Base::EndpointNotFound do
-      Base.new(Dynamo.new.aws).take('absent')
+  def test_increments_on_ping
+    stub = stub_request(:any, 'www.ebay.com')
+    count = PingCount.new(Dynamo.new.aws)
+    count.start_from(5)
+    resource = CountedResource.new(
+      Resource.new(URI.parse('http://www.ebay.com')),
+      count
+    )
+    PINGS.times do
+      resource.take
     end
-  end
-
-  def test_ping_count
-    aws = Dynamo.new.aws
-    pings = 19
-    PingCount.new(aws).start_from(pings)
-    assert_equal(pings, Base.new(Dynamo.new.aws).ping_count)
-  end
-
-  def test_start_ping_count
-    aws = Dynamo.new.aws
-    Base.new(Dynamo.new.aws).start_ping_count
-    assert_equal(0, PingCount.new(aws).count)
+    assert_equal(START + PINGS, count.count)
+    remove_request_stub(stub)
   end
 end
