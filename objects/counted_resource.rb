@@ -36,8 +36,8 @@ class CountedResource
   end
 
   def take(host = nil, port = nil)
-    take = @resource.take
+    take = @resource.take(host, port)
     @count.increment(1)
-    return take
+    take
   end
 end

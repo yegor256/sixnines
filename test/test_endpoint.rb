@@ -68,8 +68,8 @@ class EndpointTest < Test::Unit::TestCase
 
   def test_increments_ping_count
     initial = 3
-    first_proxy = 'my-proxy.com'
-    second_proxy = 'my-other-proxy.com'
+    first_proxy = 'my-proxy.com:8080'
+    second_proxy = 'my-other-proxy.com:3000'
     first_stub = stub_request(:any, first_proxy)
     second_stub = stub_request(:any, second_proxy)
     dynamo = Dynamo.new.aws
@@ -78,7 +78,7 @@ class EndpointTest < Test::Unit::TestCase
     )
     ep = Base.new(dynamo).take(id)
     pings = TotalPings.new(initial)
-    ep.ping(pings, ["#{first_stub}:8080", "#{second_stub}:3000"])
+    ep.ping(pings, [first_proxy, second_proxy])
     assert_equal(initial + 1, pings.count)
     remove_request_stub(first_stub)
     remove_request_stub(second_stub)

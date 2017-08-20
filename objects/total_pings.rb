@@ -20,12 +20,11 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+require 'concurrent'
+
 #
 # Total pings
 #
-
-require 'concurrent'
-
 class TotalPings
   def initialize(count)
     @count = Concurrent::AtomicFixnum.new(count)

@@ -39,23 +39,25 @@ class BaseTest < Test::Unit::TestCase
   def test_ping_increments_total_pings
     initial = 5
     aws = Dynamo.new.aws
-    ep1 = Endpoints.new(
+    Endpoints.new(
       aws,
       'yegor256-endpoint'
     ).add('http://www.yegor256.com')
-    ep2 = Endpoints.new(
+    Endpoints.new(
       aws,
       'pdacostaporto-endpoint'
     ).add('http://www.siniestromuppet.org.uy')
-    first_proxy = 'myproxy.com'
-    second_proxy = 'my-other-proxy'
+    first_proxy = 'my-proxy.com:8080'
+    second_proxy = 'my-other-proxy:3000'
     first_stub = stub_request(:any, first_proxy)
     second_stub = stub_request(:any, second_proxy)
-    increase = aws.scan({
-      table_name: 'sn-endpoints',
-    }).items.length
+    increase = aws.scan(
+      table_name: 'sn-endpoints'
+    ).items.length
     pings = TotalPings.new(initial)
-    Base.new(aws).ping(pings, ["#{first_proxy}:8080", "#{second_proxy}:3000"])
+    Base.new(aws).ping(pings, [first_proxy, second_proxy])
     assert_equal(initial + increase, pings.count)
+    remove_request_stub(first_stub)
+    remove_request_stub(second_stub)
   end
 end
