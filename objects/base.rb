@@ -38,7 +38,7 @@ class Base
     @aws = aws
   end
 
-  def ping(proxies, &b)
+  def ping(count, proxies, &b)
     @aws.query(
       table_name: 'sn-endpoints',
       index_name: 'expires',
@@ -51,7 +51,7 @@ class Base
       key_condition_expression: 'active=:h and expires < :r'
     ).items
     .map { |i| Endpoint.new(@aws, i) }
-    .map { |e| e.ping(proxies, &b) }.join("\n")
+    .map { |e| e.ping(count, proxies, &b) }.join("\n")
   end
 
   def find(query)

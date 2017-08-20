@@ -26,6 +26,7 @@ require_relative '../objects/base'
 require_relative '../objects/endpoint'
 require_relative '../objects/endpoints'
 require_relative '../objects/dynamo'
+require_relative '../objects/total_pings'
 
 class EndpointTest < Test::Unit::TestCase
   def test_pings_valid_uri
@@ -38,7 +39,7 @@ class EndpointTest < Test::Unit::TestCase
     sites.each do |s|
       id = Endpoints.new(dynamo, 'yegor256-endpoint').add(s)
       ep = Base.new(dynamo).take(id)
-      ping = ep.ping
+      ping = ep.ping(TotalPings.new(0))
       assert(ping.end_with?('200'), ping)
     end
   end
@@ -49,7 +50,7 @@ class EndpointTest < Test::Unit::TestCase
       'http://www.sixnines-broken-uri.io'
     )
     ep = Base.new(dynamo).take(id)
-    ping = ep.ping
+    ping = ep.ping(TotalPings.new(1))
     assert_false(ping.end_with?('200'), ping)
   end
 
@@ -59,9 +60,27 @@ class EndpointTest < Test::Unit::TestCase
       'http://broken-url'
     )
     ep = Base.new(dynamo).take(id)
-    ep.ping
+    ep.ping(TotalPings.new(2))
     assert_not_equal(nil, Base.new(dynamo).take(id).to_h[:log])
     ep.flush
     assert_equal(nil, Base.new(dynamo).take(id).to_h[:log])
+  end
+
+  def test_increments_ping_count
+    initial = 3
+    first_proxy = 'my-proxy.com'
+    second_proxy = 'my-other-proxy.com'
+    first_stub = stub_request(:any, first_proxy)
+    second_stub = stub_request(:any, second_proxy)
+    dynamo = Dynamo.new.aws
+    id = Endpoints.new(dynamo, 'pdacostaporto-endpoint').add(
+      'http://www.siniestromuppet.org.uy'
+    )
+    ep = Base.new(dynamo).take(id)
+    pings = TotalPings.new(initial)
+    ep.ping(pings, ["#{first_stub}:8080", "#{second_stub}:3000"])
+    assert_equal(initial + 1, pings.count)
+    remove_request_stub(first_stub)
+    remove_request_stub(second_stub)
   end
 end
