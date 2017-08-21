@@ -96,6 +96,7 @@ before '/*' do
     ver: VERSION,
     login_link: settings.oauth.login_uri
   }
+  cookies[:sixnines] = params[:cookie] if params[:cookie]
   if cookies[:sixnines]
     begin
       @locals[:user] = Cookie::Closed.new(

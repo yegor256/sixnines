@@ -91,6 +91,9 @@ $ rake run
 
 Then, point your browser to `http://localhost:9292` and enjoy.
 
+To login locally just open `http://localhost:9292/?cookie=test` and user
+`test` will be logged in.
+
 ## License
 
 (The MIT License)
