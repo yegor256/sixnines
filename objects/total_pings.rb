@@ -20,33 +20,21 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-source 'https://rubygems.org'
-ruby '2.3.3'
+require 'concurrent'
 
-gem 'actionview', '5.0.2'
-gem 'aws-sdk', '2.6.35'
-gem 'concurrent-ruby', '1.0.5', require: 'concurrent'
-gem 'haml', '4.0.7'
-gem 'mail', '2.6.4'
-gem 'nokogiri', '1.6.8.1'
-gem 'rmagick', '2.16.0'
-gem 'sass', '3.4.22'
-gem 'sentry-raven', '2.5.3'
-gem 'sinatra', '1.4.7'
-gem 'sinatra-contrib', '1.4.7'
-gem 'stripe', '2.1.0'
-gem 'time_difference', '0.5.0'
-gem 'timeout-extensions', '0.1.1'
-gem 'twitter', '6.1.0'
-gem 'xml-sitemap', '1.3.3'
+#
+# Total pings
+#
+class TotalPings
+  def initialize(count)
+    @count = Concurrent::AtomicFixnum.new(count)
+  end
 
-group :test, :development do
-  gem 'codecov', '0.1.10', require: false
-  gem 'rack-test', '0.6.3', require: false
-  gem 'rake', '12.0.0', require: false
-  gem 'rerun', require: false
-  gem 'rubocop', '0.46.0', require: false
-  gem 'rubocop-rspec', '1.8.0', require: false
-  gem 'test-unit', '3.0.8', require: false
-  gem 'webmock', '3.0.1', require: false
+  def increment(times)
+    @count.increment(times)
+  end
+
+  def count
+    @count.value.to_i
+  end
 end

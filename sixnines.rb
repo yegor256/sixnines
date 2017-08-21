@@ -89,6 +89,7 @@ configure do
     c.access_token = config['twitter']['access_token']
     c.access_token_secret = config['twitter']['access_token_secret']
   end)
+  set :pings, TotalPings.new(0)
 end
 
 before '/*' do
@@ -138,7 +139,8 @@ get '/' do
     description: 'Website Availability Monitor',
     query: params[:q] ? params[:q] : nil,
     found: params[:q] ? settings.base.find(params[:q]) : [],
-    flips: settings.base.flips
+    flips: settings.base.flips,
+    ping_count: settings.pings.count
   )
 end
 
@@ -273,7 +275,7 @@ get '/ping' do
   open('/tmp/sixnines.lock', 'w') do |f|
     txt << if f.flock(File::LOCK_NB | File::LOCK_EX)
       again = true
-      settings.base.ping(settings.proxies) do |up, ep|
+      settings.base.ping(settings.pings, settings.proxies) do |up, ep|
         next if ENV['RACK_ENV'] == 'test'
         href = 'http://www.sixnines.io' + EpBadge.new(ep).to_href
         event = if up
@@ -351,6 +353,11 @@ end
 get '/a/del' do
   settings.base.endpoints(@locals[:user]).del(params[:endpoint])
   redirect to('/a')
+end
+
+get '/ping_count' do
+  content_type 'application/json'
+  { ping_count: settings.pings.count }.to_json
 end
 
 get '/css/*.css' do

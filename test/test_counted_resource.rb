@@ -22,42 +22,26 @@
 
 require 'test/unit'
 require 'rack/test'
+require_relative '../objects/counted_resource'
+require_relative '../objects/resource'
 require_relative '../objects/dynamo'
-require_relative '../objects/base'
+require_relative '../objects/total_pings'
 
-class BaseTest < Test::Unit::TestCase
-  def test_lists_flips
-    assert(!Base.new(Dynamo.new.aws).flips.nil?)
-  end
+class CountedResourceTest < Test::Unit::TestCase
+  START = 5
+  PINGS = 3
 
-  def test_tries_to_take_absent_endpoint
-    assert_raise Base::EndpointNotFound do
-      Base.new(Dynamo.new.aws).take('absent')
+  def test_increments_on_ping
+    stub = stub_request(:any, 'www.ebay.com')
+    count = TotalPings.new(START)
+    resource = CountedResource.new(
+      count,
+      Resource.new(URI.parse('http://www.ebay.com'))
+    )
+    PINGS.times do
+      resource.take
     end
-  end
-
-  def test_ping_increments_total_pings
-    initial = 5
-    aws = Dynamo.new.aws
-    Endpoints.new(
-      aws,
-      'yegor256-endpoint'
-    ).add('http://www.yegor256.com')
-    Endpoints.new(
-      aws,
-      'pdacostaporto-endpoint'
-    ).add('http://www.siniestromuppet.org.uy')
-    first_proxy = 'my-proxy.com:8080'
-    second_proxy = 'my-other-proxy:3000'
-    first_stub = stub_request(:any, first_proxy)
-    second_stub = stub_request(:any, second_proxy)
-    increase = aws.scan(
-      table_name: 'sn-endpoints'
-    ).items.length
-    pings = TotalPings.new(initial)
-    Base.new(aws).ping(pings, [first_proxy, second_proxy])
-    assert_equal(initial + increase, pings.count)
-    remove_request_stub(first_stub)
-    remove_request_stub(second_stub)
+    assert_equal(START + PINGS, count.count)
+    remove_request_stub(stub)
   end
 end
