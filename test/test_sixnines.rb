@@ -86,7 +86,7 @@ class AppTest < Test::Unit::TestCase
 
   def test_history_endpoint_with_user
     id = ep('http://www.vk.com')
-    header('Cookie', 'sixnines=jeffrey')
+    header('Cookie', 'glogin=jeffrey|')
     get("/h/#{id}")
     assert_equal(200, last_response.status)
   end
@@ -147,7 +147,7 @@ class AppTest < Test::Unit::TestCase
   end
 
   def test_user_account
-    header('Cookie', 'sixnines=jeff')
+    header('Cookie', 'glogin=jeff|')
     get('/a')
     assert_equal(200, last_response.status)
   end

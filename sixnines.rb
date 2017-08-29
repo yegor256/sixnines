@@ -36,13 +36,12 @@ require 'action_view'
 require 'action_view/helpers'
 require 'raven'
 require 'net/http'
+require 'glogin'
 
 require_relative 'version'
 require_relative 'objects/exec'
 require_relative 'objects/base'
-require_relative 'objects/cookie'
 require_relative 'objects/dynamo'
-require_relative 'objects/github_auth'
 require_relative 'objects/endpoint/ep_favicon'
 require_relative 'objects/endpoint/ep_data'
 
@@ -77,9 +76,10 @@ configure do
     c.dsn = config['sentry']
   end
   set :config, config
-  set :oauth, GithubAuth.new(
+  set :glogin, GLogin::Auth.new(
     config['github']['client_id'],
-    config['github']['client_secret']
+    config['github']['client_secret'],
+    'http://www.sixnines.io/oauth'
   )
   set :base, Base.new(Dynamo.new(config).aws)
   set :proxies, config['proxies']
@@ -95,14 +95,14 @@ end
 before '/*' do
   @locals = {
     ver: VERSION,
-    login_link: settings.oauth.login_uri
+    login_link: settings.glogin.login_uri
   }
-  cookies[:sixnines] = params[:cookie] if params[:cookie]
-  if cookies[:sixnines]
+  cookies[:glogin] = params[:cookie] if params[:cookie]
+  if cookies[:glogin]
     begin
-      @locals[:user] = Cookie::Closed.new(
-        cookies[:sixnines], settings.config['cookie_secret']
-      ).to_s
+      @locals[:user] = GLogin::Cookie::Closed.new(
+        cookies[:glogin], settings.config['cookie_secret']
+      ).to_user
     rescue OpenSSL::Cipher::CipherError => _
       @locals.delete(:user)
     end
@@ -114,9 +114,9 @@ before '/a*' do
 end
 
 get '/oauth' do
-  user = settings.oauth.user_name(settings.oauth.access_token(params[:code]))
-  cookies[:sixnines] = Cookie::Open.new(
-    user, settings.config['cookie_secret']
+  cookies[:glogin] = GLogin::Cookie::Open.new(
+    settings.glogin.user(params[:code]),
+    settings.config['cookie_secret']
   ).to_s
   redirect to('/')
 end
@@ -258,7 +258,8 @@ end
 
 # Flush the endpoint
 get '/flush/:id' do
-  raise 'You are not allowed to do this' unless @locals[:user] == 'yegor256'
+  raise 'You are not allowed to do this' \
+    if @locals[:user].nil? || @locals[:user][:login] != 'yegor256'
   begin
     ep = settings.base.take(params[:id])
     ep.flush
@@ -321,9 +322,9 @@ end
 
 get '/a' do
   haml :account, layout: :layout, locals: @locals.merge(
-    title: "@#{@locals[:user]}",
-    description: "Account of @#{@locals[:user]}",
-    endpoints: settings.base.endpoints(@locals[:user]).list,
+    title: "@#{@locals[:user][:login]}",
+    description: "Account of @#{@locals[:user][:login]}",
+    endpoints: settings.base.endpoints(@locals[:user][:login]).list,
     stripe_key: settings.config['stripe']['live']['public_key']
   )
 end
@@ -346,12 +347,12 @@ post '/a/add' do
       raise "Invalid coupon \"#{params[:coupon]}\""
     end
   end
-  settings.base.endpoints(@locals[:user]).add(params[:endpoint])
+  settings.base.endpoints(@locals[:user][:login]).add(params[:endpoint])
   redirect to('/a')
 end
 
 get '/a/del' do
-  settings.base.endpoints(@locals[:user]).del(params[:endpoint])
+  settings.base.endpoints(@locals[:user][:login]).del(params[:endpoint])
   redirect to('/a')
 end
 
