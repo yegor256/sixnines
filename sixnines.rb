@@ -122,7 +122,7 @@ get '/oauth' do
 end
 
 get '/logout' do
-  cookies.delete(:sixnines)
+  cookies.delete(:glogin)
   redirect to('/')
 end
 
