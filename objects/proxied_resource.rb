@@ -39,17 +39,16 @@ class ProxiedResource
     a = [500, '', 'There are no proxies']
     @proxies.each do |p|
       host, port = p.split(':')
-        puts "====================== #{host} ================"
       begin
         a = @resource.take(host, port)
       rescue Net::HTTPServerException => e
         code = e.message.split(' ')[0].to_i
-        puts "====================== [#{code}] ================"
         raise e unless code == 407
         a = Response.new(200, '', e.message).receive
       end
       break if a[0] != 500 || !a[1].empty?
     end
+    a = Response.new(200, '', '407 proxy issue').receive if a[0] == 407
     a
   end
 end
