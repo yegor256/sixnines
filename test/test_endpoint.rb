@@ -54,6 +54,27 @@ class EndpointTest < Test::Unit::TestCase
     assert_false(ping.end_with?('200'), ping)
   end
 
+  def test_pings_via_broken_proxy
+    require 'socket'
+    server = TCPServer.new('127.0.0.1', 0)
+    port = server.addr[1]
+    Thread.start do
+      Kernel.loop do
+        session = server.accept
+        session.gets
+        session.print "HTTP/1.1 200 Proxy error\r\n"
+        session.close
+      end
+    end
+    dynamo = Dynamo.new.aws
+    id = Endpoints.new(dynamo, 'yegor256-endpoint').add(
+      'http://www.the-address-that-doesnt-exist-for-sure.com'
+    )
+    ep = Base.new(dynamo).take(id)
+    ping = ep.ping(TotalPings.new(1), ["127.0.0.1:#{port}"])
+    assert_true(ping.end_with?('200'), ping)
+  end
+
   def test_flushes
     dynamo = Dynamo.new.aws
     id = Endpoints.new(dynamo, 'yegor256-endpoint').add(

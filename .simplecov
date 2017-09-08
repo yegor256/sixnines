@@ -32,8 +32,7 @@ if Gem.win_platform? then
   end
 else
   SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
-    SimpleCov::Formatter::HTMLFormatter,
-    Coveralls::SimpleCov::Formatter
+    SimpleCov::Formatter::HTMLFormatter
   ]
   SimpleCov.start do
     add_filter "/test/"
