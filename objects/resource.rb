@@ -28,7 +28,6 @@ require_relative 'checks/zlib_buffer_error_response'
 require_relative 'checks/socket_error_response'
 require_relative 'checks/timedout_response'
 require_relative 'checks/network_unreachable_response'
-require_relative 'checks/proxy_authentication_required_response'
 
 #
 # Single web resource.
@@ -50,7 +49,6 @@ class Resource
       HTTPResponse.new(http, req),
       [
         ZlibBufferErrorResponse.new,
-        ProxyAuthenticationRequiredResponse.new,
         SocketErrorResponse.new(3),
         TimedoutResponse.new(5),
         NetworkUnreachableResponse.new
