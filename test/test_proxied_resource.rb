@@ -27,10 +27,11 @@ require_relative '../objects/proxied_resource'
 
 class ProxiedResourceTest < Test::Unit::TestCase
   def test_pings_valid_uri
+    port = FakeServer.new.start(200)
     assert_equal(
       200,
       ProxiedResource.new(
-        Resource.new(URI.parse('http://www.yegor256.com')),
+        Resource.new(URI.parse("http://127.0.0.1:#{port}/")),
         [
           '',
           '216.230.229.34:60099'
@@ -40,10 +41,11 @@ class ProxiedResourceTest < Test::Unit::TestCase
   end
 
   def test_pings_valid_uri_without_proxy
+    port = FakeServer.new.start(200)
     assert_equal(
       200,
       ProxiedResource.new(
-        Resource.new(URI.parse('http://www.yegor256.com'))
+        Resource.new(URI.parse("http://127.0.0.1:#{port}/"))
       ).take[0]
     )
   end

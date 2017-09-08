@@ -14,42 +14,29 @@
 #
 # THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFINGEMENT. IN NO EVENT SHALL THE
 # AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-require 'uri'
-require 'timeout'
-require 'net/http'
-require 'openssl'
-require_relative 'resource'
+require 'socket'
 
-#
-# Proxied single web resource.
-#
-class ProxiedResource
-  def initialize(resource, proxies = [''])
-    @resource = resource
-    @proxies = proxies
-  end
-
-  def take
-    a = [500, '', 'There are no proxies']
-    @proxies.each do |p|
-      host, port = p.split(':')
-        puts "====================== #{host} ================"
-      begin
-        a = @resource.take(host, port)
-      rescue Net::HTTPServerException => e
-        code = e.message.split(' ')[0].to_i
-        puts "====================== [#{code}] ================"
-        raise e unless code == 407
-        a = Response.new(200, '', e.message).receive
+class FakeServer
+  def start(code)
+    server = TCPServer.new('127.0.0.1', 0)
+    port = server.addr[1]
+    Thread.start do
+      Kernel.loop do
+        session = server.accept
+        session.gets
+        session.print "HTTP/1.1 #{code}\r\n"
+        session.print "Content-type: text/plain\r\n"
+        session.print "\r\n"
+        session.print "Some content here\r\n"
+        session.close
       end
-      break if a[0] != 500 || !a[1].empty?
     end
-    a
+    port
   end
 end

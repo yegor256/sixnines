@@ -22,6 +22,7 @@
 
 require 'test/unit'
 require 'rack/test'
+require_relative 'fake_server'
 require_relative '../objects/dynamo'
 require_relative '../objects/base'
 
@@ -37,16 +38,17 @@ class BaseTest < Test::Unit::TestCase
   end
 
   def test_ping_increments_total_pings
+    port = FakeServer.new.start(200)
     initial = 5
     aws = Dynamo.new.aws
     Endpoints.new(
       aws,
       'yegor256-endpoint'
-    ).add('http://www.yegor256.com')
+    ).add("http://127.0.0.1:#{port}/first")
     Endpoints.new(
       aws,
       'pdacostaporto-endpoint'
-    ).add('http://www.siniestromuppet.org.uy')
+    ).add("http://127.0.0.1:#{port}/second")
     first_proxy = 'my-proxy.com:8080'
     second_proxy = 'my-other-proxy:3000'
     first_stub = stub_request(:any, first_proxy)

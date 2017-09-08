@@ -22,6 +22,7 @@
 
 require 'test/unit'
 require 'rack/test'
+require_relative 'fake_server'
 require_relative '../objects/base'
 require_relative '../objects/endpoint'
 require_relative '../objects/endpoints'
@@ -30,18 +31,14 @@ require_relative '../objects/total_pings'
 
 class EndpointTest < Test::Unit::TestCase
   def test_pings_valid_uri
-    sites = [
-      'http://www.yegor256.com',
-      'https://twitter.com/yegor256',
-      'http://ru.yegor256.com/2017-06-29-activists.html'
-    ]
+    port = FakeServer.new.start(200)
     dynamo = Dynamo.new.aws
-    sites.each do |s|
-      id = Endpoints.new(dynamo, 'yegor256-endpoint').add(s)
-      ep = Base.new(dynamo).take(id)
-      ping = ep.ping(TotalPings.new(0))
-      assert(ping.end_with?('200'), ping)
-    end
+    id = Endpoints.new(dynamo, 'yegor256-endpoint').add(
+      "http://127.0.0.1:#{port}/"
+    )
+    ep = Base.new(dynamo).take(id)
+    ping = ep.ping(TotalPings.new(0))
+    assert(ping.end_with?('200'), ping)
   end
 
   def test_pings_broken_uri
@@ -55,17 +52,7 @@ class EndpointTest < Test::Unit::TestCase
   end
 
   def test_pings_via_broken_proxy
-    require 'socket'
-    server = TCPServer.new('127.0.0.1', 0)
-    port = server.addr[1]
-    Thread.start do
-      Kernel.loop do
-        session = server.accept
-        session.gets
-        session.print "HTTP/1.1 200 Proxy error\r\n"
-        session.close
-      end
-    end
+    port = FakeServer.new.start(407)
     dynamo = Dynamo.new.aws
     id = Endpoints.new(dynamo, 'yegor256-endpoint').add(
       'http://www.the-address-that-doesnt-exist-for-sure.com'
@@ -88,6 +75,7 @@ class EndpointTest < Test::Unit::TestCase
   end
 
   def test_increments_ping_count
+    port = FakeServer.new.start(200)
     initial = 3
     first_proxy = 'my-proxy.com:8080'
     second_proxy = 'my-other-proxy.com:3000'
@@ -95,7 +83,7 @@ class EndpointTest < Test::Unit::TestCase
     second_stub = stub_request(:any, second_proxy)
     dynamo = Dynamo.new.aws
     id = Endpoints.new(dynamo, 'pdacostaporto-endpoint').add(
-      'http://www.siniestromuppet.org.uy'
+      "http://127.0.0.1:#{port}/"
     )
     ep = Base.new(dynamo).take(id)
     pings = TotalPings.new(initial)

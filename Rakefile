@@ -47,6 +47,7 @@ RuboCop::RakeTask.new(:rubocop) do |task|
   task.requires << 'rubocop-rspec'
 end
 
+desc 'Start DynamoDB Local server'
 task :dynamo do
   FileUtils.rm_rf('dynamodb-local/target')
   pid = Process.spawn('mvn', 'install', chdir: 'dynamodb-local')
@@ -66,6 +67,7 @@ task :dynamo do
   puts "DynamoDB Local is running in PID #{pid}"
 end
 
+desc 'Sleep endlessly after the start of DynamoDB Local server'
 task :sleep do
   loop do
     sleep(5)

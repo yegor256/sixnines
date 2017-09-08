@@ -23,18 +23,16 @@
 require 'test/unit'
 require 'rack/test'
 require 'zlib'
+require_relative 'fake_server'
 require_relative '../objects/resource'
 
 class ResourceTest < Test::Unit::TestCase
   def test_pings_valid_uri
-    sites = [
-      'http://www.yegor256.com',
-      'https://twitter.com/yegor256',
-      'http://ru.yegor256.com/2017-06-29-activists.html'
-    ]
-    sites.each do |s|
-      assert_equal(200, Resource.new(URI.parse(s)).take[0])
-    end
+    port = FakeServer.new.start(200)
+    assert_equal(
+      200,
+      Resource.new(URI.parse("http://127.0.0.1:#{port}/")).take[0]
+    )
   end
 
   def test_pings_broken_uri
