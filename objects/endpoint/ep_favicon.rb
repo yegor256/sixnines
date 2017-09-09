@@ -37,6 +37,7 @@ class EpFavicon
   def png
     Dir.mktmpdir do |dir|
       uri = @endpoint.to_h[:favicon]
+      raise 'Favicon URI is nil' if uri.nil?
       http = Net::HTTP.new(uri.host, uri.port)
       if uri.scheme == 'https'
         http.use_ssl = true
@@ -63,8 +64,7 @@ class EpFavicon
       img.format = 'PNG'
       img.to_blob
     end
-  rescue => e
-    puts e.message
+  rescue
     File.read(File.join(Dir.pwd, 'assets/images/default-favicon.png'))
   end
 end

@@ -195,11 +195,13 @@ class Endpoint
   def favicon(body)
     xml = Nokogiri::HTML(body)
     links = xml.xpath('/html/head/link[@rel="shortcut icon"]/@href')
+    uri = to_h[:uri]
+    raise "Favicon URI can't be nil in the endpoint" if uri.nil?
     if links.empty?
-      URI.parse("http://#{to_h[:uri].host}/favicon.ico")
+      URI.parse("http://#{uri.host}/favicon.ico")
     else
       uri = URI.parse(links[0])
-      uri = URI.parse("http://#{to_h[:uri].host}#{uri}") unless uri.absolute?
+      uri = URI.parse("http://#{uri.host}#{uri}") unless uri.absolute?
       uri
     end
   rescue => _
