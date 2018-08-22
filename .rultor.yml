@@ -6,6 +6,8 @@ install: |-
   sudo apt-get update -y
   sudo apt-get install -y libmagickwand-dev imagemagick
 release:
+  sensitive:
+    - config.yml
   script: |-
     bundle install
     rake
@@ -24,7 +26,10 @@ release:
     git commit -m 'build number set'
     cp ../config.yml config.yml
     git add config.yml
-    git commit -m 'config.yml' && git push -f heroku $(git symbolic-ref --short HEAD):master && git reset HEAD~1
+    git commit -m 'config.yml'
+    git push -f heroku $(git symbolic-ref --short HEAD):master
+    git reset HEAD~1
+    rm -rf config.yml
     curl -f --connect-timeout 15 --retry 5 --retry-delay 30 http://www.sixnines.io > /dev/null
   commanders:
   - yegor256
