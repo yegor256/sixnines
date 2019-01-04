@@ -351,6 +351,12 @@ post '/a/add' do
   redirect to('/a')
 end
 
+post '/a/edit' do
+  settings.base.endpoints(@locals[:user][:login]).del(params[:old])
+  settings.base.endpoints(@locals[:user][:login]).add(params[:new])
+  redirect to('/a')
+end
+
 get '/a/del' do
   settings.base.endpoints(@locals[:user][:login]).del(params[:endpoint])
   redirect to('/a')
