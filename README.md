@@ -73,22 +73,36 @@ fields:
 
 ## How to contribute?
 
-Just submit a pull request. Make sure `rake` passes.
+First, install
+[Java 8+](https://java.com/en/download/),
+[Maven 3.2+](https://maven.apache.org/),
+[Ruby 2.3+](https://www.ruby-lang.org/en/documentation/installation/),
+[Rubygems](https://rubygems.org/pages/download),
+and
+[Bundler](https://bundler.io/).
+Then:
 
-Prerequisites:
-
-  * [Ruby](https://www.ruby-lang.org/en/) 2.0+
-  * [Bundler](http://bundler.io/)
-  * [Maven](https://maven.apache.org/) 3.2+
-
-To run it locally:
-
+```bash
+$ bundle update
+$ bundle exec rake --quiet
 ```
-$ rake run
+
+The build has to be clean. If it's not, [submit an issue](https://github.com/zold-io/out/issues).
+
+Then, make your changes, make sure the build is still clean,
+and [submit a pull request](https://www.yegor256.com/2014/04/15/github-guidelines.html).
+
+In order to run a single test:
+
+```bash
+$ bundle exec rake run
 ```
 
-Then, point your browser to `http://localhost:9292` and enjoy.
+Then, in another terminal:
 
-To login locally just open `http://localhost:9292/?cookie=test` and user
-`test` will be logged in.
+```bash
+$ bundle exec ruby test/test_base.rb -n test_lists_flips
+```
 
+Then, if you want to test the UI, open `http://localhost:9292` in your browser,
+and login, if necessary, by adding `?glogin=tester` to the URL.
