@@ -11,8 +11,6 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/c3b56d829753998ee405/maintainability)](https://codeclimate.com/github/yegor256/sixnines/maintainability)
 [![Test Coverage](https://img.shields.io/codecov/c/github/yegor256/sixnines.svg)](https://codecov.io/github/yegor256/sixnines?branch=master)
 
-## What does it do?
-
 [sixnines.io](http://www.sixnines.io) is a hosted service to validate
 and prove availability of your web service and sites. Read this blog
 post for more details:
@@ -94,26 +92,3 @@ Then, point your browser to `http://localhost:9292` and enjoy.
 To login locally just open `http://localhost:9292/?cookie=test` and user
 `test` will be logged in.
 
-## License
-
-(The MIT License)
-
-Copyright (c) 2017 Yegor Bugayenko
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the 'Software'), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.

@@ -23,13 +23,13 @@
 source 'https://rubygems.org'
 ruby '2.6.0'
 
-gem 'actionview', '5.0.2'
+gem 'actionview', '5.0.7.2'
 gem 'aws-sdk', '2.6.35'
 gem 'concurrent-ruby', '1.0.5', require: 'concurrent'
 gem 'glogin'
 gem 'haml', '4.0.7'
 gem 'mail', '2.6.4'
-gem 'nokogiri', '1.6.8.1'
+gem 'nokogiri', '1.8.5'
 gem 'rmagick', '3.1.0'
 gem 'sass', '3.4.22'
 gem 'sentry-raven', '2.5.3'
@@ -46,7 +46,7 @@ group :test, :development do
   gem 'rack-test', '0.6.3', require: false
   gem 'rake', '12.0.0', require: false
   gem 'rerun', require: false
-  gem 'rubocop', '0.46.0', require: false
+  gem 'rubocop', '0.49.0', require: false
   gem 'rubocop-rspec', '1.8.0', require: false
   gem 'test-unit', '3.0.8', require: false
   gem 'webmock', '3.0.1', require: false
