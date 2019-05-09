@@ -21,7 +21,7 @@
 # SOFTWARE.
 
 source 'https://rubygems.org'
-ruby '2.3.3'
+ruby '2.6.0'
 
 gem 'actionview', '5.0.2'
 gem 'aws-sdk', '2.6.35'
@@ -30,7 +30,7 @@ gem 'glogin'
 gem 'haml', '4.0.7'
 gem 'mail', '2.6.4'
 gem 'nokogiri', '1.6.8.1'
-gem 'rmagick', '2.16.0'
+gem 'rmagick', '3.1.0'
 gem 'sass', '3.4.22'
 gem 'sentry-raven', '2.5.3'
 gem 'sinatra', '1.4.7'

@@ -2,14 +2,13 @@
 
 [![Managed by Zerocracy](http://www.0crat.com/badge/C6MATTB7E.svg)](http://www.0crat.com/p/C6MATTB7E)
 [![DevOps By Rultor.com](http://www.rultor.com/b/yegor256/sixnines)](http://www.rultor.com/p/yegor256/sixnines)
-[![We recommend RubyMine](http://img.teamed.io/rubymine-recommend.svg)](https://www.jetbrains.com/ruby/)
+[![We recommend RubyMine](http://www.elegantobjects.org/rubymine.svg)](https://www.jetbrains.com/ruby/)
 
 [![Availability at SixNines](http://www.sixnines.io/b/3b05e836)](http://www.sixnines.io/h/3b05e836)
 
 [![Build Status](https://travis-ci.org/yegor256/sixnines.svg)](https://travis-ci.org/yegor256/sixnines)
 [![PDD status](http://www.0pdd.com/svg?name=yegor256/sixnines)](http://www.0pdd.com/p?name=yegor256/sixnines)
-[![Dependency Status](https://gemnasium.com/yegor256/sixnines.svg)](https://gemnasium.com/yegor256/sixnines)
-[![Code Climate](http://img.shields.io/codeclimate/github/yegor256/sixnines.svg)](https://codeclimate.com/github/yegor256/sixnines)
+[![Maintainability](https://api.codeclimate.com/v1/badges/c3b56d829753998ee405/maintainability)](https://codeclimate.com/github/yegor256/sixnines/maintainability)
 [![Test Coverage](https://img.shields.io/codecov/c/github/yegor256/sixnines.svg)](https://codecov.io/github/yegor256/sixnines?branch=master)
 
 ## What does it do?
