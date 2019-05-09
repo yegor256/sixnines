@@ -3,6 +3,10 @@ assets:
   id_rsa: zerocracy/home#assets/heroku-key
   id_rsa.pub: zerocracy/home#assets/heroku-key.pub
 install: |-
+  sudo rvm install ruby-2.6.0
+  rvm use 2.6.0
+  export GEM_HOME=~/.ruby
+  export GEM_PATH=$GEM_HOME:$GEM_PATH
   sudo apt-get update -y
   sudo apt-get install -y libmagickwand-dev imagemagick
 release:
@@ -10,7 +14,7 @@ release:
     - config.yml
   script: |-
     bundle install
-    rake
+    bundle exec rake
     git remote add heroku git@heroku.com:sixnines.git
     rm -rf ~/.ssh
     mkdir ~/.ssh
@@ -37,5 +41,5 @@ merge:
   commanders: []
   script: |-
     bundle install
-    rake
+    bundle exec rake
 deploy: {}
