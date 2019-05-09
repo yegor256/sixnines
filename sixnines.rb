@@ -339,6 +339,15 @@ post '/a/add' do
   redirect to('/a')
 end
 
+# @todo #93:30min We should check that there were no successful pings before
+# changing the endpoint to ensure no one uses this feature to register new
+# sites without charge.
+post '/a/edit' do
+  settings.base.endpoints(@locals[:user][:login]).del(params[:old])
+  settings.base.endpoints(@locals[:user][:login]).add(params[:new])
+  redirect to('/a')
+end
+
 get '/a/del' do
   settings.base.endpoints(@locals[:user][:login]).del(params[:endpoint])
   redirect to('/a')

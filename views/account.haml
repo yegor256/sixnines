@@ -37,10 +37,30 @@
     There are no endpoints yet (add the first one above).
 - else
   - endpoints.each do |e|
-    %p
+    %p{id: "show-#{e.to_h[:id]}"}
       = EpUri.new(e).to_html
       %span.right-if-mobile=EpBadge.new(e).to_html
       %br.mobile-only
       =EpAvailability.new(e).full
+      %a.light{onclick: "return edit('#{e.to_h[:id]}');"} edit
       %a.light{href: '/a/del?endpoint=' + URI.escape(EpUri.new(e).to_url),
         onclick: 'return confirm("Attention! Be aware that you will not be able to restore it and to add a new one you will have to pay another $4.95!");'} delete
+    %div{id: "edit-#{e.to_h[:id]}", hidden: true}
+      %form{method: 'post', action: '/a/edit'}
+        %input{type: 'hidden', name: 'old', value: EpUri.new(e).to_s}
+        %input{id: "new-#{e.to_h[:id]}", type: 'url', name: 'new', size: '55', placeholder: 'Edited URI of the endpoint', value: EpUri.new(e).to_s}
+        %input{type: 'submit', value: 'Save'}
+        %a.light{onclick: "return cancel('#{e.to_h[:id]}', '#{EpUri.new(e).to_s}');"} cancel
+:javascript
+  function edit(i) {
+    $('#show-' + i).attr('hidden', 'hidden');
+    $('#edit-' + i).removeAttr('hidden');
+    return false;
+  }
+
+  function cancel(i, uri) {
+    $('#show-' + i).removeAttr('hidden');
+    $('#edit-' + i).attr('hidden', 'hidden');
+    $('#new-' + i).val(uri);
+    return false;
+  }
