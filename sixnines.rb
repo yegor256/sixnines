@@ -101,7 +101,8 @@ before '/*' do
   if cookies[:glogin]
     begin
       @locals[:user] = GLogin::Cookie::Closed.new(
-        cookies[:glogin], settings.config['cookie_secret']
+        cookies[:glogin],
+        settings.config['cookie_secret']
       ).to_user
     rescue OpenSSL::Cipher::CipherError => _e
       @locals.delete(:user)

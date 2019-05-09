@@ -147,7 +147,7 @@ class AppTest < Test::Unit::TestCase
   end
 
   def test_user_account
-    header('Cookie', 'glogin=jeff|')
+    header('Cookie', 'glogin=jeff')
     get('/a')
     assert_equal(200, last_response.status)
   end
