@@ -47,7 +47,7 @@ GEM
     faraday (0.15.4)
       multipart-post (>= 1.2, < 3)
     ffi (1.10.0)
-    glogin (0.5.0)
+    glogin (0.5.1)
     haml (5.0.4)
       temple (>= 0.8.0)
       tilt
@@ -193,7 +193,7 @@ DEPENDENCIES
   aws-sdk-dynamodb (= 1.26.0)
   codecov (= 0.1.14)
   concurrent-ruby (= 1.1.5)
-  glogin (~> 0.4)
+  glogin (~> 0.5.1)
   haml (= 5.0.4)
   mail (= 2.7.1)
   nokogiri (= 1.10.3)
