@@ -1,6 +1,6 @@
-# encoding: utf-8
-#
-# Copyright (c) 2017 Yegor Bugayenko
+# frozen_string_literal: true
+
+# Copyright (c) 2017-2019 Yegor Bugayenko
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the 'Software'), to deal
@@ -64,7 +64,7 @@ class EpFavicon
       img.format = 'PNG'
       img.to_blob
     end
-  rescue
+  rescue StandardError => _e
     File.read(File.join(Dir.pwd, 'assets/images/default-favicon.png'))
   end
 end

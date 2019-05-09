@@ -1,6 +1,6 @@
-# encoding: utf-8
-#
-# Copyright (c) 2017 Yegor Bugayenko
+# frozen_string_literal: true
+
+# Copyright (c) 2017-2019 Yegor Bugayenko
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the 'Software'), to deal
@@ -34,7 +34,7 @@ class EpFaviconTest < Test::Unit::TestCase
 
   def test_fetches_correct_favicon
     img = Magick::Image.from_blob(
-      EpFavicon.new(endpoint('http://www.yegor256.com/favicon.ico')).png
+      EpFavicon.new(endpoint('https://www.yegor256.com/favicon.ico')).png
     )[0]
     assert_equal(64, img.columns)
     assert_equal(64, img.rows)
@@ -44,13 +44,12 @@ class EpFaviconTest < Test::Unit::TestCase
     files = [
       # rubocop:disable LineLength
       ['https://cdn.sstatic.net/Sites/stackoverflow/img/favicon.ico', 16],
-      ['http://www.yegor256.com/favicon.ico', 64],
-      ['http://www.instagram.com/static/images/ico/favicon.ico/dfa85bb1fd63.ico', 16],
-      ['https://www.pinterest.com/favicon.ico', 16],
+      ['https://www.yegor256.com/favicon.ico', 64],
+      ['https://www.instagram.com/static/images/ico/favicon.ico/dfa85bb1fd63.ico', 16],
+      ['https://www.pinterest.com/favicon.ico', 16]
       # ['http://www.apple.com/favicon.ico', 32] -- doesn't work
       # rubocop:enable LineLength
     ]
-    return
     files.each do |f, w|
       img = Magick::Image.from_blob(
         EpFavicon.new(endpoint(f)).png
@@ -63,12 +62,12 @@ class EpFaviconTest < Test::Unit::TestCase
 
   def endpoint(uri)
     Class.new do
-      def initialize(u)
-        @u = u
+      def initialize(url)
+        @url = url
       end
 
       def to_h
-        { favicon: URI.parse(@u) }
+        { favicon: URI.parse(@url) }
       end
     end.new(uri)
   end

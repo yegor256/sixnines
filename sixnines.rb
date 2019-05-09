@@ -1,6 +1,6 @@
-# encoding: utf-8
-#
-# Copyright (c) 2017 Yegor Bugayenko
+# frozen_string_literal: true
+
+# Copyright (c) 2017-2019 Yegor Bugayenko
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the 'Software'), to deal
@@ -28,7 +28,7 @@ require 'sass'
 require 'uri'
 require 'yaml'
 require 'json'
-require 'aws-sdk'
+require 'aws-sdk-dynamodb'
 require 'stripe'
 require 'time_difference'
 require 'twitter'
@@ -70,7 +70,7 @@ configure do
       'coupons' => ['test']
     }
   else
-    YAML.load(File.open(File.join(Dir.pwd, 'config.yml')))
+    YAML.safe_load(File.open(File.join(Dir.pwd, 'config.yml')))
   end
   Raven.configure do |c|
     c.dsn = config['sentry']
@@ -103,7 +103,7 @@ before '/*' do
       @locals[:user] = GLogin::Cookie::Closed.new(
         cookies[:glogin], settings.config['cookie_secret']
       ).to_user
-    rescue OpenSSL::Cipher::CipherError => _
+    rescue OpenSSL::Cipher::CipherError => _e
       @locals.delete(:user)
     end
   end
@@ -137,7 +137,7 @@ get '/' do
   haml :index, layout: :layout, locals: @locals.merge(
     title: 'SixNines',
     description: 'Website Availability Monitor',
-    query: params[:q] ? params[:q] : nil,
+    query: params[:q],
     found: params[:q] ? settings.base.find(params[:q]) : [],
     flips: settings.base.flips,
     ping_count: settings.pings.count
@@ -178,82 +178,70 @@ end
 
 # Badge of the endpoint
 get '/b/:id' do
-  begin
-    response.headers['Cache-Control'] = 'no-cache, private'
-    badge = EpBadge.new(settings.base.take(params[:id]))
-    style = params[:style] == 'flat' ? 'flat' : 'round'
-    if params[:format] && params[:format] == 'png'
-      content_type 'image/png'
-      badge.to_png(style)
-    else
-      content_type 'image/svg+xml'
-      badge.to_svg(style)
-    end
-  rescue Base::EndpointNotFound
-    404
+  response.headers['Cache-Control'] = 'no-cache, private'
+  badge = EpBadge.new(settings.base.take(params[:id]))
+  style = params[:style] == 'flat' ? 'flat' : 'round'
+  if params[:format] && params[:format] == 'png'
+    content_type 'image/png'
+    badge.to_png(style)
+  else
+    content_type 'image/svg+xml'
+    badge.to_svg(style)
   end
+rescue Base::EndpointNotFound
+  404
 end
 
 # History page of the endpoint
 get '/h/:id' do
-  begin
-    ep = settings.base.take(params[:id])
-    haml :history, layout: :layout, locals: @locals.merge(
-      title: "sn:#{ep.to_h[:hostname]}",
-      description: "#{ep.to_h[:hostname]}: availability report",
-      amphtml: "/h-amp/#{params[:id]}",
-      e: Endpoint::Cached.new(ep)
-    )
-  rescue Base::EndpointNotFound
-    404
-  end
+  ep = settings.base.take(params[:id])
+  haml :history, layout: :layout, locals: @locals.merge(
+    title: "sn:#{ep.to_h[:hostname]}",
+    description: "#{ep.to_h[:hostname]}: availability report",
+    amphtml: "/h-amp/#{params[:id]}",
+    e: Endpoint::Cached.new(ep)
+  )
+rescue Base::EndpointNotFound
+  404
 end
 
 # History page of the endpoint (AMP)
 get '/h-amp/:id' do
-  begin
-    ep = settings.base.take(params[:id])
-    haml :history_amp, layout: :amp, locals: @locals.merge(
-      title: ep.to_h[:hostname],
-      description: ep.to_h[:hostname],
-      canonical: "/h/#{params[:id]}",
-      e: Endpoint::Cached.new(ep)
-    )
-  rescue Base::EndpointNotFound
-    404
-  end
+  ep = settings.base.take(params[:id])
+  haml :history_amp, layout: :amp, locals: @locals.merge(
+    title: ep.to_h[:hostname],
+    description: ep.to_h[:hostname],
+    canonical: "/h/#{params[:id]}",
+    e: Endpoint::Cached.new(ep)
+  )
+rescue Base::EndpointNotFound
+  404
 end
 
 # SVG graph of the endpoint
 get '/g/:id' do
-  begin
-    response.headers['Cache-Control'] = 'no-cache, private'
-    content_type 'image/svg+xml'
-    EpGraph.new(Endpoint::Cached.new(settings.base.take(params[:id]))).to_svg
-  rescue Base::EndpointNotFound
-    404
-  end
+  response.headers['Cache-Control'] = 'no-cache, private'
+  content_type 'image/svg+xml'
+  EpGraph.new(Endpoint::Cached.new(settings.base.take(params[:id]))).to_svg
+rescue Base::EndpointNotFound
+  404
 end
 
 # Favicon of the endpoint
 get '/f/:id' do
-  begin
-    response.headers['Cache-Control'] = 'max-age=' + (5 * 60 * 60).to_s
-    content_type 'image/png'
-    EpFavicon.new(settings.base.take(params[:id])).png
-  rescue Base::EndpointNotFound
-    404
-  end
+  response.headers['Cache-Control'] = 'max-age=' + (5 * 60 * 60).to_s
+  content_type 'image/png'
+  EpFavicon.new(settings.base.take(params[:id])).png
+rescue Base::EndpointNotFound
+  404
 end
 
 # Data of the endpoint
 get '/d/:id' do
-  begin
-    content_type 'application/json'
-    EpData.new(settings.base.take(params[:id])).to_json
-  rescue Base::EndpointNotFound
-    404
-  end
+  content_type 'application/json'
+  EpData.new(settings.base.take(params[:id])).to_json
+rescue Base::EndpointNotFound
+  404
 end
 
 # Flush the endpoint

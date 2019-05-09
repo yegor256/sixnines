@@ -1,6 +1,6 @@
-# encoding: utf-8
-#
-# Copyright (c) 2017 Yegor Bugayenko
+# frozen_string_literal: true
+
+# Copyright (c) 2017-2019 Yegor Bugayenko
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the 'Software'), to deal
@@ -21,7 +21,7 @@
 # SOFTWARE.
 
 require 'yaml'
-require 'aws-sdk'
+require 'aws-sdk-dynamodb'
 
 #
 # Dynamo client
@@ -36,7 +36,7 @@ class Dynamo
       if ENV['RACK_ENV'] == 'test'
         cfg = File.join(Dir.pwd, 'dynamodb-local/target/dynamo.yml')
         raise 'Test config is absent' unless File.exist?(cfg)
-        yaml = YAML.load(File.open(cfg))
+        yaml = YAML.safe_load(File.open(cfg))
         {
           region: 'us-east-1',
           endpoint: "http://localhost:#{yaml['port']}",

@@ -1,6 +1,6 @@
-# encoding: utf-8
-#
-# Copyright (c) 2017 Yegor Bugayenko
+# frozen_string_literal: true
+
+# Copyright (c) 2017-2019 Yegor Bugayenko
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the 'Software'), to deal
@@ -29,7 +29,7 @@ require_relative 'objects/dynamo'
 
 ENV['RACK_ENV'] = 'test'
 
-task default: [:clean, :test, :rubocop, :copyright]
+task default: %i[clean test rubocop copyright]
 
 require 'rake/testtask'
 desc 'Run all unit tests'
@@ -81,7 +81,7 @@ task run: :dynamo do
 end
 
 task :copyright do
-  sh "grep -q -r '#{Date.today.strftime('%Y')}' \
+  sh "grep -q -r '2017-#{Date.today.strftime('%Y')}' \
     --include '*.rb' \
     --include '*.txt' \
     --include 'Rakefile' \

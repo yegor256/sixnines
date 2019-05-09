@@ -1,6 +1,6 @@
-# encoding: utf-8
-#
-# Copyright (c) 2017 Yegor Bugayenko
+# frozen_string_literal: true
+
+# Copyright (c) 2017-2019 Yegor Bugayenko
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the 'Software'), to deal
@@ -37,13 +37,13 @@ class AvailabilityTest < Test::Unit::TestCase
       { pings: 1_000_000, failures: 0, avlbl: '99.9999%' }
     ].each do |a|
       endpoint = Class.new do
-        def initialize(p, f)
-          @p = p
-          @f = f
+        def initialize(pings, failures)
+          @pings = pings
+          @failures = failures
         end
 
         def to_h
-          { pings: @p, failures: @f }
+          { pings: @pings, failures: @failures }
         end
       end.new(a[:pings], a[:failures])
       assert_equal(a[:avlbl], EpAvailability.new(endpoint).short)

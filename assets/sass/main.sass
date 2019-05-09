@@ -1,4 +1,4 @@
-// Copyright (c) 2017 Yegor Bugayenko
+// Copyright (c) 2017-2019 Yegor Bugayenko
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the 'Software'), to deal
@@ -80,41 +80,41 @@ article
 section
   padding: 4em
 
-  @include mobile() 
+  @include mobile()
     padding: .2em
 
-  @include tablet() 
+  @include tablet()
     padding: 1em
 
 .bold
   font-weight: 700
 
-.big 
+.big
   font-size: $big
 
-.blue 
+.blue
   color: $blue
 
 .green
   color: $green
 
-.dark 
+.dark
   color: $text
 
-.normal 
+.normal
   font-weight: normal
 
-fieldset 
+fieldset
   border: 0
   padding: 0
   margin: 0
 
-a 
+a
   color: inherit
   cursor: pointer
   text-decoration: underline
 
-  &:hover 
+  &:hover
     color: darken($text, 20)
     text-decoration: underline
 
@@ -128,39 +128,39 @@ a.no-underline
   height: 20px
   width: 20px
 
-.favicon-big 
+.favicon-big
   height: 40px
   margin-right: $base
   width: 40px
 
 header ul,
 footer ul,
-%list 
+%list
   list-style-type: none
   margin: 0
   padding: 0
 
-  * 
+  *
     vertical-align: middle
 
-footer 
+footer
   margin-top: 2em
 
-ul 
+ul
   @extend %list
 
-  li 
+  li
     display: inline-block
 
 .menu
   @extend %list
   margin-bottom: $base * 2
 
-  li 
+  li
     display: inline-block
 
 
-%control 
+%control
   @extend %font
   font-weight: 600
   border-radius: $radius
@@ -175,25 +175,25 @@ ul
   appearance: none
 
 input[type='text'],
-input[type='url'] 
+input[type='url']
   @extend %control
   background-color: $input
   border: 2px solid darken($background, 5)
   color: $text
   cursor: text
 
-  @include mobile() 
+  @include mobile()
     width: 100%
 
   &:focus,
-  &:active 
+  &:active
     border: 2px solid darken($background, 20)
 
   :input-placeholder
     color: $text
 
 button,
-input[type='submit'] 
+input[type='submit']
   @extend %control
   background-color: $blue
   border: 0

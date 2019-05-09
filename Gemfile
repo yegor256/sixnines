@@ -1,6 +1,6 @@
-# encoding: utf-8
-#
-# Copyright (c) 2017 Yegor Bugayenko
+# frozen_string_literal: true
+
+# Copyright (c) 2017-2019 Yegor Bugayenko
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the 'Software'), to deal
@@ -23,31 +23,31 @@
 source 'https://rubygems.org'
 ruby '2.6.0'
 
-gem 'actionview', '5.0.7.2'
-gem 'aws-sdk', '2.6.35'
-gem 'concurrent-ruby', '1.0.5', require: 'concurrent'
-gem 'glogin'
-gem 'haml', '4.0.7'
-gem 'mail', '2.6.4'
-gem 'nokogiri', '1.8.5'
+gem 'actionview', '5.2.3'
+gem 'aws-sdk-dynamodb', '1.26.0'
+gem 'concurrent-ruby', '1.1.5', require: 'concurrent'
+gem 'glogin', '0.5.0'
+gem 'haml', '5.0.4'
+gem 'mail', '2.7.1'
+gem 'nokogiri', '1.10.3'
 gem 'rmagick', '3.1.0'
-gem 'sass', '3.4.22'
-gem 'sentry-raven', '2.5.3'
-gem 'sinatra', '1.4.7'
-gem 'sinatra-contrib', '1.4.7'
-gem 'stripe', '2.1.0'
-gem 'time_difference', '0.5.0'
+gem 'sass', '3.7.4'
+gem 'sentry-raven', '2.9.0'
+gem 'sinatra', '2.0.5'
+gem 'sinatra-contrib', '2.0.5'
+gem 'stripe', '4.16.0'
+gem 'time_difference', '0.7.0'
 gem 'timeout-extensions', '0.1.1'
-gem 'twitter', '6.1.0'
+gem 'twitter', '6.2.0'
 gem 'xml-sitemap', '1.3.3'
 
 group :test, :development do
-  gem 'codecov', '0.1.10', require: false
-  gem 'rack-test', '0.6.3', require: false
-  gem 'rake', '12.0.0', require: false
-  gem 'rerun', require: false
-  gem 'rubocop', '0.49.0', require: false
-  gem 'rubocop-rspec', '1.8.0', require: false
-  gem 'test-unit', '3.0.8', require: false
-  gem 'webmock', '3.0.1', require: false
+  gem 'codecov', '0.1.14', require: false
+  gem 'rack-test', '1.1.0', require: false
+  gem 'rake', '12.3.2', require: false
+  gem 'rerun', '0.13.0', require: false
+  gem 'rubocop', '0.68.1', require: false
+  gem 'rubocop-rspec', '1.32.0', require: false
+  gem 'test-unit', '3.3.2', require: false
+  gem 'webmock', '3.5.1', require: false
 end

@@ -3,6 +3,7 @@ AllCops:
     - 'bin/**/*'
     - 'assets/**/*'
   DisplayCopNames: true
+  TargetRubyVersion: 2.6.0
 
 Style/CaseIndentation:
   Enabled: false
@@ -28,3 +29,5 @@ Style/IndentationWidth:
   Enabled: false
 Metrics/PerceivedComplexity:
   Max: 10
+Layout/EmptyLineAfterGuardClause:
+  Enabled: false

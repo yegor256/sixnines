@@ -1,6 +1,6 @@
-# encoding: utf-8
-#
-# Copyright (c) 2017 Yegor Bugayenko
+# frozen_string_literal: true
+
+# Copyright (c) 2017-2019 Yegor Bugayenko
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the 'Software'), to deal
@@ -38,7 +38,7 @@ class Base
     @aws = aws
   end
 
-  def ping(count, proxies, &b)
+  def ping(count, proxies, &block)
     @aws.query(
       table_name: 'sn-endpoints',
       index_name: 'expires',
@@ -51,7 +51,7 @@ class Base
       key_condition_expression: 'active=:h and expires < :r'
     ).items
     .map { |i| Endpoint.new(@aws, i) }
-    .map { |e| e.ping(count, proxies, &b) }.join("\n")
+    .map { |e| e.ping(count, proxies, &block) }.join("\n")
   end
 
   def find(query)

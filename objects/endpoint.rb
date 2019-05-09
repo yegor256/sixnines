@@ -1,6 +1,6 @@
-# encoding: utf-8
-#
-# Copyright (c) 2017 Yegor Bugayenko
+# frozen_string_literal: true
+
+# Copyright (c) 2017-2019 Yegor Bugayenko
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the 'Software'), to deal
@@ -40,25 +40,25 @@ require_relative 'endpoint/ep_graph'
 class Endpoint
   # Cached endpoint
   class Cached
-    def initialize(ep)
-      @ep = ep
+    def initialize(point)
+      @point = point
       @history = nil
     end
 
     def to_h
-      @ep.to_h
+      @point.to_h
     end
 
     def history
-      @history ||= @ep.history
+      @history ||= @point.history
     end
 
     def ping
-      @ep.ping
+      @point.ping
     end
 
     def flush
-      @ep.flush
+      @point.flush
     end
   end
 
@@ -204,7 +204,7 @@ class Endpoint
       uri = URI.parse("http://#{uri.host}#{uri}") unless uri.absolute?
       uri
     end
-  rescue => _
+  rescue StandardError => _e
     URI.parse('localhost')
   end
 end

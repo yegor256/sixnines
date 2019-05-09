@@ -1,6 +1,6 @@
-# encoding: utf-8
-#
-# Copyright (c) 2017 Yegor Bugayenko
+# frozen_string_literal: true
+
+# Copyright (c) 2017-2019 Yegor Bugayenko
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the 'Software'), to deal
@@ -48,7 +48,7 @@ class EpGraph
     h = points
     clean = h.select { |p| p[:msec] < mean * 5 && p[:msec] > mean / 5 }
     xml = if h.empty?
-      '<history minx="0" maxx="0" miny="0" maxy="0" avg="#{mean}"/>'
+      "<history minx='0' maxx='0' miny='0' maxy='0' avg='#{mean}'/>"
     else
       xorder = clean.sort { |a, b| a[:time] <=> b[:time] }
       yorder = clean.sort { |a, b| a[:msec] <=> b[:msec] }
