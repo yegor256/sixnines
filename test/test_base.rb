@@ -42,13 +42,12 @@ class BaseTest < Test::Unit::TestCase
     initial = 5
     aws = Dynamo.new.aws
     Endpoints.new(
-      aws,
-      'yegor256-endpoint'
-    ).add("http://127.0.0.1:#{port}/first")
+      aws, 'yegor256-endpoint-1'
+    ).add("http://127.0.0.1:#{port}/first-A")
     Endpoints.new(
       aws,
-      'pdacostaporto-endpoint'
-    ).add("http://127.0.0.1:#{port}/second")
+      'pdacostaporto-endpoint-2'
+    ).add("http://127.0.0.1:#{port}/second-B")
     first_proxy = 'my-proxy.com:8080'
     second_proxy = 'my-other-proxy:3000'
     first_stub = stub_request(:any, first_proxy)

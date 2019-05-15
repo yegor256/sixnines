@@ -260,7 +260,7 @@ end
 
 get '/ping' do
   content_type 'text/plain'
-  txt = ''
+  txt = ''.dup
   again = false
   open('/tmp/sixnines.lock', 'w') do |f|
     txt << if f.flock(File::LOCK_NB | File::LOCK_EX)
