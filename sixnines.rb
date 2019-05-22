@@ -115,8 +115,10 @@ before '/a*' do
 end
 
 get '/oauth' do
+  code = params[:code]
+  return 'The code is missing' if code.nil?
   cookies[:glogin] = GLogin::Cookie::Open.new(
-    settings.glogin.user(params[:code]),
+    settings.glogin.user(code),
     settings.config['cookie_secret']
   ).to_s
   redirect to('/')
