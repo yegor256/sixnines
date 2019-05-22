@@ -11,6 +11,8 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/c3b56d829753998ee405/maintainability)](https://codeclimate.com/github/yegor256/sixnines/maintainability)
 [![Test Coverage](https://img.shields.io/codecov/c/github/yegor256/sixnines.svg)](https://codecov.io/github/yegor256/sixnines?branch=master)
 
+[![Hits-of-Code](https://hitsofcode.com/github/yegor256/sixnines)](https://hitsofcode.com/view/github/yegor256/sixnines)
+
 [sixnines.io](http://www.sixnines.io) is a hosted service to validate
 and prove availability of your web service and sites. Read this blog
 post for more details:
