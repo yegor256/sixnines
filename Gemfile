@@ -25,6 +25,7 @@ ruby '2.6.0'
 
 gem 'actionview', '5.2.3'
 gem 'aws-sdk-dynamodb', '1.26.0'
+gem 'backtrace', '0.3.0'
 gem 'concurrent-ruby', '1.1.5', require: 'concurrent'
 gem 'glogin', '~> 0.5.1'
 gem 'haml', '5.0.4'

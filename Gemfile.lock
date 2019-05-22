@@ -28,6 +28,7 @@ GEM
     aws-sigv4 (1.1.0)
       aws-eventstream (~> 1.0, >= 1.0.2)
     backports (3.14.0)
+    backtrace (0.3.0)
     buftok (0.2.0)
     builder (3.2.3)
     codecov (0.1.14)
@@ -191,6 +192,7 @@ PLATFORMS
 DEPENDENCIES
   actionview (= 5.2.3)
   aws-sdk-dynamodb (= 1.26.0)
+  backtrace (= 0.3.0)
   codecov (= 0.1.14)
   concurrent-ruby (= 1.1.5)
   glogin (~> 0.5.1)

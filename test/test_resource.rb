@@ -77,4 +77,15 @@ class ResourceTest < Test::Unit::TestCase
     )
     remove_request_stub(stub)
   end
+
+  def test_other_error
+    stub = stub_request(:any, 'www.microsoft.com').to_return do
+      raise 'oops'
+    end
+    assert_equal(
+      'oops',
+      Resource.new(URI.parse('http://www.microsoft.com')).take[1]
+    )
+    remove_request_stub(stub)
+  end
 end
