@@ -275,11 +275,15 @@ of downtime"
         else
           'is down'
         end
-        settings.twitter.update(
-          "#{ep.to_h[:hostname]} #{event}! \
+        begin
+          settings.twitter.update(
+            "#{ep.to_h[:hostname]} #{event}! \
 Availability: #{EpAvailability.new(ep).short} \
 (#{EpAvailability.new(ep).full}). #{href}"
-        )
+          )
+        rescue Twitter::Error::Unauthorized
+          puts 'Can\'t tweet, account is locked'
+        end
       end
     else
       status(403)
