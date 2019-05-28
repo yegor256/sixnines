@@ -1,10 +1,10 @@
-<img src="http://www.sixnines.io/images/logo.png" width="64px" height="64px"/>
+<img src="https://www.sixnines.io/images/logo.png" width="64px" height="64px"/>
 
 [![Managed by Zerocracy](http://www.0crat.com/badge/C6MATTB7E.svg)](http://www.0crat.com/p/C6MATTB7E)
 [![DevOps By Rultor.com](http://www.rultor.com/b/yegor256/sixnines)](http://www.rultor.com/p/yegor256/sixnines)
 [![We recommend RubyMine](http://www.elegantobjects.org/rubymine.svg)](https://www.jetbrains.com/ruby/)
 
-[![Availability at SixNines](http://www.sixnines.io/b/3b05e836)](http://www.sixnines.io/h/3b05e836)
+[![Availability at SixNines](https://www.sixnines.io/b/3b05e836)](https://www.sixnines.io/h/3b05e836)
 
 [![Build Status](https://travis-ci.org/yegor256/sixnines.svg)](https://travis-ci.org/yegor256/sixnines)
 [![PDD status](http://www.0pdd.com/svg?name=yegor256/sixnines)](http://www.0pdd.com/p?name=yegor256/sixnines)
@@ -13,7 +13,7 @@
 
 [![Hits-of-Code](https://hitsofcode.com/github/yegor256/sixnines)](https://hitsofcode.com/view/github/yegor256/sixnines)
 
-[sixnines.io](http://www.sixnines.io) is a hosted service to validate
+[sixnines.io](https://www.sixnines.io) is a hosted service to validate
 and prove availability of your web service and sites. Read this blog
 post for more details:
 [SixNines.io, Your Website Availability Monitor](http://www.yegor256.com/2017/04/25/sixnines.html).
@@ -21,7 +21,7 @@ post for more details:
 The badge is available as:
 
 ```
-http://www.sixnines.io/b/3b05e836?style=flat&format=png
+https://www.sixnines.io/b/3b05e836?style=flat&format=png
 ```
 
 Here, the `style` parameter can be either `round` or `flat`.
