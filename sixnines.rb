@@ -37,13 +37,17 @@ require 'action_view/helpers'
 require 'raven'
 require 'net/http'
 require 'glogin'
-
 require_relative 'version'
 require_relative 'objects/exec'
 require_relative 'objects/base'
 require_relative 'objects/dynamo'
 require_relative 'objects/endpoint/ep_favicon'
 require_relative 'objects/endpoint/ep_data'
+
+if ENV['RACK_ENV'] != 'test'
+  require 'rack/ssl'
+  use Rack::SSL
+end
 
 configure do
   Haml::Options.defaults[:format] = :xhtml
