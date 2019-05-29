@@ -1,6 +1,6 @@
 <img src="https://www.sixnines.io/images/logo.png" width="64px" height="64px"/>
 
-[![Managed by Zerocracy](http://www.0crat.com/badge/C6MATTB7E.svg)](http://www.0crat.com/p/C6MATTB7E)
+[![Managed by Zerocracy](https://www.0crat.com/badge/C6MATTB7E.svg)](https://www.0crat.com/p/C6MATTB7E)
 [![DevOps By Rultor.com](http://www.rultor.com/b/yegor256/sixnines)](http://www.rultor.com/p/yegor256/sixnines)
 [![We recommend RubyMine](http://www.elegantobjects.org/rubymine.svg)](https://www.jetbrains.com/ruby/)
 
