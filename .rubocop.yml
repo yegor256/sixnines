@@ -23,7 +23,7 @@ Layout/MultilineMethodCallIndentation:
   Enabled: false
 Layout/ElseAlignment:
   Enabled: false
-Lint/EndAlignment:
+Layout/EndAlignment:
   Enabled: false
 Layout/IndentationWidth:
   Enabled: false
