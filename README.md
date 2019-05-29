@@ -4,14 +4,13 @@
 [![DevOps By Rultor.com](http://www.rultor.com/b/yegor256/sixnines)](http://www.rultor.com/p/yegor256/sixnines)
 [![We recommend RubyMine](https://www.elegantobjects.org/rubymine.svg)](https://www.jetbrains.com/ruby/)
 
-[![Availability at SixNines](https://www.sixnines.io/b/3b05e836)](https://www.sixnines.io/h/3b05e836)
-
 [![Build Status](https://travis-ci.org/yegor256/sixnines.svg)](https://travis-ci.org/yegor256/sixnines)
 [![PDD status](http://www.0pdd.com/svg?name=yegor256/sixnines)](http://www.0pdd.com/p?name=yegor256/sixnines)
 [![Maintainability](https://api.codeclimate.com/v1/badges/c3b56d829753998ee405/maintainability)](https://codeclimate.com/github/yegor256/sixnines/maintainability)
 [![Test Coverage](https://img.shields.io/codecov/c/github/yegor256/sixnines.svg)](https://codecov.io/github/yegor256/sixnines?branch=master)
-
 [![Hits-of-Code](https://hitsofcode.com/github/yegor256/sixnines)](https://hitsofcode.com/view/github/yegor256/sixnines)
+
+[![Availability at SixNines](https://www.sixnines.io/b/3b05e836)](https://www.sixnines.io/h/3b05e836)
 
 [sixnines.io](https://www.sixnines.io) is a hosted service to validate
 and prove availability of your web service and sites. Read this blog

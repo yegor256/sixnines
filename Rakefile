@@ -32,7 +32,6 @@ ENV['RACK_ENV'] = 'test'
 task default: %i[clean test rubocop copyright]
 
 require 'rake/testtask'
-desc 'Run all unit tests'
 Rake::TestTask.new(test: :dynamo) do |test|
   Rake::Cleaner.cleanup_files(['coverage'])
   test.libs << 'lib' << 'test'
@@ -42,7 +41,6 @@ Rake::TestTask.new(test: :dynamo) do |test|
 end
 
 require 'rubocop/rake_task'
-desc 'Run RuboCop on all directories'
 RuboCop::RakeTask.new(:rubocop) do |task|
   task.fail_on_error = true
   task.requires << 'rubocop-rspec'
