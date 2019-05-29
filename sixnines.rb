@@ -157,11 +157,11 @@ get '/rss' do
   RSS::Maker.make('atom') do |m|
     m.channel.author = 'SixNines.io'
     m.channel.updated = Time.now.to_s
-    m.channel.about = 'http://sixnines.io/rss'
+    m.channel.about = 'https://sixnines.io/rss'
     m.channel.title = 'SixNines recent flips'
     settings.base.flips.each do |e|
       m.items.new_item do |i|
-        i.link = "http://www.sixnines.io/h/#{e.to_h[:id]}"
+        i.link = "https://www.sixnines.io/h/#{e.to_h[:id]}"
         i.title = "#{e.to_h[:hostname]} flipped"
         i.updated = Time.now.to_s
       end
@@ -273,7 +273,7 @@ get '/ping' do
       again = true
       settings.base.ping(settings.pings, settings.proxies) do |up, ep|
         next if ENV['RACK_ENV'] == 'test'
-        href = 'http://www.sixnines.io' + EpBadge.new(ep).to_href
+        href = 'https://www.sixnines.io' + EpBadge.new(ep).to_href
         event = if up
           "went back up after \
 #{ActionView::Base.new.time_ago_in_words(ep.to_h[:flipped])} \
@@ -304,7 +304,7 @@ Availability: #{EpAvailability.new(ep).short} \
     Process.detach(
       fork do
         sleep(10)
-        Net::HTTP.get_response(URI.parse('http://www.sixnines.io/ping?fork'))
+        Net::HTTP.get_response(URI.parse('https://www.sixnines.io/ping?fork'))
       end
     )
   end
@@ -312,7 +312,7 @@ Availability: #{EpAvailability.new(ep).short} \
 end
 
 get '/robots.txt' do
-  'sitemap: http://www.sixnines.io/sitemap.xml'
+  'sitemap: https://www.sixnines.io/sitemap.xml'
 end
 
 get '/version' do
