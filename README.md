@@ -12,10 +12,11 @@
 
 [![Availability at SixNines](https://www.sixnines.io/b/3b05e836)](https://www.sixnines.io/h/3b05e836)
 
-[sixnines.io](https://www.sixnines.io) is a hosted service to validate
-and prove availability of your web service and sites. Read this blog
-post for more details:
-[SixNines.io, Your Website Availability Monitor](http://www.yegor256.com/2017/04/25/sixnines.html).
+[SixNines](https://www.sixnines.io) is a hosted service to validate
+and prove availability of your web service and sites.
+
+Read this blog post for more details:
+[_SixNines.io, Your Website Availability Monitor_](http://www.yegor256.com/2017/04/25/sixnines.html).
 
 The badge is available as:
 
@@ -25,6 +26,14 @@ https://www.sixnines.io/b/3b05e836?style=flat&format=png
 
 Here, the `style` parameter can be either `round` or `flat`.
 The `format` parameter can be either `svg` (106x20) or `png` (424x80).
+
+This is how you put it in your `README` (in Markdown):
+
+```
+[![Availability at SixNines](https://www.sixnines.io/b/3b05e836)](https://www.sixnines.io/h/3b05e836)
+```
+
+The badge you see above works exactly like that.
 
 ## DynamoDB Schema
 
