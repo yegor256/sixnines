@@ -2,7 +2,7 @@
 
 [![Managed by Zerocracy](https://www.0crat.com/badge/C6MATTB7E.svg)](https://www.0crat.com/p/C6MATTB7E)
 [![DevOps By Rultor.com](http://www.rultor.com/b/yegor256/sixnines)](http://www.rultor.com/p/yegor256/sixnines)
-[![We recommend RubyMine](http://www.elegantobjects.org/rubymine.svg)](https://www.jetbrains.com/ruby/)
+[![We recommend RubyMine](https://www.elegantobjects.org/rubymine.svg)](https://www.jetbrains.com/ruby/)
 
 [![Availability at SixNines](https://www.sixnines.io/b/3b05e836)](https://www.sixnines.io/h/3b05e836)
 
