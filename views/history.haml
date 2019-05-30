@@ -27,4 +27,4 @@
 - if e.to_h[:log]
   %p
     %a{onclick: "$('#log').toggle();"} View last failed HTTP log
-    %pre#log{style: 'display: none;'}=html_escape(e.to_h[:log])
+  %pre#log{style: 'display: none;'}=html_escape(e.to_h[:log])
