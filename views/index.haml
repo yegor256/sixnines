@@ -5,8 +5,7 @@
   We ping all websites a few times per minute.
 
 %p
-  %span#ping-count
-    =ping_count.to_s
+  %span#ping-count= ping_count.to_s
   requests completed since reboot.
 
 %form#search-form{method: 'get', action: '/'}
