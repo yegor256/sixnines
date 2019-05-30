@@ -10,7 +10,7 @@
 [![Test Coverage](https://img.shields.io/codecov/c/github/yegor256/sixnines.svg)](https://codecov.io/github/yegor256/sixnines?branch=master)
 [![Hits-of-Code](https://hitsofcode.com/github/yegor256/sixnines)](https://hitsofcode.com/view/github/yegor256/sixnines)
 
-[![Availability at SixNines](https://www.sixnines.io/b/3b05e836)](https://www.sixnines.io/h/3b05e836)
+[![Availability at SixNines](https://www.sixnines.io/b/5fa8)](https://www.sixnines.io/h/5fa8)
 
 [SixNines](https://www.sixnines.io) is a hosted service to validate
 and prove availability of your web service and sites.
@@ -21,7 +21,7 @@ Read this blog post for more details:
 The badge is available as:
 
 ```
-https://www.sixnines.io/b/3b05e836?style=flat&format=png
+https://www.sixnines.io/b/5fa8?style=flat&format=png
 ```
 
 Here, the `style` parameter can be either `round` or `flat`.
@@ -30,7 +30,7 @@ The `format` parameter can be either `svg` (106x20) or `png` (424x80).
 This is how you put it in your `README` (in Markdown):
 
 ```
-[![Availability at SixNines](https://www.sixnines.io/b/3b05e836)](https://www.sixnines.io/h/3b05e836)
+[![Availability at SixNines](https://www.sixnines.io/b/5fa8)](https://www.sixnines.io/h/5fa8)
 ```
 
 The badge you see above works exactly like that.
