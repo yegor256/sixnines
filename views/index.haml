@@ -43,7 +43,7 @@
       %br.mobile-only
       =ActionView::Base.new.distance_of_time_in_words(e.to_h[:flipped], Time.now) + ' ago'
 :javascript
-  $( document ).ready(function poll_ping () {
+  $(document).ready(function poll_ping() {
     $.get('/ping_count', function(data) {
       $('#ping-count').text(data.ping_count);
       setTimeout(poll_ping, 1000);
