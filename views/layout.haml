@@ -20,7 +20,7 @@
           %ul.menu
             %li
               %a.no-underline{href: '/'}
-                %img{src: url('images/logo.svg'), width: '50', alt: 'logo'}
+                %img{src: url('/images/logo.svg'), width: '50', alt: 'logo'}
             - if defined? user
               %li
                 %ul
@@ -44,10 +44,8 @@
               = '--'
           %ul
             %li
-              = ver
+              = "#{ENV['HEROKU_RELEASE_VERSION']}/#{ver}"
           %ul
-            %li
-              %a.bold{href: 'https://twitter.com/sxnns'} @sxnns
             %li
               %a.bold{href: '/terms'} Terms
             %li
@@ -59,7 +57,7 @@
                   %img{src: '//img.shields.io/github/stars/yegor256/sixnines.svg?style=flat-square', alt: 'GitHub stars'}
               %li
                 %a{href: 'https://www.sixnines.io/h/3b05e836'}
-                  %img{src: '//www.sixnines.io/b/3b05e836?style=flat', alt: 'badge'}
+                  %img{src: '//www.sixnines.io/b/3b05e836?style=flat', alt: 'Availability badge'}
     :javascript
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
