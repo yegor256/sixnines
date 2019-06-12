@@ -83,7 +83,7 @@ configure do
   set :glogin, GLogin::Auth.new(
     config['github']['client_id'],
     config['github']['client_secret'],
-    'http://www.sixnines.io/oauth'
+    'https://www.sixnines.io/oauth'
   )
   set :base, Base.new(Dynamo.new(config).aws)
   set :proxies, config['proxies']
