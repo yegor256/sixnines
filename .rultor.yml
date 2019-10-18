@@ -17,7 +17,7 @@ release:
   script: |-
     bundle install
     bundle exec rake
-    git remote add heroku git@heroku.com:sixnines.git
+    git remote add dokku dokku@www.sixnines.io:sixnines
     rm -rf ~/.ssh
     mkdir ~/.ssh
     mv ../id_rsa ../id_rsa.pub ~/.ssh
@@ -31,7 +31,7 @@ release:
     cp ../config.yml config.yml
     git add config.yml
     git commit -m 'config.yml'
-    git push -f heroku $(git symbolic-ref --short HEAD):master
+    git push -f dokku $(git symbolic-ref --short HEAD):master
     git reset HEAD~1
     rm -rf config.yml
     curl -f --connect-timeout 15 --retry 5 --retry-delay 30 http://www.sixnines.io > /dev/null
