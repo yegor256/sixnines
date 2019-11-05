@@ -24,10 +24,11 @@ source 'https://rubygems.org'
 ruby '2.6.0'
 
 gem 'actionview', '5.2.3'
+gem 'activesupport', '5.2.3'
 gem 'aws-sdk-dynamodb', '1.26.0'
 gem 'backtrace', '0.3.0'
 gem 'concurrent-ruby', '1.1.5', require: 'concurrent'
-gem 'glogin', '~> 0.5.1'
+gem 'glogin', '~> 0.6.0'
 gem 'haml', '5.0.4'
 gem 'mail', '2.7.1'
 gem 'nokogiri', '1.10.3'
@@ -44,12 +45,12 @@ gem 'twitter', '6.2.0'
 gem 'xml-sitemap', '1.3.3'
 
 group :test, :development do
-  gem 'codecov', '0.1.14', require: false
+  gem 'codecov', '0.1.16', require: false
   gem 'rack-test', '1.1.0', require: false
-  gem 'rake', '12.3.2', require: false
+  gem 'rake', '13.0.0', require: false
   gem 'rerun', '0.13.0', require: false
   gem 'rubocop', '0.68.1', require: false
   gem 'rubocop-rspec', '1.32.0', require: false
-  gem 'test-unit', '3.3.2', require: false
-  gem 'webmock', '3.5.1', require: false
+  gem 'test-unit', '3.3.4', require: false
+  gem 'webmock', '3.7.6', require: false
 end
