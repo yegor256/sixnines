@@ -291,7 +291,7 @@ Availability: #{EpAvailability.new(ep).short} \
       end
     end
   end
-  status(204) if txt.empty?
+  return 'Nothing to ping' if txt.empty?
   Process.detach(
     fork do
       sleep(10)
@@ -299,7 +299,6 @@ Availability: #{EpAvailability.new(ep).short} \
     end
   )
 rescue Futex::CantLock
-  status(403)
   'Locked, try again a bit later'
 end
 

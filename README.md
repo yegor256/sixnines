@@ -10,7 +10,7 @@
 [![Test Coverage](https://img.shields.io/codecov/c/github/yegor256/sixnines.svg)](https://codecov.io/github/yegor256/sixnines?branch=master)
 [![Hits-of-Code](https://hitsofcode.com/github/yegor256/sixnines)](https://hitsofcode.com/view/github/yegor256/sixnines)
 
-[![Availability at SixNines](https://www.sixnines.io/b/5fa8)](https://www.sixnines.io/h/5fa8)
+[![Availability at SixNines](https://www.sixnines.io/b/9ccc)](https://www.sixnines.io/h/9ccc)
 
 [SixNines](https://www.sixnines.io) is a hosted service to validate
 and prove availability of your web service and sites.
