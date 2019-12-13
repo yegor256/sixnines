@@ -25,6 +25,7 @@ require 'haml/template/options'
 require 'sinatra'
 require 'sinatra/cookies'
 require 'sass'
+require 'futex'
 require 'uri'
 require 'yaml'
 require 'json'
@@ -266,51 +267,40 @@ end
 
 get '/ping' do
   content_type 'text/plain'
-  txt = ''.dup
-  again = false
-  open('/tmp/sixnines.lock', 'w') do |f|
-    txt << if f.flock(File::LOCK_NB | File::LOCK_EX)
-      again = true
-      settings.base.ping(settings.pings, settings.proxies) do |up, ep|
-        next if ENV['RACK_ENV'] == 'test'
-        href = 'https://www.sixnines.io' + EpBadge.new(ep).to_href
-        event = 'is down'
-        if up
-          event = 'is up'
-          if ep.to_h[:flipped]
-            event = "went back up after \
+  txt = Futex.new('/tmp/sixnines.lock', timeout: 1).open do
+    settings.base.ping(settings.pings, settings.proxies) do |up, ep|
+      next if ENV['RACK_ENV'] == 'test'
+      href = 'https://www.sixnines.io' + EpBadge.new(ep).to_href
+      event = 'is down'
+      if up
+        event = 'is up'
+        if ep.to_h[:flipped]
+          event = "went back up after \
 #{ActionView::Base.new.time_ago_in_words(ep.to_h[:flipped])} \
 of downtime"
-          end
         end
-        begin
-          settings.twitter.update(
-            "#{ep.to_h[:hostname]} #{event}! \
+      end
+      begin
+        settings.twitter.update(
+          "#{ep.to_h[:hostname]} #{event}! \
 Availability: #{EpAvailability.new(ep).short} \
 (#{EpAvailability.new(ep).full}). #{href}"
-          )
-        rescue Twitter::Error::Unauthorized
-          puts 'Can\'t tweet, account is locked'
-        end
+        )
+      rescue Twitter::Error::Unauthorized
+        puts 'Can\'t tweet, account is locked'
       end
-    else
-      status(403)
-      'Locked, try again a bit later'
     end
   end
-  if txt.empty?
-    status(204)
-    again = true
-  end
-  if again
-    Process.detach(
-      fork do
-        sleep(10)
-        Net::HTTP.get_response(URI.parse('https://www.sixnines.io/ping?fork'))
-      end
-    )
-  end
-  txt
+  status(204) if txt.empty?
+  Process.detach(
+    fork do
+      sleep(10)
+      Net::HTTP.get_response(URI.parse('https://www.sixnines.io/ping?fork'))
+    end
+  )
+rescue Futex::CantLock
+  status(403)
+  'Locked, try again a bit later'
 end
 
 get '/robots.txt' do
