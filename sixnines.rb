@@ -288,6 +288,8 @@ Availability: #{EpAvailability.new(ep).short} \
         )
       rescue Twitter::Error::Unauthorized
         puts 'Can\'t tweet, account is locked'
+      rescue Twitter::Error::ServiceUnavailable
+        puts 'Can\'t tweet, service unavailable'
       end
     end
   end
