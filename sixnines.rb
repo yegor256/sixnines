@@ -109,7 +109,7 @@ before '/*' do
         cookies[:glogin],
         settings.config['cookie_secret']
       ).to_user
-    rescue OpenSSL::Cipher::CipherError => _e
+    rescue GLogin::Codec::DecodingError => _e
       @locals.delete(:user)
     end
   end
