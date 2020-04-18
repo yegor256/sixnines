@@ -343,10 +343,12 @@ post '/a/add' do
   redirect to('/a')
 end
 
-# @todo #93:30min We should check that there were no successful pings before
-#  changing the endpoint to ensure no one uses this feature to register new
-#  sites without charge.
 post '/a/edit' do
+  endpoints_uri_list = settings.base.endpoints(@locals[:user][:login]).list.map{|e| e.to_h[:uri].to_s}
+  if not endpoints_uri_list.include?(params[:old])
+    raise "Can't edit unknown endpoint \"#{params[:old]}\""
+  end
+
   settings.base.endpoints(@locals[:user][:login]).del(params[:old])
   settings.base.endpoints(@locals[:user][:login]).add(params[:new])
   redirect to('/a')
