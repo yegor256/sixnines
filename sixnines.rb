@@ -344,8 +344,9 @@ post '/a/add' do
 end
 
 post '/a/edit' do
-  unless settings.base.endpoints(@locals[:user][:login]).include?(params[:old])
-    raise "Invalid endpoint \"#{params[:old]}\""
+  endpoints_uri_list = settings.base.endpoints(@locals[:user][:login]).list.map{|e| e.to_h[:uri].to_s}
+  if not endpoints_uri_list.include?(params[:old])
+    raise "Can't edit unknown endpoint \"#{params[:old]}\""
   end
 
   settings.base.endpoints(@locals[:user][:login]).del(params[:old])
