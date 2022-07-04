@@ -20,36 +20,13 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-source 'https://rubygems.org'
+require 'action_view'
+require 'action_view/helpers'
 
-gem 'actionview', '7.0.3'
-gem 'activesupport', '7.0.3'
-gem 'aws-sdk-dynamodb', '1.75.0'
-gem 'backtrace', '0.3.0'
-gem 'concurrent-ruby', '1.1.10', require: 'concurrent'
-gem 'futex', '0.8.6'
-gem 'glogin', '~> 0.7.0'
-gem 'haml', '5.2.2'
-gem 'mail', '2.7.1'
-gem 'nokogiri', '1.13.6'
-gem 'rack-ssl', '1.4.1'
-gem 'rmagick', '4.2.5'
-gem 'sass', '3.7.4'
-gem 'sentry-raven', '3.1.2'
-gem 'sinatra', '2.2.0'
-gem 'sinatra-contrib', '2.2.0'
-gem 'stripe', '6.5.0'
-gem 'timeout-extensions', '0.1.1'
-gem 'twitter', '7.0.0'
-gem 'xml-sitemap', '1.3.3'
+include ActionView::Helpers::DateHelper
 
-group :test, :development do
-  gem 'codecov', '0.6.0', require: false
-  gem 'rack-test', '2.0.2', require: false
-  gem 'rake', '13.0.6', require: false
-  gem 'rerun', '0.13.1', require: false
-  gem 'rubocop', '1.31.1', require: false
-  gem 'rubocop-rspec', '2.11.1', require: false
-  gem 'test-unit', '3.5.3', require: false
-  gem 'webmock', '3.14.0', require: false
+helpers do
+  def time_ago(time)
+    time_ago_in_words(time)
+  end
 end

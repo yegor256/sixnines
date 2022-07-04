@@ -12,8 +12,8 @@
   - if e.to_h[:flipped]
     Flipped:
     %strong
-      =ActionView::Base.new.time_ago_in_words(e.to_h[:flipped]) + ' ago'
+      =time_ago(e.to_h[:flipped]) + ' ago'
 %p
   Created:
   %strong
-    =ActionView::Base.new.time_ago_in_words(e.to_h[:created]) + ' ago'
+    =time_ago(e.to_h[:created]) + ' ago'

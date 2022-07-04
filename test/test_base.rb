@@ -39,7 +39,6 @@ class BaseTest < Test::Unit::TestCase
 
   def test_ping_increments_total_pings
     port = FakeServer.new.start(200)
-    initial = 5
     aws = Dynamo.new.aws
     Endpoints.new(
       aws, 'yegor256-endpoint-1'
@@ -55,6 +54,7 @@ class BaseTest < Test::Unit::TestCase
     increase = aws.scan(
       table_name: 'sn-endpoints'
     ).items.length
+    initial = 5
     pings = TotalPings.new(initial)
     Base.new(aws).ping(pings, [first_proxy, second_proxy])
     assert_equal(initial + increase, pings.count)

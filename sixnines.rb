@@ -31,14 +31,12 @@ require 'yaml'
 require 'json'
 require 'aws-sdk-dynamodb'
 require 'stripe'
-require 'time_difference'
 require 'twitter'
-require 'action_view'
-require 'action_view/helpers'
 require 'raven'
 require 'net/http'
 require 'glogin'
 require_relative 'version'
+require_relative 'objects/helpers'
 require_relative 'objects/exec'
 require_relative 'objects/base'
 require_relative 'objects/dynamo'
@@ -255,7 +253,7 @@ end
 # Flush the endpoint
 get '/flush/:id' do
   raise 'You are not allowed to do this' \
-    if @locals[:user].nil? || @locals[:user][:login] != 'yegor256'
+    if @locals[:user].nil? || @locals[:user][:id] != 'yegor256'
   begin
     ep = settings.base.take(params[:id])
     ep.flush
@@ -276,7 +274,7 @@ get '/ping' do
         event = 'is up'
         if ep.to_h[:flipped]
           event = "went back up after \
-#{ActionView::Base.new.time_ago_in_words(ep.to_h[:flipped])} \
+#{time_ago_in_words(ep.to_h[:flipped])} \
 of downtime"
         end
       end
@@ -314,9 +312,9 @@ end
 
 get '/a' do
   haml :account, layout: :layout, locals: @locals.merge(
-    title: "@#{@locals[:user][:login]}",
-    description: "Account of @#{@locals[:user][:login]}",
-    endpoints: settings.base.endpoints(@locals[:user][:login]).list,
+    title: "@#{@locals[:user][:id]}",
+    description: "Account of @#{@locals[:user][:id]}",
+    endpoints: settings.base.endpoints(@locals[:user][:id]).list,
     stripe_key: settings.config['stripe']['live']['public_key']
   )
 end
@@ -339,7 +337,7 @@ post '/a/add' do
       raise "Invalid coupon \"#{params[:coupon]}\""
     end
   end
-  settings.base.endpoints(@locals[:user][:login]).add(params[:endpoint])
+  settings.base.endpoints(@locals[:user][:id]).add(params[:endpoint])
   redirect to('/a')
 end
 
@@ -347,13 +345,13 @@ end
 #  changing the endpoint to ensure no one uses this feature to register new
 #  sites without charge.
 post '/a/edit' do
-  settings.base.endpoints(@locals[:user][:login]).del(params[:old])
-  settings.base.endpoints(@locals[:user][:login]).add(params[:new])
+  settings.base.endpoints(@locals[:user][:id]).del(params[:old])
+  settings.base.endpoints(@locals[:user][:id]).add(params[:new])
   redirect to('/a')
 end
 
 get '/a/del' do
-  settings.base.endpoints(@locals[:user][:login]).del(params[:endpoint])
+  settings.base.endpoints(@locals[:user][:id]).del(params[:endpoint])
   redirect to('/a')
 end
 
