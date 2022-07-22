@@ -47,7 +47,6 @@ class AppTest < Test::Unit::TestCase
     assert(last_response.ok?)
     html = last_response.body
     assert(html.include?('SixNines'))
-    assert_equal(1, xml.xpath('/html/head/title').length)
   end
 
   def test_it_renders_valid_html
@@ -59,6 +58,7 @@ class AppTest < Test::Unit::TestCase
       xml = Nokogiri::HTML(html) do |c|
         c.options = Nokogiri::XML::ParseOptions::STRICT
       end
+      assert_equal(1, xml.xpath('/html/head/title').length)
     rescue Nokogiri::XML::SyntaxError => e
       puts "Broken HTML:\n#{html}"
       raise e

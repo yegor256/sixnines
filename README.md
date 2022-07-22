@@ -1,13 +1,11 @@
-<img src="https://www.sixnines.io/images/logo.png" width="64px" height="64px"/>
+<img alt="logo" src="https://www.sixnines.io/images/logo.png" width="64px" height="64px"/>
 
 [![Managed by Zerocracy](https://www.0crat.com/badge/C6MATTB7E.svg)](https://www.0crat.com/p/C6MATTB7E)
 [![DevOps By Rultor.com](http://www.rultor.com/b/yegor256/sixnines)](http://www.rultor.com/p/yegor256/sixnines)
 [![We recommend RubyMine](https://www.elegantobjects.org/rubymine.svg)](https://www.jetbrains.com/ruby/)
 
-[![Build Status](https://travis-ci.org/yegor256/sixnines.svg)](https://travis-ci.org/yegor256/sixnines)
 [![PDD status](http://www.0pdd.com/svg?name=yegor256/sixnines)](http://www.0pdd.com/p?name=yegor256/sixnines)
 [![Maintainability](https://api.codeclimate.com/v1/badges/c3b56d829753998ee405/maintainability)](https://codeclimate.com/github/yegor256/sixnines/maintainability)
-[![Test Coverage](https://img.shields.io/codecov/c/github/yegor256/sixnines.svg)](https://codecov.io/github/yegor256/sixnines?branch=master)
 [![Hits-of-Code](https://hitsofcode.com/github/yegor256/sixnines)](https://hitsofcode.com/view/github/yegor256/sixnines)
 
 [![Availability at SixNines](https://www.sixnines.io/b/9ccc)](https://www.sixnines.io/h/9ccc)
