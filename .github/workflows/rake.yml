@@ -11,7 +11,7 @@ jobs:
   test:
     strategy:
       matrix:
-        os: [ubuntu-latest]
+        os: [ubuntu-20.04]
         ruby: ['2.7']
     runs-on: ${{ matrix.os }}
     steps:
@@ -19,5 +19,6 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
+      - run: apt-get install -y librsvg2-bin
       - run: bundle update
       - run: bundle exec rake
