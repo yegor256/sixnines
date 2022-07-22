@@ -21,6 +21,7 @@
 # SOFTWARE.
 
 source 'https://rubygems.org'
+ruby '2.7'
 
 gem 'actionview', '7.0.3'
 gem 'activesupport', '7.0.3'
