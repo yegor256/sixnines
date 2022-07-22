@@ -2,8 +2,8 @@
 set -e
 
 cd $(dirname $0)
-bundle update
-bundle exec rake
+# bundle update
+# bundle exec rake
 sed -i -s 's|Gemfile.lock||g' .gitignore
 cp /code/home/assets/sixnines/config.yml .
 git add config.yml
