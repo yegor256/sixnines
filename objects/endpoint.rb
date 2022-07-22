@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Copyright (c) 2017-2020 Yegor Bugayenko
+# Copyright (c) 2017-2022 Yegor Bugayenko
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the 'Software'), to deal
@@ -98,7 +98,7 @@ class Endpoint
       },
       expression_attribute_values: {
         ':u' => @item['uri'],
-        ':t' => (Time.now - 1000 * 60).to_i
+        ':t' => (Time.now - (1000 * 60)).to_i
       },
       key_condition_expression: 'uri = :u and #time > :t'
     ).items.map do |i|
@@ -165,7 +165,7 @@ class Endpoint
       },
       expression_attribute_names: ean,
       expression_attribute_values: eav,
-      update_expression: 'set ' + update.join(', ')
+      update_expression: "set #{update.join(', ')}"
     )
     yield(up, self) if block_given? && up != h[:up]
     "#{h[:uri]}: #{code}"

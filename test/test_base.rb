@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Copyright (c) 2017-2020 Yegor Bugayenko
+# Copyright (c) 2017-2022 Yegor Bugayenko
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the 'Software'), to deal
@@ -54,10 +54,10 @@ class BaseTest < Test::Unit::TestCase
     increase = aws.scan(
       table_name: 'sn-endpoints'
     ).items.length
-    initial = 5
+    initial = 42
     pings = TotalPings.new(initial)
     Base.new(aws).ping(pings, [first_proxy, second_proxy])
-    assert_equal(initial + increase, pings.count)
+    assert_equal(initial + increase + 1, pings.count)
     remove_request_stub(first_stub)
     remove_request_stub(second_stub)
   end

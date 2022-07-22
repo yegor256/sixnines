@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Copyright (c) 2017-2020 Yegor Bugayenko
+# Copyright (c) 2017-2022 Yegor Bugayenko
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the 'Software'), to deal
@@ -42,7 +42,7 @@ class EpBadge
     "/h/#{@endpoint.to_h[:id]}"
   end
 
-  def to_html(amp = false)
+  def to_html(amp: false)
     "<a href='#{to_href}'><#{amp ? 'amp-' : ''}img src='#{to_src}' \
 alt='#{@endpoint.to_h[:hostname]} availability badge' \
 width='106' height='20'/></a>"

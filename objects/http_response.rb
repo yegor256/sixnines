@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Copyright (c) 2017-2020 Yegor Bugayenko
+# Copyright (c) 2017-2022 Yegor Bugayenko
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the 'Software'), to deal
@@ -50,7 +50,7 @@ HTTP/#{res.http_version} #{res.code} #{res.message}\n\
   end
 
   def headers(headers)
-    headers.to_hash.map { |k, v| v.map { |h| k + ': ' + h } }.join("\n")
+    headers.to_hash.map { |k, v| v.map { |h| "#{k}: #{h}" } }.join("\n")
   end
 
   def body(body)

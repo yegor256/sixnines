@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Copyright (c) 2017-2020 Yegor Bugayenko
+# Copyright (c) 2017-2022 Yegor Bugayenko
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the 'Software'), to deal
@@ -31,7 +31,7 @@ class EpAvailability
   def to_f
     h = @endpoint.to_h
     [
-      (100 * (1 - nz(h[:failures].to_f) / nz(h[:pings].to_f))),
+      (100 * (1 - (nz(h[:failures].to_f) / nz(h[:pings].to_f)))),
       99.9999
     ].min.round(Math.log10(nz(h[:pings])).to_i - 1)
   end
@@ -41,7 +41,7 @@ class EpAvailability
   end
 
   def short
-    to_s + '%'
+    "#{self}%"
   end
 
   def full

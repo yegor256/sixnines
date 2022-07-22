@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Copyright (c) 2017-2020 Yegor Bugayenko
+# Copyright (c) 2017-2022 Yegor Bugayenko
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the 'Software'), to deal
@@ -52,13 +52,16 @@ class EpGraph
     else
       xorder = clean.sort { |a, b| a[:time] <=> b[:time] }
       yorder = clean.sort { |a, b| a[:msec] <=> b[:msec] }
-      "<history now='#{Time.now.to_i}' \
-        avg='#{mean}' \
-        minx='#{xorder.first[:time].to_i}' maxx='#{xorder.last[:time].to_i}' \
-        miny='#{yorder.first[:msec]}' maxy='#{yorder.last[:msec]}'>" +
+      [
+        "<history now='#{Time.now.to_i}' \
+          avg='#{mean}' \
+          minx='#{xorder.first[:time].to_i}' maxx='#{xorder.last[:time].to_i}' \
+          miny='#{yorder.first[:msec]}' maxy='#{yorder.last[:msec]}'>",
         h.map do |p|
           "<p time='#{p[:time].to_i}' msec='#{p[:msec]}' code='#{p[:code]}'/>"
-        end.join('') + '</history>'
+        end.join,
+        '</history>'
+      ].join
     end
     Nokogiri::XSLT(File.read('assets/xsl/graph.xsl')).transform(
       Nokogiri::XML(xml)

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Copyright (c) 2017-2020 Yegor Bugayenko
+# Copyright (c) 2017-2022 Yegor Bugayenko
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the 'Software'), to deal
@@ -29,7 +29,9 @@ class Base
   # When not found
   class EndpointNotFound < StandardError
     attr_reader :id
+
     def initialize(id)
+      super
       @id = id
     end
   end

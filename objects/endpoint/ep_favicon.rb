@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Copyright (c) 2017-2020 Yegor Bugayenko
+# Copyright (c) 2017-2022 Yegor Bugayenko
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the 'Software'), to deal
@@ -46,11 +46,7 @@ class EpFavicon
       req = Net::HTTP::Get.new(uri.request_uri)
       req['User-Agent'] = 'SixNines.io (not Firefox, Chrome, or Safari)'
       res = http.request(req)
-      f = File.join(
-        dir,
-        'image.' + case res['Content-Type']
-        when 'image/x-icon', 'image/vnd.microsoft.icon'
-          'ico'
+      type = case res['Content-Type']
         when 'image/png'
           'png'
         when 'image/gif'
@@ -58,7 +54,7 @@ class EpFavicon
         else
           'ico'
         end
-      )
+      f = File.join(dir, "image.#{type}")
       File.write(f, res.body)
       img = Magick::Image.read(f)[0]
       img.format = 'PNG'

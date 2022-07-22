@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Copyright (c) 2017-2020 Yegor Bugayenko
+# Copyright (c) 2017-2022 Yegor Bugayenko
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the 'Software'), to deal
@@ -23,7 +23,9 @@
 require 'action_view'
 require 'action_view/helpers'
 
+# rubocop:disable Style/MixinUsage
 include ActionView::Helpers::DateHelper
+# rubocop:enable Style/MixinUsage
 
 helpers do
   def time_ago(time)

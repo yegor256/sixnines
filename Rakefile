@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Copyright (c) 2017-2020 Yegor Bugayenko
+# Copyright (c) 2017-2022 Yegor Bugayenko
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the 'Software'), to deal
@@ -55,9 +55,10 @@ task :dynamo do
     puts "DynamoDB Local killed in PID #{pid}"
   end
   begin
-    puts 'DynamoDB Local table: ' + Dynamo.new.aws.describe_table(
+    status = Dynamo.new.aws.describe_table(
       table_name: 'sn-endpoints'
     )[:table][:table_status]
+    puts "DynamoDB Local table: #{status}"
   rescue Exception => e
     puts e.message
     sleep(5)

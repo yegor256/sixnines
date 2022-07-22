@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Copyright (c) 2017-2020 Yegor Bugayenko
+# Copyright (c) 2017-2022 Yegor Bugayenko
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the 'Software'), to deal
@@ -26,11 +26,11 @@ require 'English'
 Before do
   @cwd = Dir.pwd
   @dir = Dir.mktmpdir('test')
-  FileUtils.mkdir_p(@dir) unless File.exist?(@dir)
+  FileUtils.mkdir_p(@dir)
   Dir.chdir(@dir)
 end
 
 After do
   Dir.chdir(@cwd)
-  FileUtils.rm_rf(@dir) if File.exist?(@dir)
+  FileUtils.rm_rf(@dir)
 end

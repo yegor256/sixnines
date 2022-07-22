@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Copyright (c) 2017-2020 Yegor Bugayenko
+# Copyright (c) 2017-2022 Yegor Bugayenko
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the 'Software'), to deal
@@ -41,8 +41,8 @@ class ProxiedResource
       host, port = p.split(':')
       begin
         a = @resource.take(host, port)
-      rescue Net::HTTPServerException => e
-        code = e.message.split(' ')[0].to_i
+      rescue Net::HTTPClientException => e
+        code = e.message.split[0].to_i
         raise e unless code == 407
         a = Response.new(200, '', e.message).receive
       end

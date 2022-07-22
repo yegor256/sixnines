@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Copyright (c) 2017-2020 Yegor Bugayenko
+# Copyright (c) 2017-2022 Yegor Bugayenko
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the 'Software'), to deal
@@ -235,7 +235,7 @@ end
 
 # Favicon of the endpoint
 get '/f/:id' do
-  response.headers['Cache-Control'] = 'max-age=' + (5 * 60 * 60).to_s
+  response.headers['Cache-Control'] = "max-age=#{5 * 60 * 60}"
   content_type 'image/png'
   EpFavicon.new(settings.base.take(params[:id])).png
 rescue Base::EndpointNotFound
@@ -268,7 +268,7 @@ get '/ping' do
   txt = Futex.new('/tmp/sixnines.lock', timeout: 1).open do
     settings.base.ping(settings.pings, settings.proxies) do |up, ep|
       next if ENV['RACK_ENV'] == 'test'
-      href = 'https://www.sixnines.io' + EpBadge.new(ep).to_href
+      href = "https://www.sixnines.io#{EpBadge.new(ep).to_href}"
       event = 'is down'
       if up
         event = 'is up'
@@ -333,9 +333,7 @@ post '/a/add' do
       customer: customer.id
     )
   else
-    unless settings.config['coupons'].include?(params[:coupon])
-      raise "Invalid coupon \"#{params[:coupon]}\""
-    end
+    raise "Invalid coupon \"#{params[:coupon]}\"" unless settings.config['coupons'].include?(params[:coupon])
   end
   settings.base.endpoints(@locals[:user][:id]).add(params[:endpoint])
   redirect to('/a')

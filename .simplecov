@@ -1,4 +1,6 @@
-# Copyright (c) 2017-2020 Yegor Bugayenko
+# frozen_string_literal: true
+
+# Copyright (c) 2017-2022 Yegor Bugayenko
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the 'Software'), to deal
@@ -18,21 +20,21 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-if Gem.win_platform? then
+if Gem.win_platform?
   SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
     SimpleCov::Formatter::HTMLFormatter
   ]
   SimpleCov.start do
-    add_filter "/test/"
-    add_filter "/features/"
+    add_filter '/test/'
+    add_filter '/features/'
   end
 else
   SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new(
     SimpleCov::Formatter::HTMLFormatter
   )
   SimpleCov.start do
-    add_filter "/test/"
-    add_filter "/features/"
+    add_filter '/test/'
+    add_filter '/features/'
     minimum_coverage 30
   end
 end

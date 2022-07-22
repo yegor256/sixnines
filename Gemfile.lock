@@ -192,6 +192,7 @@ GEM
       builder (>= 2.0)
 
 PLATFORMS
+  ruby
   x86_64-darwin-19
 
 DEPENDENCIES
