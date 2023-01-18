@@ -22,8 +22,8 @@
 
 source 'https://rubygems.org'
 
-gem 'actionview', '7.0.3'
-gem 'activesupport', '7.0.3'
+gem 'actionview', '7.0.4.1'
+gem 'activesupport', '7.0.4.1'
 gem 'aws-sdk-dynamodb', '1.75.0'
 gem 'backtrace', '0.3.0'
 gem 'concurrent-ruby', '1.1.10', require: 'concurrent'

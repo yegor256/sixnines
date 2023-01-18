@@ -1,13 +1,13 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    actionview (7.0.3)
-      activesupport (= 7.0.3)
+    actionview (7.0.4.1)
+      activesupport (= 7.0.4.1)
       builder (~> 3.1)
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.1, >= 1.2.0)
-    activesupport (7.0.3)
+    activesupport (7.0.4.1)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
@@ -41,7 +41,7 @@ GEM
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
     equalizer (0.0.11)
-    erubi (1.10.0)
+    erubi (1.12.0)
     faraday (2.3.0)
       faraday-net_http (~> 2.0)
       ruby2_keywords (>= 0.0.4)
@@ -83,8 +83,8 @@ GEM
     memoizable (0.4.2)
       thread_safe (~> 0.3, >= 0.3.1)
     mini_mime (1.1.2)
-    mini_portile2 (2.8.0)
-    minitest (5.16.2)
+    mini_portile2 (2.8.1)
+    minitest (5.17.0)
     multi_json (1.15.0)
     multipart-post (2.2.3)
     mustermann (3.0.0)
@@ -100,7 +100,7 @@ GEM
       ast (~> 2.4.1)
     power_assert (2.0.1)
     public_suffix (4.0.7)
-    racc (1.6.1)
+    racc (1.6.2)
     rack (2.2.4)
     rack-protection (3.0.4)
       rack
@@ -200,8 +200,8 @@ PLATFORMS
   x86_64-darwin-19
 
 DEPENDENCIES
-  actionview (= 7.0.3)
-  activesupport (= 7.0.3)
+  actionview (= 7.0.4.1)
+  activesupport (= 7.0.4.1)
   aws-sdk-dynamodb (= 1.75.0)
   backtrace (= 0.3.0)
   codecov (= 0.6.0)
