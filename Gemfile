@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Copyright (c) 2017-2022 Yegor Bugayenko
+# Copyright (c) 2017-2023 Yegor Bugayenko
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the 'Software'), to deal
@@ -34,6 +34,7 @@ gem 'mail', '2.7.1'
 gem 'nokogiri', '1.13.10'
 gem 'rack-ssl', '1.4.1'
 gem 'rmagick', '4.2.5'
+gem 'rss', '0.3.0'
 gem 'sass', '3.7.4'
 gem 'sentry-raven', '3.1.2'
 gem 'sinatra', '3.0.4'
@@ -44,12 +45,12 @@ gem 'twitter', '7.0.0'
 gem 'xml-sitemap', '1.3.3'
 
 group :test, :development do
-  gem 'codecov', '0.6.0', require: false
   gem 'rack-test', '2.0.2', require: false
   gem 'rake', '13.0.6', require: false
   gem 'rerun', '0.13.1', require: false
   gem 'rubocop', '1.31.1', require: false
   gem 'rubocop-rspec', '2.11.1', require: false
+  gem 'simplecov', '0.22.0', require: false
   gem 'test-unit', '3.5.3', require: false
   gem 'webmock', '3.14.0', require: false
 end

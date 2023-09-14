@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Copyright (c) 2017-2022 Yegor Bugayenko
+# Copyright (c) 2017-2023 Yegor Bugayenko
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the 'Software'), to deal
@@ -24,10 +24,6 @@ ENV['RACK_ENV'] = 'test'
 
 require 'simplecov'
 SimpleCov.start
-if ENV['CI'] == 'true'
-  require 'codecov'
-  SimpleCov.formatter = SimpleCov::Formatter::Codecov
-end
 
 require 'webmock/test_unit'
 WebMock.allow_net_connect!
