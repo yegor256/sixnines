@@ -42,6 +42,7 @@ gem 'sinatra-contrib', '3.0.4'
 gem 'stripe', '6.5.0'
 gem 'timeout-extensions', '0.1.1'
 gem 'twitter', '7.0.0'
+gem 'webrick', '1.8.1'
 gem 'xml-sitemap', '1.3.3'
 
 group :test, :development do
