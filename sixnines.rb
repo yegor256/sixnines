@@ -359,9 +359,11 @@ get '/ping_count' do
 end
 
 get '/css/*.css' do
+  name = params[:splat].first
+  file = File.join('assets/sass', "#{name}.sass")
+  error(404, "File not found: #{file}") unless File.exist?(file)
   content_type 'text/css', charset: 'utf-8'
-  file = params[:splat].first
-  sass file.to_sym, views: "#{settings.root}/assets/sass"
+  Sass::Engine.new(file).render
 end
 
 not_found do

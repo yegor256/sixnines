@@ -42,6 +42,11 @@ class AppTest < Test::Unit::TestCase
     assert(last_response.ok?)
   end
 
+  def test_css
+    get('/css/main.css')
+    assert(last_response.ok?)
+  end
+
   def test_it_renders_home_page
     get('/')
     assert(last_response.ok?)
