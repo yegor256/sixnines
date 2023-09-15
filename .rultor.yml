@@ -1,5 +1,5 @@
 docker:
-  image: yegor256/rultor-image:1.9.1
+  image: yegor256/rultor-image:1.21.0
 readers:
   - "urn:github:526301"
 assets:
@@ -16,7 +16,7 @@ release:
     - config.yml
   script: |-
     bundle exec rake
-    git remote add dokku dokku@www.sixnines.io:sixnines
+    git remote add dokku dokku@dokku.sixnines.io:sixnines
     rm -rf ~/.ssh
     mkdir ~/.ssh
     mv ../id_rsa ../id_rsa.pub ~/.ssh
