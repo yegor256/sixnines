@@ -45,6 +45,8 @@ class AppTest < Test::Unit::TestCase
   def test_css
     get('/css/main.css')
     assert(last_response.ok?)
+    assert(!last_response.body.empty?)
+    assert(last_response.body.include?('body {'), last_response.body)
   end
 
   def test_it_renders_home_page

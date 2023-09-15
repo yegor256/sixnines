@@ -363,7 +363,7 @@ get '/css/*.css' do
   file = File.join('assets/sass', "#{name}.sass")
   error(404, "File not found: #{file}") unless File.exist?(file)
   content_type 'text/css', charset: 'utf-8'
-  Sass::Engine.new(file).render
+  Sass::Engine.new(File.read(file)).render
 end
 
 not_found do
