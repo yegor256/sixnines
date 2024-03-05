@@ -9,7 +9,7 @@ cp /code/home/assets/sixnines/config.yml .
 git add config.yml
 git add Gemfile.lock
 git add .gitignore
-git commit -m 'config.yml for dokku'
+git commit -m 'config.yml for heroku'
 trap 'git reset HEAD~1 && rm config.yml && git checkout -- .gitignore' EXIT
-git push dokku master -f
+git push heroku master -f
 
