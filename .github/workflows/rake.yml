@@ -11,7 +11,7 @@ jobs:
   test:
     strategy:
       matrix:
-        os: [ubuntu-20.04]
+        os: [ubuntu-24.04]
         ruby: ['2.7']
     runs-on: ${{ matrix.os }}
     steps:
