@@ -1,5 +1,4 @@
 {
-  "TableName": "sn-endpoints",
   "AttributeDefinitions": [
     {
       "AttributeName": "login",
@@ -30,20 +29,6 @@
       "AttributeType": "N"
     }
   ],
-  "KeySchema": [
-    {
-      "AttributeName": "login",
-      "KeyType": "HASH"
-    },
-    {
-      "AttributeName": "uri",
-      "KeyType": "RANGE"
-    }
-  ],
-  "ProvisionedThroughput": {
-    "ReadCapacityUnits": "1",
-    "WriteCapacityUnits": "1"
-  },
   "GlobalSecondaryIndexes": [
     {
       "IndexName": "unique",
@@ -125,5 +110,20 @@
         "WriteCapacityUnits": "1"
       }
     }
-  ]
+  ],
+  "KeySchema": [
+    {
+      "AttributeName": "login",
+      "KeyType": "HASH"
+    },
+    {
+      "AttributeName": "uri",
+      "KeyType": "RANGE"
+    }
+  ],
+  "ProvisionedThroughput": {
+    "ReadCapacityUnits": "1",
+    "WriteCapacityUnits": "1"
+  },
+  "TableName": "sn-endpoints"
 }

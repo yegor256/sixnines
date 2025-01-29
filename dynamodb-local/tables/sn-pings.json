@@ -1,5 +1,4 @@
 {
-  "TableName": "sn-pings",
   "AttributeDefinitions": [
     {
       "AttributeName": "uri",
@@ -23,5 +22,6 @@
   "ProvisionedThroughput": {
     "ReadCapacityUnits": "1",
     "WriteCapacityUnits": "1"
-  }
+  },
+  "TableName": "sn-pings"
 }
