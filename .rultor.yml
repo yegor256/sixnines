@@ -9,7 +9,7 @@ assets:
 install: |-
   sudo gem install openssl -- --with-openssl-dir=/usr/local/rvm/rubies/ruby-3.0.1/lib/ruby/3.0.0/openssl
   sudo apt-get update -y
-  sudo apt-get install -y libmagickwand-dev imagemagick
+  sudo apt-get install --yes libmagickwand-dev imagemagick
   pdd -f /dev/null
   sudo bundle install --no-color "--gemfile=$(pwd)/Gemfile"
 release:

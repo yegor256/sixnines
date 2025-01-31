@@ -20,7 +20,7 @@ jobs:
         with:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
-      - run: sudo apt-get install -y inkscape
+      - run: sudo apt-get install --yes inkscape
       - run: bundle config set --global path "$(pwd)/vendor/bundle"
       - run: bundle install
       - run: bundle exec rake
