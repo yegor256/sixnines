@@ -43,5 +43,5 @@ jobs:
           bundler-cache: true
       - run: sudo apt-get install --yes inkscape
       - run: bundle config set --global path "$(pwd)/vendor/bundle"
-      - run: bundle install
+      - run: bundle install --no-color
       - run: bundle exec rake
