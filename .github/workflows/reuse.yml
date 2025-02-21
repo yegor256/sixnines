@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: MIT
 ---
 # yamllint disable rule:line-length
-name: copyrights
+name: reuse
 'on':
   push:
     branches:
@@ -13,9 +13,9 @@ name: copyrights
     branches:
       - master
 jobs:
-  copyrights:
+  reuse:
     timeout-minutes: 15
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
-      - uses: yegor256/copyrights-action@0.0.8
+      - uses: fsfe/reuse-action@v5

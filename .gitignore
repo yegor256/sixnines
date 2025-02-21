@@ -6,3 +6,4 @@ target/
 .DS_Store
 rdoc/
 .sass-cache/
+vendor/
