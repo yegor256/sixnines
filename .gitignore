@@ -1,9 +1,12 @@
-coverage/
-.idea/
 *.gem
-target/
-.bundle/
 .DS_Store
-rdoc/
+.bundle/
+.idea/
 .sass-cache/
+.yardoc/
+coverage/
+doc/
+node_modules/
+rdoc/
+target/
 vendor/
