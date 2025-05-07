@@ -1,9 +1,9 @@
-*.gem
-.DS_Store
 .bundle/
+.DS_Store
 .idea/
 .sass-cache/
 .yardoc/
+*.gem
 coverage/
 doc/
 node_modules/
