@@ -5,8 +5,6 @@ version = 1
 [[annotations]]
 path = [
     ".DS_Store",
-    "public/googlefee20c356221dabb.html",
-    "Aptfile",
     ".gitattributes",
     ".gitignore",
     ".pdd",
@@ -31,9 +29,11 @@ path = [
     "**/CNAME",
     "**/Gemfile.lock",
     "**/Procfile",
+    "Aptfile",
     "CHECKS",
     "Gemfile.lock",
     "Procfile",
+    "public/googlefee20c356221dabb.html",
     "README.md",
     "renovate.json",
 ]
