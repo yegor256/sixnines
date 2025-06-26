@@ -84,12 +84,14 @@ class AppTest < Minitest::Test
   end
 
   def test_history_endpoint
+    WebMock.enable_net_connect!
     id = ep('http://www.ibm.com')
     get("/h/#{id}")
     assert_equal(200, last_response.status)
   end
 
   def test_history_endpoint_with_user
+    WebMock.enable_net_connect!
     id = ep('http://www.vk.com')
     header('Cookie', 'glogin=jeffrey|')
     get("/h/#{id}")
@@ -97,6 +99,7 @@ class AppTest < Minitest::Test
   end
 
   def test_history_amp_endpoint
+    WebMock.enable_net_connect!
     id = ep('http://www.ibm.com')
     get("/h-amp/#{id}")
     assert_equal(200, last_response.status)
@@ -108,6 +111,7 @@ class AppTest < Minitest::Test
   end
 
   def test_data_endpoint
+    WebMock.enable_net_connect!
     id = ep('http://www.stackoverflow.com')
     get("/d/#{id}")
     assert_equal(200, last_response.status)
@@ -119,6 +123,7 @@ class AppTest < Minitest::Test
   end
 
   def test_favicon_endpoint
+    WebMock.enable_net_connect!
     id = ep('http://www.yahoo.com')
     get("/f/#{id}")
     assert_equal(200, last_response.status)
@@ -130,6 +135,7 @@ class AppTest < Minitest::Test
   end
 
   def test_badge_endpoint
+    WebMock.enable_net_connect!
     id = ep('http://www.twitter.com')
     get("/b/#{id}")
     assert_equal(200, last_response.status)
@@ -141,6 +147,7 @@ class AppTest < Minitest::Test
   end
 
   def test_graph_endpoint
+    WebMock.enable_net_connect!
     id = ep('http://www.instagram.com')
     get("/g/#{id}")
     assert_equal(200, last_response.status)
