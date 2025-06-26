@@ -26,7 +26,7 @@ class EpBadge
   end
 
   def to_html(amp: false)
-    "<a href='#{to_href}'><#{amp ? 'amp-' : ''}img src='#{to_src}' \
+    "<a href='#{to_href}'><#{'amp-' if amp}img src='#{to_src}' \
 alt='#{@endpoint.to_h[:hostname]} availability badge' \
 width='106' height='20'/></a>"
   end

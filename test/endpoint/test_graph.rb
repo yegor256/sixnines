@@ -27,7 +27,7 @@ class GraphTest < Minitest::Test
     FileUtils.mkdir_p(target)
     svg = EpGraph.new(endpoint).to_svg
     File.write(File.join(target, 'graph.svg'), svg)
-    assert(svg.include?('<svg'))
+    assert_includes(svg, '<svg')
   end
 
   def test_calculates_avg

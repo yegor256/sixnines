@@ -1,4 +1,4 @@
-<img alt="logo" src="https://www.sixnines.io/images/logo.png" width="64px" height="64px"/>
+# Website Availability Monitoring System
 
 [![DevOps By Rultor.com](https://www.rultor.com/b/yegor256/sixnines)](https://www.rultor.com/p/yegor256/sixnines)
 [![We recommend RubyMine](https://www.elegantobjects.org/rubymine.svg)](https://www.jetbrains.com/ruby/)
@@ -15,11 +15,11 @@
 and prove availability of your web service and sites.
 
 Read this blog post for more details:
-[_SixNines.io, Your Website Availability Monitor_](http://www.yegor256.com/2017/04/25/sixnines.html).
+[_SixNines.io, Your Website Availability Monitor_][blog].
 
 The badge is available as:
 
-```
+```text
 https://www.sixnines.io/b/5fa8?style=flat&format=png
 ```
 
@@ -28,7 +28,7 @@ The `format` parameter can be either `svg` (106x20) or `png` (424x80).
 
 This is how you put it in your `README` (in Markdown):
 
-```
+```text
 [![Availability at SixNines](https://www.sixnines.io/b/5fa8)](https://www.sixnines.io/h/5fa8)
 ```
 
@@ -38,12 +38,12 @@ The badge you see above works exactly like that.
 
 The `sn-endpoints` table contains all registered end-points:
 
-```
+```yaml
 fields:
   login/H: GitHub login of the owner
   uri/R: URI of the endpoint, e.g. "http://www.google.com/?q=hello"
   id: Unique ID of the endpoint
-  active: "yes" if it's alive, "no" otherwise
+  active: "yes" # if it's alive, "no" otherwise
   created: Epoch time number of when it was added
   hostname: Host name of the URI, e.g. "google.com"
   pings: Total amount of ping's we've done so far
@@ -69,7 +69,7 @@ sn-endpoints/expires: (index)
 
 The `sn-pings` table contains all recent pings:
 
-```
+```yaml
 fields:
   uri/H: URI of the endpoint we pinged
   time/R: Epoch time of ping
@@ -92,26 +92,30 @@ and
 Then:
 
 ```bash
-$ bundle update
-$ bundle exec rake --quiet
+bundle update
+bundle exec rake --quiet
 ```
 
-The build has to be clean. If it's not, [submit an issue](https://github.com/zold-io/out/issues).
+The build has to be clean. If it's not,
+[submit an issue](https://github.com/zold-io/out/issues).
 
 Then, make your changes, make sure the build is still clean,
-and [submit a pull request](https://www.yegor256.com/2014/04/15/github-guidelines.html).
+and [submit a pull request][guidelines].
 
 In order to run a single test:
 
 ```bash
-$ bundle exec rake run
+bundle exec rake run
 ```
 
 Then, in another terminal:
 
 ```bash
-$ bundle exec ruby test/test_base.rb -n test_lists_flips
+bundle exec ruby test/test_base.rb -n test_lists_flips
 ```
 
 Then, if you want to test the UI, open `http://localhost:9292` in your browser,
 and login, if necessary, by adding `?glogin=tester` to the URL.
+
+[blog]: http://www.yegor256.com/2017/04/25/sixnines.html
+[guidelines]: https://www.yegor256.com/2014/04/15/github-guidelines.html

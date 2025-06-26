@@ -16,35 +16,35 @@ class AppTest < Minitest::Test
 
   def test_renders_version
     get('/version')
-    assert(last_response.ok?)
+    assert_predicate(last_response, :ok?)
   end
 
   def test_robots_txt
     WebMock.enable_net_connect!
     get('/robots.txt')
-    assert(last_response.ok?)
+    assert_predicate(last_response, :ok?)
   end
 
   def test_css
     WebMock.enable_net_connect!
     get('/css/main.css')
-    assert(last_response.ok?)
-    assert(!last_response.body.empty?)
-    assert(last_response.body.include?('body {'), last_response.body)
+    assert_predicate(last_response, :ok?)
+    refute_empty(last_response.body)
+    assert_includes(last_response.body, 'body {', last_response.body)
   end
 
   def test_it_renders_home_page
     WebMock.enable_net_connect!
     get('/')
-    assert(last_response.ok?)
+    assert_predicate(last_response, :ok?)
     html = last_response.body
-    assert(html.include?('SixNines'))
+    assert_includes(html, 'SixNines')
   end
 
   def test_it_renders_valid_html
     skip('It does not work for some reason, even though HTML is valid')
     get('/')
-    assert(last_response.ok?)
+    assert_predicate(last_response, :ok?)
     html = last_response.body
     begin
       xml = Nokogiri::HTML(html) do |c|
@@ -60,12 +60,12 @@ class AppTest < Minitest::Test
   def test_search_when_no_recent_state_change
     ep('http://www.amazon.com')
     get('/?q=amazon')
-    assert(last_response.ok?)
+    assert_predicate(last_response, :ok?)
   end
 
   def test_it_renders_logo
     get('/images/logo.svg')
-    assert(last_response.ok?)
+    assert_predicate(last_response, :ok?)
   end
 
   def test_rss_feed

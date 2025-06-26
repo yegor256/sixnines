@@ -10,6 +10,10 @@ AllCops:
   TargetRubyVersion: 2.6.0
   NewCops: enable
   SuggestExtensions: false
+plugins:
+  - rubocop-rake
+  - rubocop-minitest
+  - rubocop-performance
 Layout/CaseIndentation:
   Enabled: false
 Metrics/CyclomaticComplexity:
@@ -24,6 +28,8 @@ Metrics/AbcSize:
   Max: 60
 Metrics/BlockLength:
   Max: 50
+Minitest/EmptyLineBeforeAssertionMethods:
+  Enabled: false
 Layout/MultilineMethodCallIndentation:
   Enabled: false
 Layout/ElseAlignment:
@@ -36,7 +42,3 @@ Metrics/PerceivedComplexity:
   Max: 10
 Layout/EmptyLineAfterGuardClause:
   Enabled: false
-require:
-  - rubocop-rake
-  - rubocop-minitest
-  - rubocop-performance

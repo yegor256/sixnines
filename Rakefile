@@ -12,7 +12,7 @@ require_relative 'objects/dynamo'
 
 ENV['RACK_ENV'] = 'test'
 
-task default: %i[clean test rubocop copyright]
+task default: %i[clean test rubocop]
 
 require 'rake/testtask'
 Rake::TestTask.new(test: :dynamo) do |test|
@@ -57,14 +57,7 @@ task :sleep do
   end
 end
 
+desc 'Start a web service, interactively'
 task run: :dynamo do
   `rerun -b "RACK_ENV=test rackup"`
-end
-
-task :copyright do
-  sh "grep -q -r '2017-#{Date.today.strftime('%Y')}' \
-    --include '*.rb' \
-    --include '*.txt' \
-    --include 'Rakefile' \
-    ."
 end

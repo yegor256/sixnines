@@ -15,7 +15,7 @@ class EpGraph
 
   def avg
     h = points.map { |p| p[:msec] }
-    (h.inject(&:+) || 1) / (h.empty? ? 1 : h.size)
+    (h.sum || 1) / (h.empty? ? 1 : h.size)
   end
 
   def avg_full
@@ -33,8 +33,8 @@ class EpGraph
     xml = if h.empty?
       "<history minx='0' maxx='0' miny='0' maxy='0' avg='#{mean}'/>"
     else
-      xorder = clean.sort { |a, b| a[:time] <=> b[:time] }
-      yorder = clean.sort { |a, b| a[:msec] <=> b[:msec] }
+      xorder = clean.sort_by { |a| a[:time] }
+      yorder = clean.sort_by { |a| a[:msec] }
       [
         "<history now='#{Time.now.to_i}' \
           avg='#{mean}' \

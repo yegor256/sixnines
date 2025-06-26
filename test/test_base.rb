@@ -11,7 +11,7 @@ require_relative 'test__helper'
 class BaseTest < Minitest::Test
   def test_lists_flips
     WebMock.enable_net_connect!
-    assert(!Base.new(Dynamo.new.aws).flips.nil?)
+    refute_nil(Base.new(Dynamo.new.aws).flips)
   end
 
   def test_tries_to_take_absent_endpoint

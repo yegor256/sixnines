@@ -21,7 +21,7 @@ class EndpointTest < Minitest::Test
     )
     ep = Base.new(dynamo).take(id)
     ping = ep.ping(TotalPings.new(0))
-    assert(ping.end_with?('200'), ping)
+    assert(ping.end_with?('200'))
   end
 
   def test_pings_broken_uri
@@ -32,7 +32,7 @@ class EndpointTest < Minitest::Test
     )
     ep = Base.new(dynamo).take(id)
     ping = ep.ping(TotalPings.new(1))
-    refute(ping.end_with?('200'), ping)
+    refute(ping.end_with?('200'))
   end
 
   def test_pings_via_broken_proxy
@@ -44,7 +44,7 @@ class EndpointTest < Minitest::Test
     )
     ep = Base.new(dynamo).take(id)
     ping = ep.ping(TotalPings.new(1), ["127.0.0.1:#{port}"])
-    assert(ping.end_with?('200'), ping)
+    assert(ping.end_with?('200'))
   end
 
   def test_flushes

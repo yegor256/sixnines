@@ -23,7 +23,7 @@ class BadgeTest < Minitest::Test
     FileUtils.mkdir_p(target)
     svg = EpBadge.new(endpoint).to_svg
     File.write(File.join(target, 'badge.svg'), svg)
-    assert(svg.include?('<svg'))
+    assert_includes(svg, '<svg')
   end
 
   def test_renders_png
