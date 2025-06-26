@@ -23,10 +23,10 @@ gem 'rake', '~>13.0', require: false
 gem 'rerun', '~>0.13', require: false
 gem 'rmagick', '~>4.2'
 gem 'rss', '~>0.3'
-gem 'rubocop', '~>1.31', require: false
-gem 'rubocop-minitest', '>0', require: false
-gem 'rubocop-performance', '>0', require: false
-gem 'rubocop-rake', '>0', require: false
+gem 'rubocop', '~>1.74', require: false
+gem 'rubocop-minitest', '~>0.38', require: false
+gem 'rubocop-performance', '~>1.25', require: false
+gem 'rubocop-rake', '~>0.7', require: false
 gem 'sass', '~>3.7'
 gem 'sentry-raven', '~>3.1'
 gem 'simplecov', '~>0.22', require: false
