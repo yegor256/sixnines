@@ -8,7 +8,7 @@
 - if defined?(user) && user[:login] == 'yegor256'
   %p
     %a{href: "/flush/#{e.to_h[:id]}", onclick: 'return confirm("Are you sure? The entire history will be destroyed!");'}
-      Flush it
+      Flush It
 %p
   Avail.
   %strong= EpAvailability.new(e).full
@@ -29,5 +29,5 @@
   %a{href: "/d/#{e.to_h[:id]}"} JSON
 - if e.to_h[:log]
   %p
-    %a{onclick: "$('#log').toggle();"} View last failed HTTP log
+    %a{onclick: "$('#log').toggle();"} View Last Failed HTTP Log
   %pre#log{style: 'display: none;'}=html_escape(e.to_h[:log])

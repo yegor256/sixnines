@@ -46,7 +46,7 @@ fields:
   active: "yes" # if it's alive, "no" otherwise
   created: Epoch time number of when it was added
   hostname: Host name of the URI, e.g. "google.com"
-  pings: Total amount of ping's we've done so far
+  pings: Total amount of pings we've done so far
   failures: Total amount of failed attempts
   state: Either "up" or "down"
   updated: Epoch time of the most recent update of this record

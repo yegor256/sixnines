@@ -268,9 +268,9 @@ Availability: #{EpAvailability.new(ep).short} \
 (#{EpAvailability.new(ep).full}). #{href}"
         )
       rescue Twitter::Error::Unauthorized
-        puts 'Can\'t tweet, account is locked'
+        puts 'Cannot tweet, account is locked'
       rescue Twitter::Error::ServiceUnavailable
-        puts 'Can\'t tweet, service unavailable'
+        puts 'Cannot tweet, service unavailable'
       end
     end
   end

@@ -16,7 +16,7 @@ class Endpoints
   end
 
   def add(uri)
-    raise "Endpoint URI can't be nil" if uri.nil?
+    raise "Endpoint URI cannot be nil" if uri.nil?
     id = unique_id(uri)
     @aws.put_item(
       table_name: 'sn-endpoints',
@@ -72,7 +72,7 @@ class Endpoints
       ).items
       return id if items.empty?
       len += 1
-      raise "Can't find ID: #{id}" if len > 16
+      raise "Cannot find ID: #{id}" if len > 16
     end
   end
 end

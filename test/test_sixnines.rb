@@ -15,6 +15,7 @@ class AppTest < Minitest::Test
   end
 
   def test_renders_version
+    WebMock.enable_net_connect!
     get('/version')
     assert_predicate(last_response, :ok?)
   end
@@ -58,27 +59,32 @@ class AppTest < Minitest::Test
   end
 
   def test_search_when_no_recent_state_change
+    WebMock.enable_net_connect!
     ep('http://www.amazon.com')
     get('/?q=amazon')
     assert_predicate(last_response, :ok?)
   end
 
   def test_it_renders_logo
+    WebMock.enable_net_connect!
     get('/images/logo.svg')
     assert_predicate(last_response, :ok?)
   end
 
   def test_rss_feed
+    WebMock.enable_net_connect!
     get('/rss')
     assert_equal(200, last_response.status)
   end
 
   def test_sitemap
+    WebMock.enable_net_connect!
     get('/sitemap.xml')
     assert_equal(200, last_response.status)
   end
 
   def test_renders_page_not_found
+    WebMock.enable_net_connect!
     get('/the-url-that-is-absent')
     assert_equal(404, last_response.status)
   end
@@ -106,6 +112,7 @@ class AppTest < Minitest::Test
   end
 
   def test_history_endpoint_not_found
+    WebMock.enable_net_connect!
     get('/h/absent')
     assert_equal(404, last_response.status)
   end
@@ -118,6 +125,7 @@ class AppTest < Minitest::Test
   end
 
   def test_data_endpoint_not_found
+    WebMock.enable_net_connect!
     get('/d/absent')
     assert_equal(404, last_response.status)
   end
@@ -130,6 +138,7 @@ class AppTest < Minitest::Test
   end
 
   def test_favicon_endpoint_not_found
+    WebMock.enable_net_connect!
     get('/f/absent')
     assert_equal(404, last_response.status)
   end
@@ -154,11 +163,13 @@ class AppTest < Minitest::Test
   end
 
   def test_graph_endpoint_not_found
+    WebMock.enable_net_connect!
     get('/g/absent')
     assert_equal(404, last_response.status)
   end
 
   def test_user_account
+    WebMock.enable_net_connect!
     header('Cookie', 'glogin=jeff')
     get('/a')
     assert_equal(200, last_response.status)

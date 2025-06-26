@@ -40,7 +40,7 @@ class EndpointTest < Minitest::Test
     port = FakeServer.new.start(407)
     dynamo = Dynamo.new.aws
     id = Endpoints.new(dynamo, 'yegor256-endpoint').add(
-      'http://www.the-address-that-doesnt-exist-for-sure.com'
+      'http://www.the-address-that-does-not-exist-for-sure.com'
     )
     ep = Base.new(dynamo).take(id)
     ping = ep.ping(TotalPings.new(1), ["127.0.0.1:#{port}"])
