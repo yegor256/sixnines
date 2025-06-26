@@ -3,12 +3,11 @@
 # SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
 # SPDX-License-Identifier: MIT
 
-require 'test/unit'
-require 'rack/test'
 require 'nokogiri'
 require_relative '../sixnines'
+require_relative 'test__helper'
 
-class AppTest < Test::Unit::TestCase
+class AppTest < Minitest::Test
   include Rack::Test::Methods
 
   def app
@@ -21,11 +20,13 @@ class AppTest < Test::Unit::TestCase
   end
 
   def test_robots_txt
+    WebMock.enable_net_connect!
     get('/robots.txt')
     assert(last_response.ok?)
   end
 
   def test_css
+    WebMock.enable_net_connect!
     get('/css/main.css')
     assert(last_response.ok?)
     assert(!last_response.body.empty?)
@@ -33,6 +34,7 @@ class AppTest < Test::Unit::TestCase
   end
 
   def test_it_renders_home_page
+    WebMock.enable_net_connect!
     get('/')
     assert(last_response.ok?)
     html = last_response.body
@@ -40,7 +42,7 @@ class AppTest < Test::Unit::TestCase
   end
 
   def test_it_renders_valid_html
-    omit('It does not work for some reason, even though HTML is valid')
+    skip('It does not work for some reason, even though HTML is valid')
     get('/')
     assert(last_response.ok?)
     html = last_response.body

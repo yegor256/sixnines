@@ -3,24 +3,26 @@
 # SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
 # SPDX-License-Identifier: MIT
 
-require 'test/unit'
-require 'rack/test'
-require_relative 'fake_server'
-require_relative '../objects/dynamo'
 require_relative '../objects/base'
+require_relative '../objects/dynamo'
+require_relative 'fake_server'
+require_relative 'test__helper'
 
-class BaseTest < Test::Unit::TestCase
+class BaseTest < Minitest::Test
   def test_lists_flips
+    WebMock.enable_net_connect!
     assert(!Base.new(Dynamo.new.aws).flips.nil?)
   end
 
   def test_tries_to_take_absent_endpoint
-    assert_raise Base::EndpointNotFound do
+    WebMock.enable_net_connect!
+    assert_raises(Base::EndpointNotFound) do
       Base.new(Dynamo.new.aws).take('absent')
     end
   end
 
   def test_ping_increments_total_pings
+    WebMock.enable_net_connect!
     port = FakeServer.new.start(200)
     aws = Dynamo.new.aws
     Endpoints.new(

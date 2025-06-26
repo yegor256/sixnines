@@ -3,11 +3,10 @@
 # SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
 # SPDX-License-Identifier: MIT
 
-require 'test/unit'
-require 'rack/test'
+require_relative 'test__helper'
 require_relative '../objects/total_pings'
 
-class TotalPingsTest < Test::Unit::TestCase
+class TotalPingsTest < Minitest::Test
   def test_count
     count = 5
     assert_equal(count, TotalPings.new(count).count)

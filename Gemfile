@@ -14,6 +14,8 @@ gem 'futex', '~>0.8'
 gem 'glogin', '~>0.13'
 gem 'haml', '~>5.2'
 gem 'mail', '~>2.7'
+gem 'minitest', '~>5.25', require: false
+gem 'minitest-reporters', '~>1.7', require: false
 gem 'nokogiri', '~>1.13'
 gem 'rack-ssl', '~>1.4'
 gem 'rack-test', '~>2.0', require: false
@@ -25,14 +27,13 @@ gem 'rubocop', '~>1.31', require: false
 gem 'rubocop-minitest', '>0', require: false
 gem 'rubocop-performance', '>0', require: false
 gem 'rubocop-rake', '>0', require: false
-gem 'rubocop-rspec', '~>2.11', require: false
 gem 'sass', '~>3.7'
 gem 'sentry-raven', '~>3.1'
 gem 'simplecov', '~>0.22', require: false
+gem 'simplecov-cobertura', '~>2.1', require: false
 gem 'sinatra', '~>3.0'
 gem 'sinatra-contrib', '~>3.0'
 gem 'stripe', '~>6.5'
-gem 'test-unit', '~>3.5', require: false
 gem 'timeout-extensions', '~>0.1'
 gem 'twitter', '~>7.0'
 gem 'webmock', '~>3.14', require: false

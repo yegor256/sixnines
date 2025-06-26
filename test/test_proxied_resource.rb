@@ -3,13 +3,13 @@
 # SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
 # SPDX-License-Identifier: MIT
 
-require 'test/unit'
-require 'rack/test'
+require_relative 'test__helper'
 require_relative '../objects/resource'
 require_relative '../objects/proxied_resource'
 
-class ProxiedResourceTest < Test::Unit::TestCase
+class ProxiedResourceTest < Minitest::Test
   def test_pings_valid_uri
+    WebMock.enable_net_connect!
     port = FakeServer.new.start(200)
     proxy = FakeServer.new.start(200)
     assert_equal(
@@ -25,6 +25,7 @@ class ProxiedResourceTest < Test::Unit::TestCase
   end
 
   def test_pings_valid_uri_without_proxy
+    WebMock.enable_net_connect!
     port = FakeServer.new.start(200)
     assert_equal(
       200,
@@ -35,8 +36,9 @@ class ProxiedResourceTest < Test::Unit::TestCase
   end
 
   def test_pings_invalid_uri
+    WebMock.enable_net_connect!
     proxy = FakeServer.new.start(500)
-    assert_not_equal(
+    refute_equal(
       200,
       ProxiedResource.new(
         Resource.new(URI.parse('http://www.definitely-invalid-url-yegor.com')),

@@ -3,19 +3,20 @@
 # SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
 # SPDX-License-Identifier: MIT
 
-require 'test/unit'
-require 'rack/test'
 require 'rmagick'
 require_relative '../../objects/endpoint/ep_favicon'
+require_relative '../test__helper'
 
-class EpFaviconTest < Test::Unit::TestCase
+class EpFaviconTest < Minitest::Test
   def test_builds_default_favicon
+    WebMock.enable_net_connect!
     img = Magick::Image.from_blob(EpFavicon.new(endpoint('broken')).png)[0]
     assert_equal(31, img.columns)
     assert_equal(31, img.rows)
   end
 
   def test_fetches_correct_favicon
+    WebMock.enable_net_connect!
     img = Magick::Image.from_blob(
       EpFavicon.new(endpoint('https://www.yegor256.com/favicon.ico')).png
     )[0]
@@ -24,6 +25,7 @@ class EpFaviconTest < Test::Unit::TestCase
   end
 
   def test_parses_different_types
+    WebMock.enable_net_connect!
     files = [
       ['https://cdn.sstatic.net/Sites/stackoverflow/img/favicon.ico', 16],
       ['https://www.yegor256.com/favicon.ico', 64],

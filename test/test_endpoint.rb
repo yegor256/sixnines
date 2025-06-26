@@ -3,8 +3,7 @@
 # SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
 # SPDX-License-Identifier: MIT
 
-require 'test/unit'
-require 'rack/test'
+require_relative 'test__helper'
 require_relative 'fake_server'
 require_relative '../objects/base'
 require_relative '../objects/endpoint'
@@ -12,8 +11,9 @@ require_relative '../objects/endpoints'
 require_relative '../objects/dynamo'
 require_relative '../objects/total_pings'
 
-class EndpointTest < Test::Unit::TestCase
+class EndpointTest < Minitest::Test
   def test_pings_valid_uri
+    WebMock.enable_net_connect!
     port = FakeServer.new.start(200)
     dynamo = Dynamo.new.aws
     id = Endpoints.new(dynamo, 'yegor256-endpoint').add(
@@ -25,16 +25,18 @@ class EndpointTest < Test::Unit::TestCase
   end
 
   def test_pings_broken_uri
+    WebMock.enable_net_connect!
     dynamo = Dynamo.new.aws
     id = Endpoints.new(dynamo, 'yegor256-endpoint').add(
       'http://www.sixnines-broken-uri.io'
     )
     ep = Base.new(dynamo).take(id)
     ping = ep.ping(TotalPings.new(1))
-    assert_false(ping.end_with?('200'), ping)
+    refute(ping.end_with?('200'), ping)
   end
 
   def test_pings_via_broken_proxy
+    WebMock.enable_net_connect!
     port = FakeServer.new.start(407)
     dynamo = Dynamo.new.aws
     id = Endpoints.new(dynamo, 'yegor256-endpoint').add(
@@ -42,22 +44,24 @@ class EndpointTest < Test::Unit::TestCase
     )
     ep = Base.new(dynamo).take(id)
     ping = ep.ping(TotalPings.new(1), ["127.0.0.1:#{port}"])
-    assert_true(ping.end_with?('200'), ping)
+    assert(ping.end_with?('200'), ping)
   end
 
   def test_flushes
+    WebMock.enable_net_connect!
     dynamo = Dynamo.new.aws
     id = Endpoints.new(dynamo, 'yegor256-endpoint').add(
       'http://broken-url'
     )
     ep = Base.new(dynamo).take(id)
     ep.ping(TotalPings.new(2))
-    assert_not_equal(nil, Base.new(dynamo).take(id).to_h[:log])
+    refute_nil(Base.new(dynamo).take(id).to_h[:log])
     ep.flush
-    assert_equal(nil, Base.new(dynamo).take(id).to_h[:log])
+    refute(Base.new(dynamo).take(id).to_h[:log])
   end
 
   def test_increments_ping_count
+    WebMock.enable_net_connect!
     port = FakeServer.new.start(200)
     initial = 3
     first_proxy = 'my-proxy.com:8080'

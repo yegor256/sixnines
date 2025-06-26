@@ -3,12 +3,12 @@
 # SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
 # SPDX-License-Identifier: MIT
 
-require 'test/unit'
-require 'rack/test'
+require_relative 'test__helper'
 require_relative '../objects/endpoints'
 
-class EndpointsTest < Test::Unit::TestCase
+class EndpointsTest < Minitest::Test
   def test_creates_endpoint
+    WebMock.enable_net_connect!
     eps = Endpoints.new(Dynamo.new.aws, 'yegor256-endpoints')
     uri = 'http://www.sixnines.io'
     eps.add(uri)

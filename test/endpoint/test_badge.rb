@@ -3,12 +3,11 @@
 # SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
 # SPDX-License-Identifier: MIT
 
-require 'test/unit'
-require 'rack/test'
 require 'rmagick'
+require_relative '../test__helper'
 require_relative '../../objects/endpoint/ep_badge'
 
-class BadgeTest < Test::Unit::TestCase
+class BadgeTest < Minitest::Test
   def test_renders_svg
     endpoint = Class.new do
       def to_h

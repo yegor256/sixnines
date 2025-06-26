@@ -3,11 +3,10 @@
 # SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
 # SPDX-License-Identifier: MIT
 
-require 'test/unit'
-require 'rack/test'
+require_relative '../test__helper'
 require_relative '../../objects/endpoint/ep_availability'
 
-class AvailabilityTest < Test::Unit::TestCase
+class AvailabilityTest < Minitest::Test
   def test_renders_numbers
     [
       { pings: 0, failures: 0, avlbl: '00.0000%' },

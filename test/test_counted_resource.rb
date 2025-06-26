@@ -3,14 +3,13 @@
 # SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
 # SPDX-License-Identifier: MIT
 
-require 'test/unit'
-require 'rack/test'
+require_relative 'test__helper'
 require_relative '../objects/counted_resource'
 require_relative '../objects/resource'
 require_relative '../objects/dynamo'
 require_relative '../objects/total_pings'
 
-class CountedResourceTest < Test::Unit::TestCase
+class CountedResourceTest < Minitest::Test
   START = 5
   PINGS = 3
 

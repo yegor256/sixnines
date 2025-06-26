@@ -3,13 +3,12 @@
 # SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
 # SPDX-License-Identifier: MIT
 
-require 'test/unit'
-require 'rack/test'
 require 'zlib'
-require_relative 'fake_server'
 require_relative '../objects/resource'
+require_relative 'fake_server'
+require_relative 'test__helper'
 
-class ResourceTest < Test::Unit::TestCase
+class ResourceTest < Minitest::Test
   def test_pings_valid_uri
     port = FakeServer.new.start(200)
     assert_equal(
@@ -19,7 +18,7 @@ class ResourceTest < Test::Unit::TestCase
   end
 
   def test_pings_broken_uri
-    assert_not_equal(
+    refute_equal(
       200,
       Resource.new(
         URI.parse('http://broken-uri-for-sure.io')
