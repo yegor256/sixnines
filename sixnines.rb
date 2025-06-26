@@ -4,7 +4,6 @@
 # SPDX-License-Identifier: MIT
 
 require 'haml'
-require 'haml/template/options'
 require 'sinatra'
 require 'sinatra/cookies'
 require 'sass'
@@ -25,6 +24,10 @@ require_relative 'objects/base'
 require_relative 'objects/dynamo'
 require_relative 'objects/endpoint/ep_favicon'
 require_relative 'objects/endpoint/ep_data'
+require_relative 'objects/endpoint/ep_uri'
+require_relative 'objects/endpoint/ep_badge'
+require_relative 'objects/endpoint/ep_availability'
+require_relative 'objects/endpoint/ep_graph'
 
 if ENV['RACK_ENV'] != 'test'
   require 'rack/ssl'
@@ -32,7 +35,7 @@ if ENV['RACK_ENV'] != 'test'
 end
 
 configure do
-  Haml::Options.defaults[:format] = :xhtml
+  set :haml, format: :xhtml
   config = if ENV['RACK_ENV'] == 'test'
     {
       'cookie_secret' => '',
