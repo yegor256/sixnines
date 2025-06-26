@@ -17,3 +17,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: yegor256/copyrights-action@0.0.8
+        with:
+          ignore: >-
+            - public/googlefee20c356221dabb.html
