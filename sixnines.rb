@@ -239,7 +239,7 @@ end
 # Flush the endpoint
 get '/flush/:id' do
   raise 'You are not allowed to do this' \
-    if @locals[:user].nil? || @locals[:user][:id] != 'yegor256'
+    if @locals[:user].nil? || @locals[:user]['id'] != 'yegor256'
   begin
     ep = settings.base.take(params[:id])
     ep.flush
@@ -298,9 +298,9 @@ end
 
 get '/a' do
   haml :account, layout: :layout, locals: @locals.merge(
-    title: "@#{@locals[:user][:id]}",
-    description: "Account of @#{@locals[:user][:id]}",
-    endpoints: settings.base.endpoints(@locals[:user][:id]).list,
+    title: "@#{@locals[:user]['id']}",
+    description: "Account of @#{@locals[:user]['id']}",
+    endpoints: settings.base.endpoints(@locals[:user]['id']).list,
     stripe_key: settings.config['stripe']['live']['public_key']
   )
 end
@@ -321,7 +321,7 @@ post '/a/add' do
   else
     raise "Invalid coupon \"#{params[:coupon]}\"" unless settings.config['coupons'].include?(params[:coupon])
   end
-  settings.base.endpoints(@locals[:user][:id]).add(params[:endpoint])
+  settings.base.endpoints(@locals[:user]['id']).add(params[:endpoint])
   redirect to('/a')
 end
 
@@ -329,13 +329,13 @@ end
 #  changing the endpoint to ensure no one uses this feature to register new
 #  sites without charge.
 post '/a/edit' do
-  settings.base.endpoints(@locals[:user][:id]).del(params[:old])
-  settings.base.endpoints(@locals[:user][:id]).add(params[:new])
+  settings.base.endpoints(@locals[:user]['id']).del(params[:old])
+  settings.base.endpoints(@locals[:user]['id']).add(params[:new])
   redirect to('/a')
 end
 
 get '/a/del' do
-  settings.base.endpoints(@locals[:user][:id]).del(params[:endpoint])
+  settings.base.endpoints(@locals[:user]['id']).del(params[:endpoint])
   redirect to('/a')
 end
 

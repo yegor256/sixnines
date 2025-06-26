@@ -36,13 +36,13 @@ class BaseTest < Minitest::Test
     second_proxy = 'my-other-proxy:3000'
     first_stub = stub_request(:any, first_proxy)
     second_stub = stub_request(:any, second_proxy)
-    increase = aws.scan(
+    aws.scan(
       table_name: 'sn-endpoints'
     ).items.length
     initial = 42
     pings = TotalPings.new(initial)
     Base.new(aws).ping(pings, [first_proxy, second_proxy])
-    assert(pings.count > initial)
+    assert_operator(pings.count, :>, initial)
     remove_request_stub(first_stub)
     remove_request_stub(second_stub)
   end

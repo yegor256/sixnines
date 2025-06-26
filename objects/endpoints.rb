@@ -16,7 +16,7 @@ class Endpoints
   end
 
   def add(uri)
-    raise "Endpoint URI cannot be nil" if uri.nil?
+    raise 'Endpoint URI cannot be nil' if uri.nil?
     id = unique_id(uri)
     @aws.put_item(
       table_name: 'sn-endpoints',
