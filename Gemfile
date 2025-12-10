@@ -30,7 +30,7 @@ gem 'rubocop-rake', '~>0.7', require: false
 gem 'sass', '~>3.7'
 gem 'sentry-raven', '~>3.1'
 gem 'simplecov', '~>0.22', require: false
-gem 'simplecov-cobertura', '~>2.1', require: false
+gem 'simplecov-cobertura', '~>3.1', require: false
 gem 'sinatra', '~>3.0'
 gem 'sinatra-contrib', '~>3.0'
 gem 'stripe', '~>6.5'
