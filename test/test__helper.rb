@@ -29,3 +29,4 @@ require 'minitest/reporters'
 require 'rack/test'
 require 'webmock/minitest'
 Minitest::Reporters.use! [Minitest::Reporters::SpecReporter.new]
+Minitest.load :minitest_reporter
