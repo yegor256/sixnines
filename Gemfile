@@ -12,7 +12,7 @@ gem 'backtrace', '~>0.3'
 gem 'concurrent-ruby', '~>1.1', require: 'concurrent'
 gem 'futex', '~>0.8'
 gem 'glogin', '~>0.13'
-gem 'haml', '~>5.2'
+gem 'haml', '~>6.0'
 gem 'mail', '~>2.7'
 gem 'minitest', '~>5.25', require: false
 gem 'minitest-reporters', '~>1.7', require: false
