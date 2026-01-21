@@ -6,8 +6,6 @@
 source 'https://rubygems.org'
 ruby '~>3.3'
 
-gem 'actionview', '~>7.0'
-gem 'activesupport', '~>7.0'
 gem 'always', '~>0.2'
 gem 'aws-sdk-dynamodb', '~>1.75'
 gem 'backtrace', '~>0.3'
@@ -25,6 +23,7 @@ gem 'ostruct', '~>0.6'
 gem 'qbash', '~>0.4'
 gem 'rack-ssl', '~>1.4'
 gem 'rack-test', '~>2.0', require: false
+gem 'rackup', '~>2.2'
 gem 'rake', '~>13.0', require: false
 gem 'rdoc', '~>7.1', require: false
 gem 'rerun', '~>0.13', require: false
@@ -41,6 +40,7 @@ gem 'simplecov-cobertura', '~>3.1', require: false
 gem 'sinatra', '~>4.2'
 gem 'sinatra-contrib', '~>4.2'
 gem 'stripe', '~>6.5'
+gem 'tago', '~>0.0'
 gem 'timeout-extensions', '~>0.1'
 gem 'twitter', '~>7.0'
 gem 'webmock', '~>3.14', require: false

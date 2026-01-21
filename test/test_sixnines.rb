@@ -44,6 +44,7 @@ class AppTest < Minitest::Test
   end
 
   def test_pings_them
+    WebMock.enable_net_connect!
     get('/ping')
     txt = last_response.body
     assert(txt.include?('(none)') || txt.include?('Nothing to ping'))

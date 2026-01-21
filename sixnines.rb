@@ -27,7 +27,7 @@ require_relative 'objects/endpoint/ep_data'
 require_relative 'objects/endpoint/ep_favicon'
 require_relative 'objects/endpoint/ep_graph'
 require_relative 'objects/endpoint/ep_uri'
-require_relative 'objects/helpers'
+require 'tago'
 require_relative 'version'
 
 if ENV['RACK_ENV'] != 'test'
@@ -272,7 +272,7 @@ get '/ping' do
       event = 'is down'
       if up
         event = 'is up'
-        event = "went back up after #{time_ago_in_words(ep.to_h[:flipped])} of downtime" if ep.to_h[:flipped]
+        event = "went back up after #{ep.to_h[:flipped].ago} of downtime" if ep.to_h[:flipped]
       end
       begin
         settings.twitter.update(

@@ -31,7 +31,7 @@
         %span.right-if-mobile=EpBadge.new(e).to_html
         %br.mobile-only
         - if e.to_h.has_key?('flipped')
-          =time_ago_in_words(e.to_h[:flipped]) + ' ago'
+          =e.to_h[:flipped].ago + ' ago'
 
 - if !flips.empty?
   %p
@@ -43,7 +43,7 @@
       =EpUri.new(e).to_html
       %span.right-if-mobile= EpBadge.new(e).to_html
       %br.mobile-only
-      =time_ago_in_words(e.to_h[:flipped]) + ' ago'
+      =e.to_h[:flipped].ago + ' ago'
 :javascript
   $(document).ready(function poll_ping() {
     $.get('/ping_count', function(data) {
