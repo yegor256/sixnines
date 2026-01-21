@@ -1,0 +1,28 @@
+# SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
+# SPDX-License-Identifier: MIT
+---
+# yamllint disable rule:line-length
+name: codecov
+'on':
+  push:
+    branches:
+      - master
+jobs:
+  codecov:
+    timeout-minutes: 20
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          submodules: true
+      - run: sudo apt-get update && sudo apt-get install --yes libmagickwand-dev inkscape
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.3
+          bundler-cache: true
+      - run: bundle config set --global path "$(pwd)/vendor/bundle"
+      - run: bundle install --no-color
+      - run: bundle exec rake
+      - uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
