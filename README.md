@@ -5,14 +5,13 @@
 
 [![rake](https://github.com/yegor256/sixnines/actions/workflows/rake.yml/badge.svg)](https://github.com/yegor256/sixnines/actions/workflows/rake.yml)
 [![PDD status](https://www.0pdd.com/svg?name=yegor256/sixnines)](https://www.0pdd.com/p?name=yegor256/sixnines)
-[![Maintainability](https://api.codeclimate.com/v1/badges/c3b56d829753998ee405/maintainability)](https://codeclimate.com/github/yegor256/sixnines/maintainability)
 [![Hits-of-Code](https://hitsofcode.com/github/yegor256/sixnines)](https://hitsofcode.com/view/github/yegor256/sixnines)
 [![codecov](https://codecov.io/gh/yegor256/sixnines/branch/master/graph/badge.svg)](https://codecov.io/gh/yegor256/sixnines)
 
 [![Availability at SixNines](https://www.sixnines.io/b/9ccc)](https://www.sixnines.io/h/9ccc)
 
 [SixNines](https://www.sixnines.io) is a hosted service to validate
-and prove availability of your web service and sites.
+and prove availability of your web services and sites.
 
 Read this blog post for more details:
 [_SixNines.io, Your Website Availability Monitor_][blog].
@@ -115,7 +114,7 @@ bundle exec ruby test/test_base.rb -n test_lists_flips
 ```
 
 Then, if you want to test the UI, open `http://localhost:9292` in your browser,
-and login, if necessary, by adding `?glogin=tester` to the URL.
+and log in, if necessary, by adding `?glogin=tester` to the URL.
 
 [blog]: http://www.yegor256.com/2017/04/25/sixnines.html
 [guidelines]: https://www.yegor256.com/2014/04/15/github-guidelines.html
