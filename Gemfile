@@ -27,7 +27,7 @@ gem 'rack-test', '~>2.0', require: false
 gem 'rake', '~>13.0', require: false
 gem 'rdoc', '~>7.1', require: false
 gem 'rerun', '~>0.13', require: false
-gem 'rmagick', '~>4.2'
+gem 'rmagick', '~>5.3'
 gem 'rss', '~>0.3'
 gem 'rubocop', '~>1.74', require: false
 gem 'rubocop-minitest', '~>0.38', require: false
