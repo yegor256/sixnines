@@ -8,6 +8,7 @@ ruby '~>3.3'
 
 gem 'actionview', '~>7.0'
 gem 'activesupport', '~>7.0'
+gem 'always', '~>0.2'
 gem 'aws-sdk-dynamodb', '~>1.75'
 gem 'backtrace', '~>0.3'
 gem 'concurrent-ruby', '~>1.1', require: 'concurrent'

@@ -3,31 +3,32 @@
 # SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
 # SPDX-License-Identifier: MIT
 
+require 'always'
+require 'aws-sdk-dynamodb'
+require 'futex'
+require 'glogin'
 require 'haml'
+require 'json'
+require 'net/http'
+require 'raven'
+require 'sass'
 require 'sinatra'
 require 'sinatra/cookies'
-require 'sass'
-require 'futex'
-require 'uri'
-require 'yaml'
-require 'json'
-require 'aws-sdk-dynamodb'
 require 'stripe'
 require 'twitter'
-require 'raven'
-require 'net/http'
-require 'glogin'
-require_relative 'version'
-require_relative 'objects/helpers'
-require_relative 'objects/exec'
+require 'uri'
+require 'yaml'
 require_relative 'objects/base'
 require_relative 'objects/dynamo'
-require_relative 'objects/endpoint/ep_favicon'
-require_relative 'objects/endpoint/ep_data'
-require_relative 'objects/endpoint/ep_uri'
-require_relative 'objects/endpoint/ep_badge'
 require_relative 'objects/endpoint/ep_availability'
+require_relative 'objects/endpoint/ep_badge'
+require_relative 'objects/endpoint/ep_data'
+require_relative 'objects/endpoint/ep_favicon'
 require_relative 'objects/endpoint/ep_graph'
+require_relative 'objects/endpoint/ep_uri'
+require_relative 'objects/exec'
+require_relative 'objects/helpers'
+require_relative 'version'
 
 if ENV['RACK_ENV'] != 'test'
   require 'rack/ssl'
@@ -79,6 +80,13 @@ configure do
     c.access_token_secret = config['twitter']['access_token_secret']
   end)
   set :pings, TotalPings.new(0)
+end
+
+unless ENV['RACK_ENV'] == 'test'
+  Always.new(1) do
+    sleep(10)
+    Net::HTTP.get_response(URI.parse('https://www.sixnines.io/ping?always'))
+  end
 end
 
 before '/*' do

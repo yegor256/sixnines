@@ -22,6 +22,8 @@ GEM
       tzinfo (~> 2.0, >= 2.0.5)
     addressable (2.8.8)
       public_suffix (>= 2.0.2, < 8.0)
+    always (0.2.0)
+      concurrent-ruby (~> 1.1)
     ansi (1.5.0)
     ast (2.4.3)
     aws-eventstream (1.4.0)
@@ -295,6 +297,7 @@ PLATFORMS
 DEPENDENCIES
   actionview (~> 7.0)
   activesupport (~> 7.0)
+  always (~> 0.2)
   aws-sdk-dynamodb (~> 1.75)
   backtrace (~> 0.3)
   concurrent-ruby (~> 1.1)
