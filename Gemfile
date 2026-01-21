@@ -17,6 +17,8 @@ gem 'mail', '~>2.7'
 gem 'minitest', '~>6.0', require: false
 gem 'minitest-reporters', '~>1.7', require: false
 gem 'nokogiri', '~>1.13'
+gem 'observer', '~>0.1'
+gem 'ostruct', '~>0.6'
 gem 'rack-ssl', '~>1.4'
 gem 'rack-test', '~>2.0', require: false
 gem 'rake', '~>13.0', require: false

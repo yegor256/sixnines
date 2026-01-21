@@ -10,6 +10,7 @@ require_relative 'test__helper'
 
 class ResourceTest < Minitest::Test
   def test_pings_valid_uri
+    WebMock.enable_net_connect!
     port = FakeServer.new.start(200)
     assert_equal(
       200,
@@ -18,6 +19,7 @@ class ResourceTest < Minitest::Test
   end
 
   def test_pings_broken_uri
+    WebMock.enable_net_connect!
     refute_equal(
       200,
       Resource.new(
@@ -27,6 +29,7 @@ class ResourceTest < Minitest::Test
   end
 
   def test_timeout
+    WebMock.disable_net_connect!
     stub = stub_request(:any, 'www.bbc.com').to_return do
       sleep(10)
       'Welcome to BBC.com'
@@ -39,6 +42,7 @@ class ResourceTest < Minitest::Test
   end
 
   def test_bad_compression
+    WebMock.disable_net_connect!
     stub = stub_request(:any, 'www.wikipedia.org').to_return do
       raise Zlib::BufError, 'buffer error', caller
     end
@@ -50,6 +54,7 @@ class ResourceTest < Minitest::Test
   end
 
   def test_network_unreachable
+    WebMock.disable_net_connect!
     stub = stub_request(:any, 'www.microsoft.com').to_return do
       raise Errno::ENETUNREACH, 'network unreachable', caller
     end
@@ -61,6 +66,7 @@ class ResourceTest < Minitest::Test
   end
 
   def test_other_error
+    WebMock.disable_net_connect!
     stub = stub_request(:any, 'www.microsoft.com').to_return do
       raise 'oops'
     end

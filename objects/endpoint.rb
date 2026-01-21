@@ -150,8 +150,9 @@ class Endpoint
       expression_attribute_values: eav,
       update_expression: "set #{update.join(', ')}"
     )
-    yield(up, self) if block_given? && up != h[:up]
-    "#{h[:uri]}: #{code}"
+    msg = 'none'
+    msg = yield(up, self) if block_given? && up != h[:up]
+    "#{h[:uri]}: #{code} (#{msg})"
   end
 
   def flush

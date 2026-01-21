@@ -250,31 +250,31 @@ get '/flush/:id' do
 end
 
 get '/ping' do
-  content_type 'text/plain'
+  start = Time.now
   txt = Futex.new('/tmp/sixnines.lock', timeout: 1).open do
     settings.base.ping(settings.pings, settings.proxies) do |up, ep|
       next if ENV['RACK_ENV'] == 'test'
+      next if Time.now - start > 10
       href = "https://www.sixnines.io#{EpBadge.new(ep).to_href}"
       event = 'is down'
       if up
         event = 'is up'
-        if ep.to_h[:flipped]
-          event = "went back up after \
-#{time_ago_in_words(ep.to_h[:flipped])} \
-of downtime"
-        end
+        event = "went back up after #{time_ago_in_words(ep.to_h[:flipped])} of downtime" if ep.to_h[:flipped]
       end
       begin
         settings.twitter.update(
-          "#{ep.to_h[:hostname]} #{event}! \
-Availability: #{EpAvailability.new(ep).short} \
-(#{EpAvailability.new(ep).full}). #{href}"
+          [
+            "#{ep.to_h[:hostname]} #{event}!",
+            "Availability: #{EpAvailability.new(ep).short}",
+            "(#{EpAvailability.new(ep).full}). #{href}"
+          ].join(' ')
         )
       rescue Twitter::Error::Unauthorized
         puts 'Cannot tweet, account is locked'
       rescue Twitter::Error::ServiceUnavailable
         puts 'Cannot tweet, service unavailable'
       end
+      event
     end
   end
   return 'Nothing to ping' if txt.empty?
@@ -284,7 +284,10 @@ Availability: #{EpAvailability.new(ep).short} \
       Net::HTTP.get_response(URI.parse('https://www.sixnines.io/ping?fork'))
     end
   )
+  content_type 'text/plain'
+  txt
 rescue Futex::CantLock
+  content_type 'text/plain'
   'Locked, try again a bit later'
 end
 

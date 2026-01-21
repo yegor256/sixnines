@@ -42,6 +42,12 @@ class AppTest < Minitest::Test
     assert_includes(html, 'SixNines')
   end
 
+  def test_pings_them
+    get('/ping')
+    txt = last_response.body
+    assert_includes(txt, '(none)')
+  end
+
   def test_it_renders_valid_html
     skip('It does not work for some reason, even though HTML is valid')
     get('/')
