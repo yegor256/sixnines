@@ -161,6 +161,7 @@ GEM
     parser (3.3.10.1)
       ast (~> 2.4.1)
       racc
+    pkg-config (1.6.5)
     prism (1.8.0)
     psych (5.3.1)
       date
@@ -195,7 +196,8 @@ GEM
     rerun (0.14.0)
       listen (~> 3.0)
     rexml (3.4.4)
-    rmagick (4.3.0)
+    rmagick (5.3.0)
+      pkg-config (~> 1.4)
     rss (0.3.2)
       rexml
     rubocop (1.82.1)
@@ -315,7 +317,7 @@ DEPENDENCIES
   rake (~> 13.0)
   rdoc (~> 7.1)
   rerun (~> 0.13)
-  rmagick (~> 4.2)
+  rmagick (~> 5.3)
   rss (~> 0.3)
   rubocop (~> 1.74)
   rubocop-minitest (~> 0.38)
