@@ -62,9 +62,6 @@ configure do
   else
     YAML.safe_load(File.open(File.join(Dir.pwd, 'config.yml')))
   end
-  Raven.configure do |c|
-    c.dsn = config['sentry']
-  end
   set :config, config
   set :glogin, GLogin::Auth.new(
     config['github']['client_id'],
@@ -80,6 +77,14 @@ configure do
     c.access_token_secret = config['twitter']['access_token_secret']
   end)
   set :pings, TotalPings.new(0)
+end
+
+unless ENV['RACK_ENV'] == 'test'
+  configure do
+    Raven.configure do |c|
+      c.dsn = settings.config['sentry']
+    end
+  end
 end
 
 unless ENV['RACK_ENV'] == 'test'
