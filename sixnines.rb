@@ -99,7 +99,7 @@ before '/*' do
     ver: VERSION,
     login_link: settings.glogin.login_uri
   }
-  cookies[:glogin] = params[:cookie] if params[:cookie]
+  cookies[:glogin] = params[:glogin] if params[:glogin]
   if cookies[:glogin]
     begin
       @locals[:user] = GLogin::Cookie::Closed.new(
@@ -314,9 +314,9 @@ end
 
 get '/a' do
   haml :account, layout: :layout, locals: @locals.merge(
-    title: "@#{@locals[:user]['id']}",
-    description: "Account of @#{@locals[:user]['id']}",
-    endpoints: settings.base.endpoints(@locals[:user]['id']).list,
+    title: "@#{@locals[:user]['login']}",
+    description: "Account of @#{@locals[:user]['login']}",
+    endpoints: settings.base.endpoints(@locals[:user]['login']).list,
     stripe_key: settings.config['stripe']['live']['public_key']
   )
 end
@@ -337,7 +337,7 @@ post '/a/add' do
   else
     raise "Invalid coupon \"#{params[:coupon]}\"" unless settings.config['coupons'].include?(params[:coupon])
   end
-  settings.base.endpoints(@locals[:user]['id']).add(params[:endpoint])
+  settings.base.endpoints(@locals[:user]['login']).add(params[:endpoint])
   redirect to('/a')
 end
 
@@ -345,13 +345,15 @@ end
 #  changing the endpoint to ensure no one uses this feature to register new
 #  sites without charge.
 post '/a/edit' do
-  settings.base.endpoints(@locals[:user]['id']).del(params[:old])
-  settings.base.endpoints(@locals[:user]['id']).add(params[:new])
+  ep = settings.base.endpoints(@locals[:user]['login'])
+  ep.del(params[:old])
+  ep.add(params[:new])
   redirect to('/a')
 end
 
 get '/a/del' do
-  settings.base.endpoints(@locals[:user]['id']).del(params[:endpoint])
+  ep = settings.base.endpoints(@locals[:user]['login'])
+  ep.del(params[:endpoint])
   redirect to('/a')
 end
 

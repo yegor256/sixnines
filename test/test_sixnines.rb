@@ -3,6 +3,7 @@
 # SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
 # SPDX-License-Identifier: MIT
 
+require 'glogin/cookie'
 require 'nokogiri'
 require_relative '../sixnines'
 require_relative 'test__helper'
@@ -157,6 +158,7 @@ class AppTest < Minitest::Test
   end
 
   def test_badge_endpoint_not_found
+    WebMock.enable_net_connect!
     get('/b/absent')
     assert_equal(404, last_response.status)
   end
@@ -176,7 +178,8 @@ class AppTest < Minitest::Test
 
   def test_user_account
     WebMock.enable_net_connect!
-    header('Cookie', 'glogin=jeff')
+    enc = GLogin::Cookie::Open.new({ 'login' => 'tester', 'id' => '99999' }, '').to_s
+    set_cookie("glogin=#{enc}")
     get('/a')
     assert_equal(200, last_response.status)
   end

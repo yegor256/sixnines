@@ -12,6 +12,8 @@ require_relative 'endpoint'
 class Endpoints
   def initialize(aws, user)
     @aws = aws
+    raise 'User is nil' if user.nil?
+    raise 'User login must be a string' unless user.is_a?(String)
     @user = user
   end
 
