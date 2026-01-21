@@ -24,8 +24,12 @@ class Resource
   def take(host = nil, port = nil)
     raise "Resource URI can't be nil" if @uri.nil?
     http = Net::HTTP.new(@uri.host, @uri.port, host, port)
+    http.open_timeout = 5
+    http.read_timeout = 5
+    http.write_timeout = 5
     if @uri.scheme == 'https'
       http.use_ssl = true
+      http.ssl_timeout = 5
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
     end
     req = Net::HTTP::Get.new(@uri.request_uri)
