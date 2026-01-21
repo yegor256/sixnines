@@ -28,15 +28,17 @@ class Base
       table_name: 'sn-endpoints',
       index_name: 'expires',
       select: 'ALL_ATTRIBUTES',
-      limit: 10,
+      limit: 4,
       expression_attribute_values: {
         ':h' => 'yes',
         ':r' => Time.now.to_i
       },
       key_condition_expression: 'active=:h and expires < :r'
-    ).items
+    )
+    .items
     .map { |i| Endpoint.new(@aws, i) }
-    .map { |e| e.ping(count, proxies, &block) }.join("\n")
+    .map { |e| e.ping(count, proxies, &block) }
+    .join("\n")
   end
 
   def find(query)
