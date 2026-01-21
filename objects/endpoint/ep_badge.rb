@@ -5,7 +5,7 @@
 
 require 'nokogiri'
 require 'shellwords'
-require_relative '../exec'
+require 'qbash'
 require_relative 'ep_availability'
 require_relative 'ep_state'
 
@@ -26,9 +26,11 @@ class EpBadge
   end
 
   def to_html(amp: false)
-    "<a href='#{to_href}'><#{'amp-' if amp}img src='#{to_src}' \
-alt='#{@endpoint.to_h[:hostname]} availability badge' \
-width='106' height='20'/></a>"
+    [
+      "<a href='#{to_href}'><#{'amp-' if amp}img src='#{to_src}' ",
+      "alt='#{@endpoint.to_h[:hostname]} availability badge' ",
+      "width='106' height='20'/></a>"
+    ].join
   end
 
   def to_svg(style = 'round')
@@ -49,16 +51,14 @@ width='106' height='20'/></a>"
       Tempfile.open(['img', '.png']) do |png|
         svg.write(to_svg(style))
         svg.flush
-        Exec.new(
-          [
-            'convert',
-            '-density 424',
-            '-resize 424x',
-            '-background none',
-            Shellwords.escape(svg.path),
-            Shellwords.escape(png.path)
-          ].join(' ')
-        ).run
+        qbash(
+          'convert',
+          '-density 424',
+          '-resize 424x',
+          '-background none',
+          Shellwords.escape(svg.path),
+          Shellwords.escape(png.path)
+        )
         png.read
       end
     end

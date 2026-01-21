@@ -27,7 +27,6 @@ require_relative 'objects/endpoint/ep_data'
 require_relative 'objects/endpoint/ep_favicon'
 require_relative 'objects/endpoint/ep_graph'
 require_relative 'objects/endpoint/ep_uri'
-require_relative 'objects/exec'
 require_relative 'objects/helpers'
 require_relative 'version'
 

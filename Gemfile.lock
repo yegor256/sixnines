@@ -59,6 +59,10 @@ GEM
     docile (1.4.1)
     domain_name (0.6.20240107)
     drb (2.2.3)
+    elapsed (0.2.2)
+      loog (~> 0.6)
+      tago (~> 0.1)
+    ellipsized (0.3.0)
     equalizer (0.0.11)
     erb (6.0.1)
     erubi (1.13.1)
@@ -111,6 +115,9 @@ GEM
     loofah (2.25.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
+    loog (0.7.2)
+      ellipsized
+      logger (~> 1.0)
     mail (2.9.0)
       logger
       mini_mime (>= 0.1.1)
@@ -168,6 +175,11 @@ GEM
       date
       stringio
     public_suffix (7.0.2)
+    qbash (0.6.0)
+      backtrace (> 0)
+      elapsed (> 0)
+      loog (> 0)
+      tago (> 0)
     racc (1.8.1)
     rack (3.2.4)
     rack-protection (4.2.1)
@@ -201,7 +213,8 @@ GEM
     rerun (0.14.0)
       listen (~> 3.0)
     rexml (3.4.4)
-    rmagick (5.3.0)
+    rmagick (5.5.0)
+      observer (~> 0.1)
       pkg-config (~> 1.4)
     rss (0.3.2)
       rexml
@@ -265,6 +278,7 @@ GEM
       tilt (~> 2.0)
     stringio (3.2.0)
     stripe (6.5.0)
+    tago (0.6.0)
     temple (0.10.4)
     thread_safe (0.3.6)
     tilt (2.7.0)
@@ -320,6 +334,7 @@ DEPENDENCIES
   nokogiri (~> 1.13)
   observer (~> 0.1)
   ostruct (~> 0.6)
+  qbash (~> 0.4)
   rack-ssl (~> 1.4)
   rack-test (~> 2.0)
   rake (~> 13.0)
