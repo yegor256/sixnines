@@ -49,8 +49,9 @@
     $.get('/ping_count', function(data) {
       var el = $('#ping-count');
       el.text(data.ping_count);
-      el.css('color', 'firebrick');
-      setTimeout(function() { el.css('color', ''); }, 300);
+      el.css('background-color', 'firebrick');
+      el.css('color', 'white');
+      setTimeout(function() { el.css('color', '').css('background-color', ''); }, 300);
       setTimeout(poll_ping, 1000);
     });
   });

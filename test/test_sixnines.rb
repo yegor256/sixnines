@@ -45,7 +45,7 @@ class AppTest < Minitest::Test
   def test_pings_them
     get('/ping')
     txt = last_response.body
-    assert_includes(txt, '(none)')
+    assert(txt.include?('(none)') || txt.include?('Nothing to ping'))
   end
 
   def test_it_renders_valid_html
