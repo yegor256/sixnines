@@ -4,6 +4,7 @@
 # SPDX-License-Identifier: MIT
 
 source 'https://rubygems.org'
+ruby '~>3.3'
 
 gem 'actionview', '~>7.0'
 gem 'activesupport', '~>7.0'
