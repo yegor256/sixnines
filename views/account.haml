@@ -46,7 +46,7 @@
       %br.mobile-only
       =EpAvailability.new(e).full
       %a.light{onclick: "return edit('#{e.to_h[:id]}');"} edit
-      %a.light{href: iri.cut('/a/del').add(endpoint: EpUri.new(e).to_url), onclick: 'return confirm("Attention! Be aware that you will not be able to restore it and to add a new one you will have to pay another $4.95!");'} delete
+      %a.light{href: iri.cut('/a/del').add(endpoint: EpUri.new(e).to_url), onclick: 'return confirm("Attention! You will not be able to restore it, and adding a new one will cost another $4.95!");'} delete
     %div{id: "edit-#{e.to_h[:id]}", hidden: true}
       %form{method: 'post', action: iri.cut('/a/edit')}
         %input{type: 'hidden', name: 'old', value: EpUri.new(e).to_s}
