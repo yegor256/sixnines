@@ -11,7 +11,7 @@ gem 'aws-sdk-dynamodb', '~>1.75'
 gem 'backtrace', '~>0.3'
 gem 'concurrent-ruby', '~>1.1', require: 'concurrent'
 gem 'futex', '~>0.8'
-gem 'glogin', '~>0.13'
+gem 'glogin', '~>0.17'
 gem 'haml', '~>5.2'
 gem 'mail', '~>2.7'
 gem 'minitest', '~>6.0', require: false

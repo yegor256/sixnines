@@ -287,7 +287,7 @@ DEPENDENCIES
   backtrace (~> 0.3)
   concurrent-ruby (~> 1.1)
   futex (~> 0.8)
-  glogin (~> 0.13)
+  glogin (~> 0.17)
   haml (~> 5.2)
   mail (~> 2.7)
   minitest (~> 6.0)
