@@ -10,7 +10,7 @@
   %span#ping-count= ping_count.to_s
   requests completed since reboot.
 
-%form#search-form{method: 'get', action: '/'}
+%form#search-form{method: 'get', action: iri.cut}
   %fieldset
     %input{type: 'text', name: 'q', size: '35', placeholder: 'Search...', value: query}
     %button{type: 'submit'} Search

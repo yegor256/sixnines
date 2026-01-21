@@ -12,9 +12,9 @@
     - if defined? amphtml
       %link{rel: 'amphtml', href: amphtml}
     %link{type: 'text/css', href: url('css/main.css'), rel: 'stylesheet'}
-    %link{rel: 'shortcut icon', href: '/images/favicon.png', type: 'image/png'}
-    %script{src: '//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'}
-    %script{src: '//checkout.stripe.com/checkout.js'}
+    %link{rel: 'shortcut icon', href: iri.cut('/images/favicon.png'), type: 'image/png'}
+    %script{src: 'https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'}
+    %script{src: 'https://checkout.stripe.com/checkout.js'}
   %body
     %section
       %header
@@ -22,15 +22,15 @@
           %ul.menu
             %li
               %a.no-underline{href: '/'}
-                %img{src: url('/images/logo.svg'), width: '50', alt: 'logo'}
+                %img{src: iri.cut('/images/logo.svg'), width: '50', alt: 'logo'}
             - if defined? user
               %li
                 %ul
                   %li
-                    %a.bold.dark{href: '/a'}
+                    %a.bold.dark{href: iri.cut('/a')}
                       = "@#{user['login']}"
                   %li
-                    %a{href: '/logout'} Logout
+                    %a{href: iri.cut('/logout')} Logout
             - else
               %li.right
                 %a.no-underline{href: login_link}
@@ -45,9 +45,9 @@
               = '--'
           %ul
             %li
-              %a.bold{href: '/terms'} Terms
+              %a.bold{href: iri.cut('/terms')} Terms
             %li
-              %a.bold{href: '/rss'} RSS
+              %a.bold{href: iri.cut('/rss')} RSS
           %ul
             %li
               %a{href: 'https://github.com/yegor256/sixnines/stargazers'}

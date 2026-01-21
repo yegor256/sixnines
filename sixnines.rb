@@ -8,6 +8,7 @@ require 'aws-sdk-dynamodb'
 require 'futex'
 require 'glogin'
 require 'haml'
+require 'iri'
 require 'json'
 require 'net/http'
 require 'raven'
@@ -392,4 +393,8 @@ error do
       error: "#{e.message}\n\t#{e.backtrace.join("\n\t")}"
     )
   )
+end
+
+def iri
+  Iri.new(request.url).to_local
 end
