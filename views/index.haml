@@ -48,10 +48,12 @@
   $(document).ready(function poll_ping() {
     $.get('/ping_count', function(data) {
       var el = $('#ping-count');
-      el.text(data.ping_count);
-      el.css('background-color', 'firebrick');
-      el.css('color', 'white');
-      setTimeout(function() { el.css('color', '').css('background-color', ''); }, 300);
+      if (el.text() != data.ping_count) {
+        el.text(data.ping_count);
+        el.css('background-color', 'firebrick');
+        el.css('color', 'white');
+        setTimeout(function() { el.css('color', '').css('background-color', ''); }, 300);
+      }
       setTimeout(poll_ping, 1000);
     });
   });
