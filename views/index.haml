@@ -48,11 +48,13 @@
   $(document).ready(function poll_ping() {
     $.get('/ping_count', function(data) {
       var el = $('#ping-count');
-      if (el.text() != data.ping_count) {
-        el.text(data.ping_count);
+      if (el.text() == data.ping_count) {
         el.css('color', 'firebrick');
-        setTimeout(function() { el.css('color', ''); }, 300);
+      } else {
+        el.text(data.ping_count);
+        el.css('color', 'darkgreen');
       }
+      setTimeout(function() { el.css('color', ''); }, 300);
       setTimeout(poll_ping, 1000);
     });
   });
