@@ -79,4 +79,20 @@ class EndpointTest < Minitest::Test
     remove_request_stub(first_stub)
     remove_request_stub(second_stub)
   end
+
+  def test_dynamo_operations_dont_timeout_after_slow_http_request
+    WebMock.enable_net_connect!
+    port = FakeServer.new.start(200, 4)
+    dynamo = Dynamo.new.aws
+    id = Endpoints.new(dynamo, 'yegor256-slow-endpoint').add(
+      "http://127.0.0.1:#{port}/"
+    )
+    ep = Base.new(dynamo).take(id)
+    result = Timeout.timeout(10) { ep.ping(TotalPings.new(0)) }
+    assert_includes(
+      result,
+      '200',
+      'expected ping to complete without timeout leak into DynamoDB'
+    )
+  end
 end

@@ -32,7 +32,9 @@ class Dynamo
         {
           region: @config['dynamodb']['region'],
           access_key_id: @config['dynamodb']['key'],
-          secret_access_key: @config['dynamodb']['secret']
+          secret_access_key: @config['dynamodb']['secret'],
+          http_open_timeout: 5,
+          http_read_timeout: 5
         }
       end
     )

@@ -389,7 +389,7 @@ error do
     locals: @locals.merge(
       title: 'Error',
       description: 'Internal server error',
-      error: "#{e.message}\n\t#{e.backtrace.join("\n\t")}"
+      error: "#{e.class} #{e.message}\n\t#{e.backtrace.join("\n\t")}"
     )
   )
 end

@@ -6,13 +6,14 @@
 require 'socket'
 
 class FakeServer
-  def start(code)
+  def start(code, delay = 0)
     server = TCPServer.new('127.0.0.1', 0)
     port = server.addr[1]
     Thread.start do
       Kernel.loop do
         session = server.accept
         session.gets
+        sleep(delay) if delay.positive?
         session.print "HTTP/1.1 #{code}\r\n"
         session.print "Content-type: text/plain\r\n"
         session.print "\r\n"
