@@ -89,7 +89,7 @@ end
 
 unless ENV['RACK_ENV'] == 'test'
   Always.new(1) do
-    sleep(10)
+    sleep(1)
     puts Net::HTTP.get_response(URI.parse('https://www.sixnines.io/ping?always'))
   end.start!
 end
