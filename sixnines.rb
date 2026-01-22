@@ -90,7 +90,7 @@ end
 unless ENV['RACK_ENV'] == 'test'
   Always.new(1) do
     sleep(10)
-    Net::HTTP.get_response(URI.parse('https://www.sixnines.io/ping?always'))
+    puts Net::HTTP.get_response(URI.parse('https://www.sixnines.io/ping?always'))
   end
 end
 
@@ -267,7 +267,7 @@ get '/ping' do
   txt = Futex.new('/tmp/sixnines.lock', timeout: 1).open do
     settings.base.ping(settings.pings, settings.proxies) do |up, ep|
       next if ENV['RACK_ENV'] == 'test'
-      next if Time.now - start > 10
+      next if Time.now - start > 5
       href = "https://www.sixnines.io#{EpBadge.new(ep).to_href}"
       event = 'is down'
       if up

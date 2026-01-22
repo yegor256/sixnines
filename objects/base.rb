@@ -36,6 +36,7 @@ class Base
       key_condition_expression: 'active=:h and expires < :r'
     )
     .items
+    .take(4)
     .map { |i| Endpoint.new(@aws, i) }
     .map { |e| e.ping(count, proxies, &block) }
     .join("\n")

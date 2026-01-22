@@ -3,10 +3,6 @@
 # SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
 # SPDX-License-Identifier: MIT
 
-require 'uri'
-require 'timeout'
-require 'net/http'
-require 'openssl'
 require_relative '../objects/resource'
 
 #
