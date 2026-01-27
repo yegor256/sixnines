@@ -30,7 +30,7 @@ class EpGraph
     mean = avg
     h = points
     clean = h.select { |p| p[:msec] < mean * 5 && p[:msec] > mean / 5 }
-    xml = if h.empty?
+    xml = if h.empty? || clean.empty?
       "<history minx='0' maxx='0' miny='0' maxy='0' avg='#{mean}'/>"
     else
       xorder = clean.sort_by { |a| a[:time] }

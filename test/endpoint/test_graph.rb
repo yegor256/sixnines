@@ -43,4 +43,17 @@ class GraphTest < Minitest::Test
     end.new
     assert_equal(510, EpGraph.new(endpoint).avg)
   end
+
+  def test_renders_svg_when_all_points_filtered_as_outliers
+    endpoint = Class.new do
+      def history
+        [
+          { time: Time.now - rand(100), msec: 0, code: 200 },
+          { time: Time.now, msec: 0, code: 200 }
+        ]
+      end
+    end.new
+    svg = EpGraph.new(endpoint).to_svg
+    assert_includes(svg, '<svg', 'SVG element missing from output')
+  end
 end
