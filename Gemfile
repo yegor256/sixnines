@@ -17,7 +17,7 @@ gem 'iri', '~>0.11'
 gem 'mail', '~>2.7'
 gem 'minitest', '~>6.0', require: false
 gem 'minitest-reporters', '~>1.7', require: false
-gem 'nokogiri', '~>1.13'
+gem 'nokogiri', '~>1.19'
 gem 'observer', '~>0.1'
 gem 'ostruct', '~>0.6'
 gem 'qbash', '~>0.4'
