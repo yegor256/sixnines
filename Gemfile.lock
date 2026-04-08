@@ -1,7 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    addressable (2.8.8)
+    addressable (2.9.0)
       public_suffix (>= 2.0.2, < 8.0)
     always (0.2.0)
       concurrent-ruby (~> 1.1)
@@ -144,7 +144,7 @@ GEM
     psych (5.3.1)
       date
       stringio
-    public_suffix (7.0.2)
+    public_suffix (7.0.5)
     qbash (0.7.1)
       backtrace (> 0)
       elapsed (> 0)
