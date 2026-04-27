@@ -57,7 +57,7 @@ GEM
       ffi (>= 1.15.5)
       rake
     futex (0.8.6)
-    glogin (0.17.1)
+    glogin (0.17.2)
       base58 (>= 0.2)
       base64 (>= 0.2)
       openssl (>= 2.0)
@@ -135,7 +135,7 @@ GEM
     nokogiri (1.19.2-x86_64-linux-gnu)
       racc (~> 1.4)
     observer (0.1.2)
-    openssl (4.0.0)
+    openssl (4.0.1)
     ostruct (0.6.3)
     parallel (1.27.0)
     parser (3.3.10.2)
