@@ -35,6 +35,7 @@ GEM
     date (3.5.1)
     docile (1.4.1)
     domain_name (0.6.20240107)
+    drb (2.2.3)
     elapsed (0.2.2)
       loog (~> 0.6)
       tago (~> 0.1)
@@ -98,7 +99,8 @@ GEM
       thread_safe (~> 0.3, >= 0.3.1)
     mini_mime (1.1.5)
     mini_portile2 (2.8.9)
-    minitest (6.0.1)
+    minitest (6.0.5)
+      drb (~> 2.0)
       prism (~> 1.5)
     minitest-reporters (1.7.1)
       ansi
