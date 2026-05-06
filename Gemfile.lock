@@ -36,7 +36,7 @@ GEM
     docile (1.4.1)
     domain_name (0.6.20240107)
     drb (2.2.3)
-    elapsed (0.2.2)
+    elapsed (0.3.1)
       loog (~> 0.6)
       tago (~> 0.1)
     ellipsized (0.3.0)
@@ -86,7 +86,7 @@ GEM
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     logger (1.7.0)
-    loog (0.7.2)
+    loog (0.8.0)
       ellipsized
       logger (~> 1.0)
     mail (2.9.0)
@@ -147,7 +147,7 @@ GEM
       date
       stringio
     public_suffix (7.0.2)
-    qbash (0.7.1)
+    qbash (0.8.3)
       backtrace (> 0)
       elapsed (> 0)
       loog (> 0)
