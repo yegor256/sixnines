@@ -42,7 +42,7 @@ gem 'sinatra-contrib', '~>4.2'
 gem 'stripe', '~>6.5'
 gem 'tago', '~>0.0'
 gem 'timeout-extensions', '~>0.1'
-gem 'twitter', '~>7.0'
+gem 'twitter', '~>8.0'
 gem 'webmock', '~>3.14', require: false
 gem 'webrick', '~>1.8'
 gem 'xml-sitemap', '~>1.3'
