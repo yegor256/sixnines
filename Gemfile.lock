@@ -59,8 +59,9 @@ GEM
       base58 (>= 0.2)
       base64 (>= 0.2)
       openssl (>= 2.0)
-    haml (5.2.2)
-      temple (>= 0.8.0)
+    haml (7.2.0)
+      temple (>= 0.8.2)
+      thor
       tilt
     hashdiff (1.2.1)
     http (6.0.3)
@@ -241,6 +242,7 @@ GEM
       logger
     tago (0.7.0)
     temple (0.10.4)
+    thor (1.5.0)
     tilt (2.7.0)
     timeout (0.6.0)
     timeout-extensions (0.1.1)
@@ -280,7 +282,7 @@ DEPENDENCIES
   concurrent-ruby (~> 1.1)
   futex (~> 0.8)
   glogin (~> 0.17)
-  haml (~> 5.2)
+  haml (~> 7.0)
   iri (~> 0.11)
   mail (~> 2.7)
   minitest (~> 6.0)
