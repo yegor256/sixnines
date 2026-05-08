@@ -39,7 +39,7 @@ gem 'simplecov', '~>0.22', require: false
 gem 'simplecov-cobertura', '~>3.1', require: false
 gem 'sinatra', '~>4.2'
 gem 'sinatra-contrib', '~>4.2'
-gem 'stripe', '~>6.5'
+gem 'stripe', '~>19.0'
 gem 'tago', '~>0.0'
 gem 'timeout-extensions', '~>0.1'
 gem 'twitter', '~>7.0'
