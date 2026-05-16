@@ -5,7 +5,7 @@ GEM
       public_suffix (>= 2.0.2, < 8.0)
     always (0.2.0)
       concurrent-ruby (~> 1.1)
-    ansi (1.5.0)
+    ansi (1.6.0)
     ast (2.4.3)
     aws-eventstream (1.4.0)
     aws-partitions (1.1247.0)
@@ -95,10 +95,10 @@ GEM
     minitest (6.0.6)
       drb (~> 2.0)
       prism (~> 1.5)
-    minitest-reporters (1.7.1)
+    minitest-reporters (1.8.0)
       ansi
       builder
-      minitest (>= 5.0)
+      minitest (>= 5.0, < 7)
       ruby-progressbar
     multi_json (1.19.1)
     mustermann (3.0.4)
