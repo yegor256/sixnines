@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: MIT
 
 source 'https://rubygems.org'
-ruby '~>3.3'
+ruby '~>4.0'
 
 gem 'always', '~>0.2'
 gem 'aws-sdk-dynamodb', '~>1.75'
