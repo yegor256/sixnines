@@ -175,7 +175,7 @@ GEM
     rmagick (7.0.3)
       observer (~> 0.1)
       pkg-config (~> 1.4)
-    rss (0.3.2)
+    rss (0.3.3)
       rexml
     rubocop (1.87.0)
       json (~> 2.3)
