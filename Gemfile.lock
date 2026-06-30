@@ -174,7 +174,7 @@ GEM
     rerun (0.14.0)
       listen (~> 3.0)
     rexml (3.4.4)
-    rmagick (7.0.4)
+    rmagick (7.0.5)
       observer (~> 0.1)
       pkg-config (~> 1.4)
     rss (0.3.2)
