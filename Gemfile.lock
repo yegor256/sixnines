@@ -83,7 +83,7 @@ GEM
     loog (0.8.0)
       ellipsized
       logger (~> 1.0)
-    mail (2.9.0)
+    mail (2.9.1)
       logger
       mini_mime (>= 0.1.1)
       net-imap
@@ -106,12 +106,12 @@ GEM
     naught (2.3.0)
     net-http (0.9.1)
       uri (>= 0.11.1)
-    net-imap (0.6.4)
+    net-imap (0.6.6)
       date
       net-protocol
     net-pop (0.1.2)
       net-protocol
-    net-protocol (0.2.2)
+    net-protocol (0.3.0)
       timeout
     net-smtp (0.5.1)
       net-protocol
@@ -285,7 +285,7 @@ DEPENDENCIES
   glogin (~> 0.17)
   haml (~> 7.0)
   iri (~> 0.11)
-  mail (~> 2.7)
+  mail (~> 2.9)
   minitest (~> 6.0)
   minitest-reporters (~> 1.7)
   nokogiri (~> 1.13)
