@@ -14,7 +14,7 @@ gem 'futex', '~>0.8'
 gem 'glogin', '~>0.17'
 gem 'haml', '~>7.0'
 gem 'iri', '~>0.11'
-gem 'mail', '~>2.7'
+gem 'mail', '~>2.9'
 gem 'minitest', '~>6.0', require: false
 gem 'minitest-reporters', '~>1.7', require: false
 gem 'nokogiri', '~>1.13'
