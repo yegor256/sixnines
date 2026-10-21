@@ -41,8 +41,8 @@
 - else
   - endpoints.each do |e|
     %p{id: "show-#{e.to_h[:id]}"}
-      = EpUri.new(e).to_html
-      %span.right-if-mobile=EpBadge.new(e).to_html
+      != EpUri.new(e).to_html
+      %span.right-if-mobile!= EpBadge.new(e).to_html
       %br.mobile-only
       =EpAvailability.new(e).full
       %a.light{onclick: "return edit('#{e.to_h[:id]}');"} edit

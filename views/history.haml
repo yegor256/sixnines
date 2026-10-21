@@ -2,9 +2,9 @@
 -# SPDX-License-Identifier: MIT
 
 %p
-  = EpUri.new(e).favicon('small')
-  = EpUri.new(e).to_html
-  = EpBadge.new(e).to_html
+  != EpUri.new(e).favicon('small')
+  != EpUri.new(e).to_html
+  != EpBadge.new(e).to_html
 - if defined?(user) && user['login'] == 'yegor256'
   %p
     %a{href: "/flush/#{e.to_h[:id]}", onclick: 'return confirm("Are you sure? The entire history will be destroyed!");'}
@@ -23,7 +23,7 @@
   %strong
     =e.to_h[:created].ago + ' ago'
 %p
-  = EpGraph.new(e).to_html
+  != EpGraph.new(e).to_html
 %p
   More in
   %a{href: "/d/#{e.to_h[:id]}"} JSON

@@ -14,7 +14,7 @@
   %fieldset
     %input{type: 'text', name: 'q', size: '35', placeholder: 'Search...', value: query}
     %button{type: 'submit'} Search
-    %b= '&#128270;'
+    %b!= '&#128270;'
 
 - if query
   - if found.empty?
@@ -27,8 +27,8 @@
       ='"' + query + '":'
     - found.each do |e|
       %p
-        =EpUri.new(e).to_html
-        %span.right-if-mobile=EpBadge.new(e).to_html
+        != EpUri.new(e).to_html
+        %span.right-if-mobile!= EpBadge.new(e).to_html
         %br.mobile-only
         - if e.to_h.has_key?('flipped')
           =e.to_h[:flipped].ago + ' ago'
@@ -40,8 +40,8 @@
     flips:
   - flips.each do |e|
     %p
-      =EpUri.new(e).to_html
-      %span.right-if-mobile= EpBadge.new(e).to_html
+      != EpUri.new(e).to_html
+      %span.right-if-mobile!= EpBadge.new(e).to_html
       %br.mobile-only
       =e.to_h[:flipped].ago + ' ago'
 :javascript

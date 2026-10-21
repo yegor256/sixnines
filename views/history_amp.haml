@@ -2,9 +2,9 @@
 -# SPDX-License-Identifier: MIT
 
 %p
-  = EpUri.new(e).to_html
+  != EpUri.new(e).to_html
 %p
-  = EpBadge.new(e).to_html(amp: true)
+  != EpBadge.new(e).to_html(amp: true)
 %p
   Availability:
   %strong= EpAvailability.new(e).full
