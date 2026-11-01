@@ -10,15 +10,15 @@ name: codecov
 jobs:
   codecov:
     timeout-minutes: 20
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           submodules: true
       - run: sudo apt-get update && sudo apt-get install --yes libmagickwand-dev inkscape
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.4.9
+          ruby-version: 3.4.12
           bundler-cache: true
       - run: bundle config set --global path "$(pwd)/vendor/bundle"
       - run: bundle install --no-color

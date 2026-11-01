@@ -25,7 +25,7 @@ gem 'rack-ssl', '~>1.4'
 gem 'rack-test', '~>2.0', require: false
 gem 'rackup', '~>2.2'
 gem 'rake', '~>13.0', require: false
-gem 'rdoc', '~>7.1', require: false
+gem 'rdoc', '~>8.0', require: false
 gem 'rerun', '~>0.13', require: false
 gem 'rmagick', '~>7.0'
 gem 'rss', '~>0.3'

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
- * SPDX-License-Identifier: MIT
- -->
+* SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
+* SPDX-License-Identifier: MIT
+-->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/2000/svg" version="1.0">
   <xsl:output method="xml" omit-xml-declaration="yes"/>
   <xsl:variable name="W" select="440"/>

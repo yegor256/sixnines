@@ -43,6 +43,19 @@ class AppTest < Minitest::Test
     assert_includes(html, 'SixNines')
   end
 
+  def test_home_page_does_not_escape_its_markup
+    WebMock.enable_net_connect!
+    get('/')
+    refute_includes(last_response.body, '&lt;', 'Home page markup must not be escaped, but it was')
+  end
+
+  def test_history_page_does_not_escape_endpoint_markup
+    WebMock.enable_net_connect!
+    id = ep("http://www.#{SecureRandom.hex(4)}.com")
+    get("/h/#{id}")
+    refute_includes(last_response.body, '&lt;', 'History page markup must not be escaped, but it was')
+  end
+
   def test_pings_them
     WebMock.enable_net_connect!
     get('/ping')
