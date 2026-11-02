@@ -5,7 +5,7 @@
 
 require 'simplecov'
 require 'simplecov-cobertura'
-unless SimpleCov.running
+unless Coverage.running?
   SimpleCov.command_name('test')
   SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new(
     [

@@ -21,6 +21,18 @@ class AppTest < Minitest::Test
     assert_predicate(last_response, :ok?)
   end
 
+  def test_renders_terms_page
+    WebMock.enable_net_connect!
+    get('/terms')
+    assert_predicate(last_response, :ok?, 'Terms page was not rendered, but it should be')
+  end
+
+  def test_logout_redirects_home
+    WebMock.enable_net_connect!
+    get('/logout')
+    assert_predicate(last_response, :redirect?, 'Logout did not redirect, but it should')
+  end
+
   def test_robots_txt
     WebMock.enable_net_connect!
     get('/robots.txt')
