@@ -35,8 +35,8 @@ gem 'rubocop-performance', '~>1.25', require: false
 gem 'rubocop-rake', '~>0.7', require: false
 gem 'sass', '~>3.7'
 gem 'sentry-raven', '~>3.1'
-gem 'simplecov', '~>0.22', require: false
-gem 'simplecov-cobertura', '~>3.1', require: false
+gem 'simplecov', '~>1.0', require: false
+gem 'simplecov-cobertura', '~>4.0', require: false
 gem 'sinatra', '~>4.2'
 gem 'sinatra-contrib', '~>4.2'
 gem 'stripe', '~>20.0'
