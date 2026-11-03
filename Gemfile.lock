@@ -58,7 +58,7 @@ GEM
       base58 (>= 0.2)
       base64 (>= 0.2)
       openssl (>= 2.0)
-    haml (7.5.1)
+    haml (7.5.2)
       prism (>= 1.1.0)
       temple (>= 0.8.2)
       thor
