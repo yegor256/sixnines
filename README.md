@@ -84,7 +84,7 @@ fields:
 First, install
 [Java 8+](https://java.com/en/download/),
 [Maven 3.2+](https://maven.apache.org/),
-[Ruby 2.3+](https://www.ruby-lang.org/en/documentation/installation/),
+[Ruby 3.3, 3.4, or 4.0](https://www.ruby-lang.org/en/documentation/installation/),
 [Rubygems](https://rubygems.org/pages/download),
 and
 [Bundler](https://bundler.io/).
