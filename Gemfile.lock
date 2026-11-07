@@ -1,7 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    addressable (2.9.0)
+    addressable (2.9.2)
       public_suffix (>= 2.0.2, < 8.0)
     always (0.2.0)
       concurrent-ruby (~> 1.1)
@@ -34,7 +34,7 @@ GEM
       bigdecimal
       rexml
     date (3.6.0)
-    domain_name (0.7.20261007)
+    domain_name (0.7.20261031)
     drb (2.2.3)
     elapsed (0.3.1)
       loog (~> 0.6)
@@ -42,7 +42,7 @@ GEM
     ellipsized (0.3.0)
     equalizer (1.0.0)
     erb (6.0.7)
-    faraday (2.15.0)
+    faraday (2.15.1)
       faraday-net_http (>= 2.0, < 3.6)
       json
       logger
