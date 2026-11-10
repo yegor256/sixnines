@@ -63,7 +63,7 @@ GEM
       temple (>= 0.8.2)
       thor
       tilt
-    hashdiff (1.2.1)
+    hashdiff (1.2.2)
     http (6.0.4)
       http-cookie (~> 1.0)
       llhttp (~> 0.6.1)
