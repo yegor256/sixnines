@@ -47,6 +47,20 @@ class Endpoints
     )
   end
 
+  # Total number of successful pings of the given endpoint
+  def successful_pings(uri)
+    raise 'Endpoint URI cannot be nil' if uri.nil?
+    item = @aws.get_item(
+      table_name: 'sn-endpoints',
+      key: {
+        'login' => @user,
+        'uri' => uri
+      }
+    ).item
+    raise "Endpoint \"#{uri}\" is absent" if item.nil? || item.empty?
+    item['pings'].to_i - item['failures'].to_i
+  end
+
   def list
     @aws.query(
       table_name: 'sn-endpoints',
