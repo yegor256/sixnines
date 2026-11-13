@@ -53,7 +53,8 @@ configure do
       'sentry' => '',
       'stripe' => {
         'live' => {
-          'public_key' => 'test'
+          'public_key' => 'test',
+          'secret_key' => 'sk_test'
         }
       },
       'proxies' => [''],
@@ -317,23 +318,28 @@ get '/a' do
     title: "@#{@locals[:user]['login']}",
     description: "Account of @#{@locals[:user]['login']}",
     endpoints: settings.base.endpoints(@locals[:user]['login']).list,
-    stripe_key: settings.config['stripe']['live']['public_key']
+    stripe_key: settings.config['stripe']['live']['public_key'],
+    error: params[:error]
   )
 end
 
 post '/a/add' do
   if params[:coupon].empty?
-    Stripe.api_key = settings.config['stripe']['live']['secret_key']
-    customer = Stripe::Customer.create(
-      email: params[:stripeEmail],
-      source: params[:stripeToken]
-    )
-    Stripe::Charge.create(
-      amount: 495,
-      description: params[:endpoint],
-      currency: 'usd',
-      customer: customer.id
-    )
+    begin
+      Stripe.api_key = settings.config['stripe']['live']['secret_key']
+      customer = Stripe::Customer.create(
+        email: params[:stripeEmail],
+        source: params[:stripeToken]
+      )
+      Stripe::Charge.create(
+        amount: 495,
+        description: params[:endpoint],
+        currency: 'usd',
+        customer: customer.id
+      )
+    rescue Stripe::StripeError => e
+      redirect to("/a?error=#{URI.encode_www_form_component(e.message)}")
+    end
   else
     raise "Invalid coupon \"#{params[:coupon]}\"" unless settings.config['coupons'].include?(params[:coupon])
   end

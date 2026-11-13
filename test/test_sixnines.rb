@@ -210,7 +210,54 @@ class AppTest < Minitest::Test
     assert_equal(200, last_response.status)
   end
 
+  def test_declined_card_redirects_to_account
+    declined_card_post
+    assert_equal(302, last_response.status)
+    assert_includes(last_response.headers['Location'], 'error=')
+  end
+
+  def test_declined_card_shows_readable_error
+    declined_card_post
+    follow_redirect!
+    assert_equal(200, last_response.status)
+    assert_includes(last_response.body, 'Payment failed:')
+    assert_includes(last_response.body, 'Your card was declined.')
+  end
+
+  def test_declined_card_does_not_add_endpoint
+    declined_card_post
+    assert_empty(
+      Endpoints.new(Dynamo.new.aws, 'tester').list,
+      'Endpoint must not be added when the card is declined'
+    )
+  end
+
   private
+
+  def declined_card_post
+    WebMock.enable_net_connect!
+    enc = GLogin::Cookie::Open.new({ 'login' => 'tester', 'id' => '99999' }, '').to_s
+    set_cookie("glogin=#{enc}")
+    stub_request(:post, 'https://api.stripe.com/v1/customers').to_return(
+      status: 402,
+      headers: { 'Content-Type' => 'application/json' },
+      body: {
+        error: {
+          type: 'card_error',
+          code: 'card_declined',
+          message: 'Your card was declined.',
+          param: 'source'
+        }
+      }.to_json
+    )
+    post(
+      '/a/add',
+      endpoint: 'http://www.example.com',
+      coupon: '',
+      stripeToken: 'tok_test',
+      stripeEmail: 'tester@example.com'
+    )
+  end
 
   def ep(url)
     dynamo = Dynamo.new.aws
