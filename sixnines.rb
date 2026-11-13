@@ -341,11 +341,10 @@ post '/a/add' do
   redirect to('/a')
 end
 
-# @todo #93:30min We should check that there were no successful pings before
-#  changing the endpoint to ensure no one uses this feature to register new
-#  sites without charge.
 post '/a/edit' do
   ep = settings.base.endpoints(@locals[:user]['login'])
+  pings = ep.successful_pings(params[:old])
+  raise "You cannot change \"#{params[:old]}\", it already has #{pings} successful pings" unless pings.zero?
   ep.del(params[:old])
   ep.add(params[:new])
   redirect to('/a')
