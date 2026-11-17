@@ -343,9 +343,7 @@ end
 
 post '/a/edit' do
   ep = settings.base.endpoints(@locals[:user]['login'])
-  pings = ep.successful_pings(params[:old])
-  raise "You cannot change \"#{params[:old]}\", it already has #{pings} successful pings" unless pings.zero?
-  ep.del(params[:old])
+  ep.del_fresh(params[:old])
   ep.add(params[:new])
   redirect to('/a')
 end
