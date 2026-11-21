@@ -31,6 +31,7 @@ class Endpoints
         'hostname' => URI.parse(uri).host.gsub(/^www\./, ''),
         'pings' => 0,
         'failures' => 0,
+        'succeeds' => 0,
         'expires' => 0
       }
     )
@@ -45,6 +46,47 @@ class Endpoints
         'uri' => uri
       }
     )
+  end
+
+  # Deletes the endpoint only if it has never pinged successfully.
+  # DynamoDB checks the condition atomically at the moment of deletion,
+  # so a first success recorded by a background ping a moment earlier
+  # still refuses the deletion. An absent endpoint is refused too,
+  # since allowing the edit would still enable free registration.
+  def del_fresh(uri)
+    raise 'Endpoint URI cannot be nil' if uri.nil?
+    @aws.delete_item(
+      table_name: 'sn-endpoints',
+      key: {
+        'login' => @user,
+        'uri' => uri
+      },
+      condition_expression: 'attribute_exists(login) AND (attribute_not_exists(#succeeds) OR #succeeds = :zero)',
+      expression_attribute_names: {
+        '#succeeds' => 'succeeds'
+      },
+      expression_attribute_values: {
+        ':zero' => 0
+      }
+    )
+  rescue Aws::DynamoDB::Errors::ConditionalCheckFailedException
+    pings = successful_pings(uri)
+    raise "You cannot change \"#{uri}\", it already has #{pings} successful pings"
+  end
+
+  # Total number of successful pings of the given endpoint, tracked
+  # in the dedicated "succeeds" counter, which is not reset by flush
+  def successful_pings(uri)
+    raise 'Endpoint URI cannot be nil' if uri.nil?
+    item = @aws.get_item(
+      table_name: 'sn-endpoints',
+      key: {
+        'login' => @user,
+        'uri' => uri
+      }
+    ).item
+    raise "Endpoint \"#{uri}\" is absent" if item.nil? || item.empty?
+    item['succeeds'].to_i
   end
 
   def list
