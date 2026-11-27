@@ -134,6 +134,10 @@ class Endpoint
       ':f' => favicon(body).to_s
     }
     update << 'failures = failures + :o' unless up
+    if up
+      update << '#succeeds = #succeeds + :o'
+      ean['#succeeds'] = 'succeeds'
+    end
     update << 'flipped = :t' unless up == h[:up]
     unless up
       update << '#log = :g'
@@ -156,6 +160,8 @@ class Endpoint
   end
 
   def flush
+    # The success history (#succeeds) is deliberately not touched here,
+    # it is independent of the resettable failure counter
     h = to_h
     @aws.update_item(
       table_name: 'sn-endpoints',

@@ -60,6 +60,37 @@ class EndpointTest < Minitest::Test
     refute(Base.new(dynamo).take(id).to_h[:log])
   end
 
+  def test_ping_success_is_recorded_in_history
+    WebMock.enable_net_connect!
+    port = FakeServer.new.start(200)
+    dynamo = Dynamo.new.aws
+    uri = "http://127.0.0.1:#{port}/"
+    id = Endpoints.new(dynamo, 'yegor256-endpoint').add(uri)
+    eps = Endpoints.new(dynamo, 'yegor256-endpoint')
+    Base.new(dynamo).take(id).ping(TotalPings.new(0))
+    assert_equal(1, eps.successful_pings(uri))
+    eps.del(uri)
+  end
+
+  def test_ping_failure_is_not_recorded_as_success
+    WebMock.enable_net_connect!
+    port = FakeServer.new.start(500)
+    dynamo = Dynamo.new.aws
+    uri = "http://127.0.0.1:#{port}/"
+    id = Endpoints.new(dynamo, 'yegor256-endpoint').add(uri)
+    eps = Endpoints.new(dynamo, 'yegor256-endpoint')
+    Base.new(dynamo).take(id).ping(TotalPings.new(0))
+    h = Base.new(dynamo).take(id).to_h
+    assert_equal(1, h[:pings], 'The failed ping must be counted as a ping')
+    assert_equal(1, h[:failures], 'The failed ping must be counted as a failure')
+    assert_equal(
+      0,
+      eps.successful_pings(uri),
+      'A failed ping must not count as a success'
+    )
+    eps.del(uri)
+  end
+
   def test_increments_ping_count
     WebMock.enable_net_connect!
     port = FakeServer.new.start(200)
