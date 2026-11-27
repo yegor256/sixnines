@@ -28,6 +28,10 @@
       });
     });
 
+- unless error.to_s.empty?
+  %p{style: 'color:red;'}
+    = "Payment failed: #{error}"
+
 %form#form{method: 'post', action: iri.cut('/a/add')}
   %input#endpoint{type: 'url', name: 'endpoint', size: '55', placeholder: 'URI of a new endpoint'}
   %input#coupon{type: 'text', name: 'coupon', size: '25', maxlength: 32, placeholder: 'Coupon (if you have it)'}
